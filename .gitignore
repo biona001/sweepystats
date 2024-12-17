@@ -1,0 +1,9 @@
+.DS_Store
+sweepy.egg-info
+sweepy/__pycache__
+*.pyc
+build*
+dist*
+env*
+*.ipynb_checkpoints*
+notebook/*
