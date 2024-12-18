@@ -76,3 +76,33 @@ class SweepMatrix:
         for k in range(self.shape[0]):
             det *= self.sweep_k(k, inv)
         return det
+
+    def det(self, restore=True):
+        """
+        Computes the determinant by sweeping the entire matrix.
+        If `restore=True`, then the original matrix is untouched.
+        """
+        det = self.sweep()
+        if restore:
+            self.sweep(restore)
+        return det
+
+    def isposdef(self, restore=True):
+        """
+        Checks whether the matrix is positive definite by checking if 
+        `A[k, k] > 0` (note: strict inequality) for each `k` before being swept. 
+        If `restore=True`, then the original matrix is untouched.
+        """
+        swept_until = 0
+        p = self.shape[0]
+        for k in range(p):
+            if self.A[k, k] > 0:
+                self.sweep_k(k)
+                swept_until += 1
+            else:
+                isposdef = False
+                break
+        if restore:
+            for k in range(swept_until):
+                self.sweep_k(k, inv=True)
+        return True if swept_until == p else False
