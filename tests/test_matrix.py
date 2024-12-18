@@ -84,16 +84,15 @@ def test_sweep_general():
     # computation of determinant is correct
     A = sw.SweepMatrix(Anp)
     Ainv = np.linalg.inv(Anp)
-    det = A.sweep()
+    det = A.det(restore=False)
     assert np.allclose(A.A, -Ainv)
     assert np.allclose(det, Anp_det, atol=1e-8)
 
     # restoration by unsweeping
-    det2 = A.sweep(inv=True)
+    A.sweep(inv=True)
     assert np.allclose(A.A, Anp_original)
-    assert np.allclose(det, 1 / det2)
 
-def test_isposdef():
+def test_isposdef(): 
     Anp = random_symmetric_matrix(100, eigmin=0.000000001) # this is pd
     Anp_original = Anp.copy()
     evals = np.linalg.eigvals(Anp)

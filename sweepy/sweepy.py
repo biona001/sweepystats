@@ -72,23 +72,24 @@ class SweepMatrix:
         return Akk
 
     def sweep(self, inv=False, verbose=True):
-        """Sweeps the entire matrix, returning its determinant."""
-        det = 1.0
+        """Sweeps the entire matrix."""
         for k in tqdm(range(self.shape[0]), disable = not verbose):
-            det *= self.sweep_k(k, inv)
-        return det
+            self.sweep_k(k, inv)
+        return None
 
-    def det(self, restore=True):
+    def det(self, restore=True, verbose=True):
         """
         Computes the determinant by sweeping the entire matrix.
         If `restore=True`, then the original matrix is untouched.
         """
-        det = self.sweep()
+        det = 1.0
+        for k in tqdm(range(self.shape[0]), disable = not verbose):
+            det *= self.sweep_k(k)
         if restore:
-            self.sweep(restore)
+            self.sweep(restore, verbose=verbose)
         return det
 
-    def isposdef(self, restore=True):
+    def isposdef(self, restore=True, verbose=True):
         """
         Checks whether the matrix is positive definite by checking if 
         `A[k, k] > 0` (note: strict inequality) for each `k` before being swept. 
@@ -96,7 +97,7 @@ class SweepMatrix:
         """
         swept_until = 0
         p = self.shape[0]
-        for k in range(p):
+        for k in tqdm(range(p), disable = not verbose):
             if self.A[k, k] > 0:
                 self.sweep_k(k)
                 swept_until += 1
@@ -104,6 +105,6 @@ class SweepMatrix:
                 isposdef = False
                 break
         if restore:
-            for k in range(swept_until):
+            for k in tqdm(range(swept_until), disable = not verbose):
                 self.sweep_k(k, inv=True)
         return True if swept_until == p else False
