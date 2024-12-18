@@ -43,26 +43,36 @@ class SweepMatrix:
     def __str__(self):
         return str(self.A)
 
-    def sweep(self, k):
-        """Sweeps on the kth row/column, returns A[k, k] before it is swept"""
-        if k < 0 or k >= self.A.shape[0]:
+    def sweep_k(self, k, inv=False):
+        """
+        Sweeps on the kth row/column, returns A[k, k] before it is swept.
+        If `inv=True`, we perform the inverse sweep on the kth row/col.
+        """
+        p = self.shape[0]
+        if k < 0 or k >= p:
             raise ValueError("Index k is out of bounds.")
         Akk = self.A[k, k]
         if Akk == 0:
             raise ZeroDivisionError("A diagonal is exactly 0.")
 
         # elements not in kth row/col
-        n, p = self.shape
-        for i in range(n):
+        for i in range(p):
             for j in range(p):
                 if i != k and j != k:
                     self.A[i, j] -= self.A[i, k] * self.A[k, j] / Akk
 
         # kth row and col
-        for i in range(n):
+        for i in range(p):
             if i != k:
-                self.A[i, k] /= Akk
+                self.A[i, k] /= Akk * (-1) ** inv
                 self.A[k, i] = self.A[i, k]
         self.A[k, k] = -1 / Akk
 
         return Akk
+
+    def sweep(self, inv=False):
+        """Sweeps the entire matrix, returning its determinant."""
+        det = 1.0
+        for k in range(self.shape[0]):
+            det *= self.sweep_k(k, inv)
+        return det

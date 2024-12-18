@@ -33,17 +33,37 @@ def test_sweep_kth_diagonal():
     Ainv = np.linalg.inv(np.array([[4, 3],
                                  [3, 2]]))
 
-    A00 = A.sweep(0)
+    A00 = A.sweep_k(0)
     assert A[0, 0] == -0.25
     assert A[0, 1] == 0.75
     assert A[1, 0] == 0.75
     assert A[1, 1] == 2 - 9/4
     assert A00 == 4
 
-    A11 = A.sweep(1)
+    A11 = A.sweep_k(1)
     assert A[0, 0] == 2
     assert A[0, 1] == -3
     assert A[1, 0] == -3
     assert A[1, 1] == 4
     assert A11 == 2 - 9/4
     assert np.allclose(A.A, -Ainv)
+
+def test_unsweep_kth_diagonal():
+    A = sw.SweepMatrix(np.array([[4, 3, -2],
+                                 [3, 2, 1],
+                                 [-2, 1, 1]]))
+    Ainv = np.linalg.inv(np.array([[4, 3, -2],
+                                   [3, 2, 1],
+                                   [-2, 1, 1]]))
+
+    A00 = A.sweep_k(0)
+    A11 = A.sweep_k(1)
+    A22 = A.sweep_k(2)
+    assert np.allclose(A.A, -Ainv)
+
+    A00 = A.sweep_k(0, inv=True)
+    A11 = A.sweep_k(1, inv=True)
+    A22 = A.sweep_k(2, inv=True)
+    assert np.allclose(A.A, np.array([[4, 3, -2],
+                                      [3, 2, 1],
+                                      [-2, 1, 1]]))
