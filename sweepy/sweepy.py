@@ -27,6 +27,13 @@ class SweepMatrix:
     def dtype(self):
         return self.A.dtype
 
+    @property
+    def mem_layout(self):
+        if self.A.flags["C_CONTIGUOUS"]:
+            return "C_CONTIGUOUS" # C style = row major
+        else:
+            return "F_CONTIGUOUS" # Fortran style = column major
+
     def __getitem__(self, key):
         return self.A[key]
 
