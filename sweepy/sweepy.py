@@ -1,4 +1,5 @@
 import numpy as np
+from tqdm import tqdm
 
 class SweepMatrix:
     def __init__(self, A: np.ndarray):
@@ -70,10 +71,10 @@ class SweepMatrix:
 
         return Akk
 
-    def sweep(self, inv=False):
+    def sweep(self, inv=False, verbose=True):
         """Sweeps the entire matrix, returning its determinant."""
         det = 1.0
-        for k in range(self.shape[0]):
+        for k in tqdm(range(self.shape[0]), disable = not verbose):
             det *= self.sweep_k(k, inv)
         return det
 
