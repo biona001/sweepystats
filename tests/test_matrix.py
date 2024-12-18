@@ -23,8 +23,13 @@ def test_SweepMatrix_copies_numpy_non_float64():
     assert A_numpy[0, 0] == 1
 
 def test_SweepMatrix_throws_error():
+    # not symmetric
     with pytest.raises(TypeError):
         sw.SweepMatrix(np.array([[1, 3],
+                                 [2, 5]]))
+    # division by 0
+    with pytest.raises(TypeError):
+        sw.SweepMatrix(np.array([[0, 3],
                                  [2, 5]]))
 
 def test_sweep_kth_diagonal():
@@ -67,3 +72,14 @@ def test_unsweep_kth_diagonal():
     assert np.allclose(A.A, np.array([[4, 3, -2],
                                       [3, 2, 1],
                                       [-2, 1, 1]]))
+
+def test_sweep():
+    A = sw.SweepMatrix(np.array([[4, 3, -2],
+                                 [3, 2, 1],
+                                 [-2, 1, 1]]))
+    Ainv = np.linalg.inv(np.array([[4, 3, -2],
+                                   [3, 2, 1],
+                                   [-2, 1, 1]]))
+    det = A.sweep()
+    assert np.allclose(A.A, -Ainv)
+    assert det == -25
