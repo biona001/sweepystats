@@ -76,19 +76,32 @@ def test_unsweep_kth_diagonal():
     A22 = A.sweep_k(2, inv=True)
     assert np.allclose(A.A, Anp)
 
-def test_sweep_general():
+def test_det():
+    # det is correct and original matrix untouched by default
     Anp = random_symmetric_matrix(100)
-    Anp_inv = np.linalg.inv(Anp)
-    Anp_det = np.linalg.det(Anp)
+    Anp_original = Anp.copy()
+    Adet = np.linalg.det(Anp)
+    A = sw.SweepMatrix(Anp)
+    Ainv = np.linalg.inv(Anp)
+    assert np.allclose(A.det(), Adet, atol=1e-8)
+    assert np.allclose(A.A, Anp_original)
+
+    # det can return exactly 0 if matrix have 0 as eigenvalue
+    Anp = random_symmetric_matrix(100, eigmin=0.0)
+    Anp_original = Anp.copy()
+    Adet = np.linalg.det(Anp)
+    A = sw.SweepMatrix(Anp)
+    assert np.allclose(A.det(), 0.0)
+    assert np.allclose(A.A, Anp_original)
+
+def test_sweep():
+    Anp = random_symmetric_matrix(100)
+    Ainv = np.linalg.inv(Anp)
     Anp_original = Anp.copy()
 
     # computation of determinant is correct
     A = sw.SweepMatrix(Anp)
-    Ainv = np.linalg.inv(Anp)
-    det = A.det(restore=False)
-    assert np.allclose(det, Anp_det, atol=1e-8)
-
-    # matrix inverse is correct
+    A.sweep()
     assert np.allclose(A.A, -Ainv)
 
     # unsweeping restores original 

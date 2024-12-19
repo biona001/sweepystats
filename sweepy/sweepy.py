@@ -55,11 +55,8 @@ class SweepMatrix:
     def __str__(self):
         return str(self.A)
 
-    def sweep_k(self, k, inv=False):
-        """
-        Sweeps on the kth row/column, returns A[k, k] before it is swept.
-        If `inv=True`, we perform the inverse sweep on the kth row/col.
-        """
+    def sweep_k(self, k, inv=False, symmetrize=True):
+        """Sweeps on the kth row/column, returns A[k, k] before it is swept."""
         p = self.shape[0]
         if k < 0 or k >= p:
             raise ValueError("Index k is out of bounds.")
@@ -78,15 +75,20 @@ class SweepMatrix:
         # Akk
         self.A[k, k] = -Akkinv
         # symmetrize
-        rows, cols = np.triu_indices(p, k=1)
-        self.A[cols, rows] = self.A[rows, cols]
+        if symmetrize:
+            rows, cols = np.triu_indices(p, k=1)
+            self.A[cols, rows] = self.A[rows, cols]
 
         return Akk
 
-    def sweep(self, inv=False, verbose=True):
-        """Sweeps the entire matrix."""
+    def sweep(self, inv=False, verbose=True, symmetrize=True):
+        """
+        Sweeps the entire matrix. If `inv=True`, we perform the inverse sweep
+        on the kth row/col. If `symmetrize=False`, then only the upper-triangle
+        is read/swept. A progress bar is displayed unless `verbose=False`. 
+        """
         for k in tqdm(range(self.shape[0]), disable = not verbose):
-            self.sweep_k(k, inv)
+            self.sweep_k(k, inv, symmetrize)
         return None
 
     def det(self, restore=True, verbose=True):
@@ -95,10 +97,16 @@ class SweepMatrix:
         If `restore=True`, then the original matrix is untouched.
         """
         det = 1.0
+        swept_until = 0
         for k in tqdm(range(self.shape[0]), disable = not verbose):
-            det *= self.sweep_k(k)
-        if restore:
-            self.sweep(restore, verbose=verbose)
+            if self.A[k, k] != 0:
+                det *= self.sweep_k(k)
+                swept_until += 1
+            else:
+                det = 0
+                break
+        for k in tqdm(range(swept_until), disable = not verbose):
+            self.sweep_k(k, inv=True)
         return det
 
     def isposdef(self, restore=True, verbose=True):
