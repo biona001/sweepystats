@@ -102,13 +102,13 @@ class SweepMatrix:
         swept_until = 0
         for k in tqdm(range(self.shape[0]), disable = not verbose):
             if self.A[k, k] != 0:
-                det *= self.sweep_k(k)
+                det *= self.sweep_k(k, symmetrize=False)
                 swept_until += 1
             else:
                 det = 0
                 break
         for k in tqdm(range(swept_until), disable = not verbose):
-            self.sweep_k(k, inv=True)
+            self.sweep_k(k, inv=True, symmetrize=False)
         return det
 
     def isposdef(self, restore=True, verbose=True):
@@ -121,12 +121,12 @@ class SweepMatrix:
         p = self.shape[0]
         for k in tqdm(range(p), disable = not verbose):
             if self.A[k, k] > 0:
-                self.sweep_k(k)
+                self.sweep_k(k, symmetrize=False)
                 swept_until += 1
             else:
                 isposdef = False
                 break
         if restore:
             for k in tqdm(range(swept_until), disable = not verbose):
-                self.sweep_k(k, inv=True)
+                self.sweep_k(k, inv=True, symmetrize=False)
         return True if swept_until == p else False

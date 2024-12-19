@@ -110,6 +110,7 @@ def test_sweep():
     A2.sweep(symmetrize=False)
     rows, cols = np.triu_indices(p)
     assert np.allclose(A2.A[rows, cols], A.A[rows, cols])
+    assert np.allclose(A2.A[rows, cols], -Ainv[rows, cols])
 
     # unsweeping restores original 
     A.sweep(inv=True)
