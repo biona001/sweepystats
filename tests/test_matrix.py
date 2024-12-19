@@ -95,18 +95,27 @@ def test_det():
     assert np.allclose(A.A, Anp_original)
 
 def test_sweep():
-    Anp = random_symmetric_matrix(100)
+    p = 100
+    Anp = random_symmetric_matrix(p)
     Ainv = np.linalg.inv(Anp)
     Anp_original = Anp.copy()
 
-    # computation of determinant is correct
+    # computation of matrix inverse is correct
     A = sw.SweepMatrix(Anp)
     A.sweep()
     assert np.allclose(A.A, -Ainv)
 
+    # if sweeping only upper triangle, answer is correct
+    A2 = sw.SweepMatrix(Anp_original.copy())
+    A2.sweep(symmetrize=False)
+    rows, cols = np.triu_indices(p)
+    assert np.allclose(A2.A[rows, cols], A.A[rows, cols])
+
     # unsweeping restores original 
     A.sweep(inv=True)
+    A2.sweep(inv=True, symmetrize=False)
     assert np.allclose(A.A, Anp_original)
+    assert np.allclose(A2.A, Anp_original)
 
 def test_isposdef(): 
     Anp = random_symmetric_matrix(100, eigmin=0.000000001) # this is pd

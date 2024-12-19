@@ -65,7 +65,9 @@ class SweepMatrix:
         if Akk == 0:
             raise ZeroDivisionError("A diagonal is exactly 0.")
 
-        np.copyto(self.storage, self.A[k, :])
+        # store kth row before sweeping (only read from upper triangle of A)
+        np.copyto(self.storage[0:k], self.A[0:k, k])
+        np.copyto(self.storage[k:], self.A[k, k:])
         # in-place update A = -1/Akk * storage * storage' (upper triangular only)
         dsyrk(-Akkinv, self.storage, beta=1.0, c=self.A, lower=0, overwrite_c=1)
         # update kth row/col (upper triangle part only)
