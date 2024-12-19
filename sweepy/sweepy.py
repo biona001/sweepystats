@@ -55,8 +55,11 @@ class SweepMatrix:
     def __setitem__(self, key, value):
         self.A[key] = value
 
+    def __repr__(self):
+        return f"SweepMatrix({repr(self.A)})"
+
     def __str__(self):
-        return str(self.A)
+        return f"SweepMatrix with array:\n{self.A}"
 
     def sweep_k(self, k, inv=False, symmetrize=True):
         """Sweeps on the kth row/column, returns A[k, k] before it is swept."""
