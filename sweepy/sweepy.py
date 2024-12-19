@@ -1,16 +1,27 @@
 import numpy as np
+from scipy.linalg.blas import dsyrk
 from tqdm import tqdm
 
 class SweepMatrix:
-    def __init__(self, A: np.ndarray):
+    """
+    Thin wrapper over a numpy array. The original array will not be copied 
+    if it is a double-precision 2D array stored in column-major (Fortran-style).
+    """
+    def __init__(self, A: np.ndarray, storage: np.ndarray = None):
         if not isinstance(A, np.ndarray):
             raise TypeError("Input must be a NumPy array.")
         if A.shape[0] != A.shape[1] or not np.allclose(A, A.T):
             raise TypeError("Input array must be symmetric Numpy array.")
-        if A.dtype != 'float64':
-            self.A = np.array(A, dtype=np.float64)
+        if A.dtype != 'float64' or not A.flags["F_CONTIGUOUS"]:
+            self.A = np.array(A, dtype=np.float64, order='F')
         else:
             self.A = A
+        if storage is None:
+            self.storage = np.zeros(A.shape[0], dtype=np.float64)
+        else:
+            if len(storage) != A.shape[0]:
+                raise ValueError("Storage must be numpy vector with length equal to the side length of A.")
+            self.storage = storage
 
     @property
     def size(self):
@@ -53,21 +64,22 @@ class SweepMatrix:
         if k < 0 or k >= p:
             raise ValueError("Index k is out of bounds.")
         Akk = self.A[k, k]
+        Akkinv = 1 / Akk
         if Akk == 0:
             raise ZeroDivisionError("A diagonal is exactly 0.")
 
-        # elements not in kth row/col
-        for i in range(p):
-            for j in range(p):
-                if i != k and j != k:
-                    self.A[i, j] -= self.A[i, k] * self.A[k, j] / Akk
-
-        # kth row and col
-        for i in range(p):
-            if i != k:
-                self.A[i, k] /= Akk * (-1) ** inv
-                self.A[k, i] = self.A[i, k]
-        self.A[k, k] = -1 / Akk
+        np.copyto(self.storage, self.A[k, :])
+        # in-place update A = -1/Akk * storage * storage' (upper triangular only)
+        dsyrk(-Akkinv, self.storage, beta=1.0, c=self.A, lower=0, overwrite_c=1)
+        # update kth row/col (upper triangle part only)
+        self.storage *= Akkinv * (-1) ** inv
+        np.copyto(self.A[0:k+1, k], self.storage[0:k+1]) #k-th col
+        np.copyto(self.A[k, k:], self.storage[k:]) #k-th row
+        # Akk
+        self.A[k, k] = -Akkinv
+        # symmetrize
+        rows, cols = np.triu_indices(p, k=1)
+        self.A[cols, rows] = self.A[rows, cols]
 
         return Akk
 

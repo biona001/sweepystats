@@ -10,12 +10,12 @@ def random_symmetric_matrix(n, eigmin=float('-inf')):
         eval, evec = np.linalg.eig(A)
         eval[np.where(eval < 0)[0]] = eigmin
         A = evec * np.diag(eval) * evec.T
-    return A
+    return np.array(A, order='F')
 
 def test_SweepMatrix_views_numpy_float64():
     A_numpy = np.array([[1., 2, 3],
                         [2, 5, 6],
-                        [3, 6, 9]])
+                        [3, 6, 9]], order='F')
     A = sw.SweepMatrix(A_numpy)
     A[0, 0] = 2
     assert A[0, 0] == 2
@@ -24,7 +24,7 @@ def test_SweepMatrix_views_numpy_float64():
 def test_SweepMatrix_copies_numpy_non_float64():
     A_numpy = np.array([[1, 2, 3],
                         [2, 5, 6],
-                        [3, 6, 9]])
+                        [3, 6, 9]], order='F')
     A = sw.SweepMatrix(A_numpy)
     A[0, 0] = 2
     assert A[0, 0] == 2
@@ -42,7 +42,7 @@ def test_SweepMatrix_throws_error():
 
 def test_sweep_kth_diagonal():
     A = sw.SweepMatrix(np.array([[4, 3],
-                                 [3, 2]]))
+                                 [3, 2]], order='F'))
     Ainv = np.linalg.inv(np.array([[4, 3],
                                  [3, 2]]))
 
@@ -78,6 +78,7 @@ def test_unsweep_kth_diagonal():
 
 def test_sweep_general():
     Anp = random_symmetric_matrix(100)
+    Anp_inv = np.linalg.inv(Anp)
     Anp_det = np.linalg.det(Anp)
     Anp_original = Anp.copy()
 
@@ -85,10 +86,12 @@ def test_sweep_general():
     A = sw.SweepMatrix(Anp)
     Ainv = np.linalg.inv(Anp)
     det = A.det(restore=False)
-    assert np.allclose(A.A, -Ainv)
     assert np.allclose(det, Anp_det, atol=1e-8)
 
-    # restoration by unsweeping
+    # matrix inverse is correct
+    assert np.allclose(A.A, -Ainv)
+
+    # unsweeping restores original 
     A.sweep(inv=True)
     assert np.allclose(A.A, Anp_original)
 
