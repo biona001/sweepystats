@@ -7,21 +7,24 @@ class SweepMatrix:
     Thin wrapper over a numpy array. The original array will not be copied 
     if it is a double-precision 2D array stored in column-major (Fortran-style).
     """
-    def __init__(self, A: np.ndarray, storage: np.ndarray = None):
+    def __init__(self, A, storage = None):
         if not isinstance(A, np.ndarray):
-            raise TypeError("Input must be a NumPy array.")
-        if A.shape[0] != A.shape[1] or not np.allclose(A, A.T):
-            raise TypeError("Input array must be symmetric Numpy array.")
-        if A.dtype != 'float64' or not A.flags["F_CONTIGUOUS"]:
+            self.A = np.array(A, dtype=np.float64, order='F')
+        elif A.dtype != 'float64' or not A.flags["F_CONTIGUOUS"]:
             self.A = np.array(A, dtype=np.float64, order='F')
         else:
             self.A = A
+        if self.A.shape[0] != self.A.shape[1] or not np.allclose(self.A, self.A.T):
+            raise TypeError("Input array must be symmetric.")
         if storage is None:
-            self.storage = np.zeros(A.shape[0], dtype=np.float64)
+            self.storage = np.zeros(self.A.shape[0], dtype=np.float64)
         else:
-            if len(storage) != A.shape[0]:
+            if len(storage) != self.A.shape[0]:
                 raise ValueError("Storage must be numpy vector with length equal to the side length of A.")
-            self.storage = storage
+            elif not isinstance(storage, np.ndarray) or storage.dtype != 'float64':
+                self.storage = np.zeros(A.shape[0], dtype=np.float64)
+            else:
+                self.storage = storage
 
     @property
     def size(self):
@@ -61,9 +64,9 @@ class SweepMatrix:
         if k < 0 or k >= p:
             raise ValueError("Index k is out of bounds.")
         Akk = self.A[k, k]
-        Akkinv = 1 / Akk
         if Akk == 0:
             raise ZeroDivisionError("A diagonal is exactly 0.")
+        Akkinv = 1 / Akk
 
         # store kth row before sweeping (only read from upper triangle of A)
         np.copyto(self.storage[0:k], self.A[0:k, k])

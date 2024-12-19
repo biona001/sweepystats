@@ -35,10 +35,11 @@ def test_SweepMatrix_throws_error():
     with pytest.raises(TypeError):
         sw.SweepMatrix(np.array([[1, 3],
                                  [2, 5]]))
-    # division by 0
-    with pytest.raises(TypeError):
-        sw.SweepMatrix(np.array([[0, 3],
-                                 [2, 5]]))
+    # Cannot sweep if diagonal contains exact 0
+    with pytest.raises(ZeroDivisionError):
+        A = sw.SweepMatrix(np.array([[0, 3],
+                                 [3, 5]]))
+        A.sweep()
 
 def test_sweep_kth_diagonal():
     A = sw.SweepMatrix(np.array([[4, 3],
@@ -134,3 +135,11 @@ def test_isposdef():
     pd = A.isposdef(sw.SweepMatrix(Anp))
     assert pd == all(evals > 0) == False
     assert np.allclose(A.A, Anp_original)
+
+def test_not_numpy_inputs():
+    A = sw.SweepMatrix([[4, 3],
+                        [3, 2]])
+    Ainv = np.linalg.inv([[4, 3],
+                          [3, 2]])
+    A.sweep()
+    assert np.allclose(A.A, -Ainv)
