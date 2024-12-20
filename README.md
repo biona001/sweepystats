@@ -1,6 +1,10 @@
 # sweepy
 
-`sweepy` is a python package for performing the statistical [sweep operation](https://hua-zhou.github.io/teaching/biostatm280-2017spring/slides/11-sweep/sweep.html) on symmetric `numpy` matrices. The class `SweepMatrix` is a thin wrapper over numpy `darray`s that can be swept forward or backwards. 
+`sweepy` is a python package for performing the statistical [sweep operation](https://hua-zhou.github.io/teaching/biostatm280-2017spring/slides/11-sweep/sweep.html) on `numpy` matrices. The class `SweepMatrix` is a thin wrapper over numpy `darray`s that can be swept forward or backwards. 
+
+:warning: **This is my hobby project during Christmas 2024. Use at your own risk!** :warning:
+
+## Features
 
 The following operations are supported **in-place** and **allocation-free**:
 
@@ -27,14 +31,14 @@ The following operations are supported **in-place** and **allocation-free**:
 + [Blog post by SAS](https://blogs.sas.com/content/iml/2018/04/18/sweep-operator-sas.html)
 
 ## TODO
-+ Ensure 0 allocation
 + CI
 + Docs
 + PyPI
 + Number of download badge
-+ Linear Regression
-+ BLAS
++ Stepwise regression
++ Conditional formulas for MVN
++ MANOVA
 + Support single precision and complex
-+ Timing comparison with LAPACK
-+ Recursive tiling
++ Benchmarks, e.g. timing comparison with `np.inv()` and `np.linalg.lstsq()`
++ Recursive tiling, see https://github.com/joshday/SweepOperator.jl/issues/9
 + Blog post
