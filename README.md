@@ -4,7 +4,13 @@
 
 `sweepystats` is a python package for performing the statistical [sweep operation](https://hua-zhou.github.io/teaching/biostatm280-2017spring/slides/11-sweep/sweep.html) on `numpy` matrices. The class `SweepMatrix` is a thin wrapper over numpy `darray`s that can be swept forward or backwards. 
 
+## Installation
+
 :warning: **This is my hobby project during Christmas 2024. Use at your own risk!** :warning:
+
+```shell
+pip3 install sweepystats
+```
 
 ## Features
 
