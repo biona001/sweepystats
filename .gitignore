@@ -1,6 +1,6 @@
 .DS_Store
-sweepy.egg-info
-sweepy/__pycache__
+sweepystats.egg-info
+sweepystats/__pycache__
 *.pyc
 build*
 dist*

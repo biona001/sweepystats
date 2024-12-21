@@ -1,6 +1,6 @@
 [project]
 name = "sweepystats"
-version = "0.0.1"
+version = "0.0.2"
 authors = [
   { name="Benjamin Chu", email="benchu99@hotmail.com" },
 ]
@@ -18,4 +18,4 @@ Homepage = "https://github.com/biona001/sweepystats"
 Issues = "https://github.com/biona001/sweepystats/issues"
 
 [tool.setuptools]
-py-modules = []
+packages = ["sweepystats"]
