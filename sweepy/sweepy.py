@@ -67,8 +67,8 @@ class SweepMatrix:
         if k < 0 or k >= p:
             raise ValueError("Index k is out of bounds.")
         Akk = self.A[k, k]
-        if Akk == 0:
-            raise ZeroDivisionError("A diagonal is exactly 0.")
+        if np.abs(Akk) < 1e-14:
+            raise ZeroDivisionError(f"A diagonal is numerically 0: {np.abs(Akk):.2e}")
         Akkinv = 1 / Akk
 
         # store kth row before sweeping (only read from upper triangle of A)

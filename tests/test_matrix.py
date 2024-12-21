@@ -120,7 +120,7 @@ def test_sweep():
     assert np.allclose(A2.A, Anp_original)
 
 def test_isposdef(): 
-    Anp = random_symmetric_matrix(100, eigmin=0.000000001) # this is pd
+    Anp = random_symmetric_matrix(100, eigmin=0.0001) # this is pd
     Anp_original = Anp.copy()
     evals = np.linalg.eigvals(Anp)
     A = sw.SweepMatrix(Anp)

@@ -1,5 +1,6 @@
 import numpy as np
 import sweepy as sw
+import pytest
 
 def test_linreg():
     n, p = 5, 3
@@ -18,3 +19,13 @@ def test_linreg():
     assert np.allclose(ols.resid(), resid)       # residual
     assert np.allclose(ols.cov(), beta_cov)      # Var(beta hat)
     assert np.allclose(ols.coef_std(), beta_std) # std of beta hat
+
+def test_high_dimensional():
+    n, p = 5, 10
+    X = np.random.rand(n, p)
+    y = np.random.rand(n)
+    ols = sw.LinearRegression(X, y)
+
+    # X'X is singular, so there must be 1 eigenvalue that is 0
+    with pytest.raises(ZeroDivisionError):
+        ols.fit()
