@@ -1,4 +1,4 @@
-import sweepy as sw
+import sweepystats as sw
 import numpy as np
 import pytest
 

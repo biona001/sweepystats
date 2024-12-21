@@ -1,5 +1,5 @@
 [project]
-name = "sweepy"
+name = "sweepystats"
 version = "0.0.1"
 authors = [
   { name="Benjamin Chu", email="benchu99@hotmail.com" },
@@ -14,8 +14,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/biona001/sweepy"
-Issues = "https://github.com/biona001/sweepy/issues"
+Homepage = "https://github.com/biona001/sweepystats"
+Issues = "https://github.com/biona001/sweepystats/issues"
 
 [tool.setuptools]
 py-modules = []

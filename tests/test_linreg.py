@@ -1,5 +1,5 @@
 import numpy as np
-import sweepy as sw
+import sweepystats as sw
 import pytest
 
 def test_linreg():
