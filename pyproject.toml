@@ -17,5 +17,9 @@ classifiers = [
 Homepage = "https://github.com/biona001/sweepystats"
 Issues = "https://github.com/biona001/sweepystats/issues"
 
+[project.dependencies]
+numpy = ">=1.20.0"
+pytest = ">=7.0.0"
+
 [tool.setuptools]
 packages = ["sweepystats"]

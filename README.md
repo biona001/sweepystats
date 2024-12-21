@@ -9,7 +9,7 @@
 :warning: **This is my hobby project during Christmas 2024. Use at your own risk!** :warning:
 
 ```shell
-pip3 install sweepystats
+pip install sweepystats
 ```
 
 ## Features
