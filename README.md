@@ -2,6 +2,9 @@
 
 *Because sweepy was taken*
 
+[![build Actions Status](https://github.com/biona001/sweepystats/actions/workflows/CI.yml/badge.svg)](https://github.com/biona001/sweepystats/actions)
+[![codecov](https://codecov.io/gh/biona001/sweepystats/graph/badge.svg?token=UJJX0JCVKK)](https://codecov.io/gh/biona001/sweepystats)
+
 `sweepystats` is a python package for performing the statistical [sweep operation](https://hua-zhou.github.io/teaching/biostatm280-2017spring/slides/11-sweep/sweep.html) on `numpy` matrices. The class `SweepMatrix` is a thin wrapper over numpy `darray`s that can be swept forward or backwards. 
 
 ## Installation
