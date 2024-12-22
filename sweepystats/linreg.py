@@ -40,7 +40,7 @@ class LinearRegression:
         if not self.fitted:
             self.fit(verbose=verbose)
         return self.A[0:self.p, -1].copy()
-    
+
     def coef_std(self, verbose=True):
         """Standard deviation of the fitted coefficient values"""
         if not self.fitted:
@@ -67,3 +67,12 @@ class LinearRegression:
         if not self.fitted:
             self.fit(verbose=verbose)
         return -self.sigma2() * self.A[0:-1, 0:-1].copy()
+
+    def R2(self, verbose=True):
+        """Computes the R2 (coefficient of determination) of fit"""
+        ybar = np.mean(self.y)
+        ss_tot = np.sum((self.y - ybar) ** 2)
+        if not self.fitted:
+            self.fit(verbose=verbose)
+        ss_res = self.resid()
+        return 1 - ss_res / ss_tot
