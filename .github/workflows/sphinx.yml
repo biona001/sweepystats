@@ -15,6 +15,10 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: "3.x"
+    - name: Install pandoc
+      run: |
+        sudo wget https://github.com/jgm/pandoc/releases/download/3.1.8/pandoc-3.1.8-1-amd64.deb -O /tmp/pandoc-3.1.8-1-amd64.deb
+        sudo dpkg -i /tmp/pandoc-3.1.8-1-amd64.deb
     - name: Build HTML
       run: |
         python -m pip install --upgrade pip
