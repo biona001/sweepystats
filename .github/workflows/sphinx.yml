@@ -28,7 +28,7 @@ jobs:
         git checkout gh-pages
         git merge master -Xtheirs --allow-unrelated-histories # keeps main changes over gh-pages
         cd docs
-        rm -rf _images _sources _static .doctrees generated notebooks *.html *.inv *.js .buildinfo
+        rm -rf _images _sources .doctrees generated notebooks *.html *.inv *.js .buildinfo
         cd ..
         sphinx-build -b html docs/ docs/_build/html
         cp -r docs/_build/html/* docs
