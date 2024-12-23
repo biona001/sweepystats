@@ -1,0 +1,445 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "0ad30cf6-a99f-4f99-ba40-0df722cc0a07",
+   "metadata": {},
+   "source": [
+    "# Getting started"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "e5ff51c5-65af-427b-9e1c-ee26eadfdc1e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import sweepystats as sw\n",
+    "import numpy as np\n",
+    "\n",
+    "def random_symmetric_matrix(n, eigmin=float('-inf')):\n",
+    "    \"\"\"\n",
+    "    Simulates an column-major double-precision\n",
+    "    n*n symmetric matrix with minimum eigenvalue `eigmin`\n",
+    "    \"\"\"\n",
+    "    A = np.random.rand(n, n)\n",
+    "    A = 0.5 * (A + A.T)\n",
+    "    # force eigenvalues to be >= eigmin\n",
+    "    if eigmin > float('-inf'):\n",
+    "        eval, evec = np.linalg.eig(A)\n",
+    "        eval[np.where(eval < 0)[0]] = eigmin\n",
+    "        A = evec * np.diag(eval) * evec.T\n",
+    "    # convert to column major\n",
+    "    return np.array(A, order='F')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8f442e38-3232-4737-85b5-deddb8934844",
+   "metadata": {},
+   "source": [
+    "## The `SweepMatrix` class\n",
+    "\n",
+    "`SweepMatrix` is a thin wrapper over numpy `darray`s. The input must be a symmetric matrix. We convert all matrices into double-precision numpy arrays with column-major order. **No data is copied** if the input is already in this format. The latter requirement is because the sweeping operation is blessed by level-3 BLAS, which we call internally. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "id": "403b4669-e187-4329-8e60-c3db093f9523",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "SweepMatrix(array([[1., 2., 3.],\n",
+       "       [2., 5., 6.],\n",
+       "       [3., 6., 9.]]))"
+      ]
+     },
+     "execution_count": 22,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# intantiate a SweepMatrix from symmetric input\n",
+    "A_numpy = np.array([[1., 2, 3],\n",
+    "                    [2, 5, 6],\n",
+    "                    [3, 6, 9]], order='F') # order = 'F' implies data is stored in column-major format\n",
+    "A = sw.SweepMatrix(A_numpy)\n",
+    "A"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "8da6f9e7-4ec3-4f2c-84c2-bd0ba176b884",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[10.,  2.,  3.],\n",
+       "       [ 2.,  5.,  6.],\n",
+       "       [ 3.,  6.,  9.]])"
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# modifying entries of A also changes the original\n",
+    "A[0, 0] = 10\n",
+    "A_numpy"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f39ef14c-ae31-4fcd-824f-f6331c70ed27",
+   "metadata": {},
+   "source": [
+    "A `SweepMatrix` can be swept forward and backwards:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "id": "4fd818e0-03d6-4285-9b66-087b75b83011",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "SweepMatrix(array([[-1.11111111e-01, -4.85722573e-17,  3.70370370e-02],\n",
+       "       [-4.85722573e-17, -1.00000000e+00,  6.66666667e-01],\n",
+       "       [ 3.70370370e-02,  6.66666667e-01, -5.67901235e-01]]))"
+      ]
+     },
+     "execution_count": 24,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "A.sweep(verbose=False) # forward sweep through all diagonal entries of A\n",
+    "A"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "id": "aef08fa9-4ec5-4fd7-bd30-967395f02d9e",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "SweepMatrix(array([[10.,  2.,  3.],\n",
+       "       [ 2.,  5.,  6.],\n",
+       "       [ 3.,  6.,  9.]]))"
+      ]
+     },
+     "execution_count": 25,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "A.sweep(inv=True, verbose=False) # inverse sweep recovers the original data\n",
+    "A"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3e1b96aa-31fa-473e-a237-afa1d10e00d3",
+   "metadata": {},
+   "source": [
+    "We can also sweep a on the `k`th diagonal element"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "id": "94076c9e-e236-472e-a958-fe4e35a01c56",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "SweepMatrix(array([[ 9.2,  0.4,  0.6],\n",
+       "       [ 0.4, -0.2,  1.2],\n",
+       "       [ 0.6,  1.2,  1.8]]))"
+      ]
+     },
+     "execution_count": 26,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "A.sweep_k(1) # sweep the kth diagonal\n",
+    "A"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "id": "34f3fec0-19fd-4441-91f4-4c563d6bb14a",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "SweepMatrix(array([[10.,  2.,  3.],\n",
+       "       [ 2.,  5.,  6.],\n",
+       "       [ 3.,  6.,  9.]]))"
+      ]
+     },
+     "execution_count": 27,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "A.sweep_k(1, inv=True) # unweep the kth diagonal\n",
+    "A"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "56331387-f90a-4204-a299-95d0da1610a2",
+   "metadata": {},
+   "source": [
+    "Because the sweep operation divides the `k`th row/column of A by `Akk`, the diagonal entry **cannot be 0** (exactly or numerically). "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f7259e17-4ebc-4512-a039-2ed418dc1de9",
+   "metadata": {},
+   "source": [
+    "## Numerical linear algebra\n",
+    "\n",
+    "The following operations are supported **in-place** and **allocation-free**\n",
+    "+ Matrix inversion in $n^3$ flops. Recall that inversion by Cholesky costs $(5/3)n^3$ flops and needs to allocate a matrix of same size.\n",
+    "+ Computation of determinant\n",
+    "+ Check (strict) positive definiteness"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b14bbbb6-d917-4eb8-bbef-456900cfabc5",
+   "metadata": {},
+   "source": [
+    "Matrix inverse:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "d1032c77-98ab-426a-8a92-e95dd7fcec41",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "100%|██████████████████████████████████████████████| 100/100 [00:00<00:00, 3924.02it/s]\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# A.sweep() converts A.A into -inv(A.A)\n",
+    "data = random_symmetric_matrix(100)\n",
+    "Ainv = np.linalg.inv(data)\n",
+    "A = sw.SweepMatrix(data)\n",
+    "A.sweep()\n",
+    "np.allclose(A.A, -Ainv) # check answer is correct"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e2029852-192d-4c58-b266-ae3a2423d55b",
+   "metadata": {},
+   "source": [
+    "Determinants:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "425a1ebb-7fd6-4007-8d10-6fe1b741fe52",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "100%|█████████████████████████████████████████████| 100/100 [00:00<00:00, 92917.68it/s]\n",
+      "100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 124867.64it/s]\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Determinants is computed by A.det(). Original matrix is untouched by default. \n",
+    "data = random_symmetric_matrix(100)\n",
+    "Adet = np.linalg.det(data)\n",
+    "A = sw.SweepMatrix(data)\n",
+    "np.allclose(A.det(restore=True), Adet) # check answer is correct"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7d52c083-d4a0-445d-852b-0e80991c9392",
+   "metadata": {},
+   "source": [
+    "`det` can return exactly 0 if matrix have 0 as eigenvalu"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "b31e90b2-01e7-41d4-87e6-6b3af5a3c142",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 18,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# det can return exactly 0 if matrix have 0 as eigenvalue\n",
+    "data = random_symmetric_matrix(100, eigmin=0.0)\n",
+    "data_original = data.copy()\n",
+    "Adet = np.linalg.det(data)\n",
+    "A = sw.SweepMatrix(data)\n",
+    "A.det(verbose=False) == 0.0"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "48bff139-6a3f-4eb5-8330-d7c259971dca",
+   "metadata": {},
+   "source": [
+    "Check positive definiteness:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "b168cc31-e08e-44c9-93c1-384f20bdc8b7",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 15,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "A = sw.SweepMatrix(random_symmetric_matrix(100, eigmin=0.0001)) # this is PD\n",
+    "A.isposdef(verbose=False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "f2173026-5746-4f6c-8ca0-62e2a1d880f2",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "False"
+      ]
+     },
+     "execution_count": 16,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "A = sw.SweepMatrix(random_symmetric_matrix(100, eigmin=-10)) # this has negative eigenvalues, should return false\n",
+    "A.isposdef(verbose=False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "11bcfcb6-7003-4dec-a587-b6c50d6ce56b",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "False"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "A = sw.SweepMatrix(random_symmetric_matrix(100, eigmin=0.0)) # this is PSD, should return false\n",
+    "A.isposdef(verbose=False)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
