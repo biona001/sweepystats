@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../" data-theme="bright">
+<html lang="en" data-content_root="../../" data-theme="bright">
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>User Guide &#8212; sweepystats 0.0.5 documentation</title>
+    <title>Numerical linear algebra &#8212; sweepystats 0.0.5 documentation</title>
   
   
   
@@ -27,31 +27,32 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=f0c89327" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/numpy.css?v=98b50ac4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=f0c89327" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <link rel="stylesheet" type="text/css" href="../../_static/numpy.css?v=98b50ac4" />
   
   <!-- So that users can add custom icons -->
-  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=d45e8c67"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/index';</script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Getting started" href="notebooks/sweepy.html" />
-    <link rel="prev" title="Sweepystats documentation" href="../index.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/notebooks/linalg';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Linear Regression" href="linreg.html" />
+    <link rel="prev" title="Getting started" href="sweepy.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.0.5" />
@@ -73,7 +74,7 @@
   <dialog id="pst-search-dialog">
     
 <form class="bd-search d-flex align-items-center"
-      action="../search.html"
+      action="../../search.html"
       method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
   <input type="search"
@@ -109,7 +110,7 @@
     
   
 
-<a class="navbar-brand logo" href="../index.html">
+<a class="navbar-brand logo" href="../../index.html">
   
   
   
@@ -131,14 +132,14 @@
   <ul class="bd-navbar-elements navbar-nav">
     
 <li class="nav-item current active">
-  <a class="nav-link nav-internal" href="#">
+  <a class="nav-link nav-internal" href="../index.html">
     User Guide
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../api_reference/index.html">
+  <a class="nav-link nav-internal" href="../../api_reference/index.html">
     API Reference
   </a>
 </li>
@@ -233,14 +234,14 @@
   <ul class="bd-navbar-elements navbar-nav">
     
 <li class="nav-item current active">
-  <a class="nav-link nav-internal" href="#">
+  <a class="nav-link nav-internal" href="../index.html">
     User Guide
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../api_reference/index.html">
+  <a class="nav-link nav-internal" href="../../api_reference/index.html">
     API Reference
   </a>
 </li>
@@ -288,10 +289,10 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="notebooks/sweepy.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebooks/linalg.html">Numerical linear algebra</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebooks/linreg.html">Linear Regression</a></li>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="sweepy.html">Getting started</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Numerical linear algebra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linreg.html">Linear Regression</a></li>
 </ul>
 </div>
 </nav></div>
@@ -328,11 +329,14 @@
   <ul class="bd-breadcrumbs">
     
     <li class="breadcrumb-item breadcrumb-home">
-      <a href="../index.html" class="nav-link" aria-label="Home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">User Guide</span></li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Numerical linear algebra</span></li>
   </ul>
 </nav>
 </div>
@@ -349,20 +353,149 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="user-guide">
-<h1>User Guide<a class="headerlink" href="#user-guide" title="Link to this heading">#</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="notebooks/sweepy.html">Getting started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/sweepy.html#The-SweepMatrix-class">The <code class="docutils literal notranslate"><span class="pre">SweepMatrix</span></code> class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="notebooks/linalg.html">Numerical linear algebra</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebooks/linreg.html">Linear Regression</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/linreg.html#Comparison-with-numpy">Comparison with <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
-</ul>
-</li>
-</ul>
+  <section id="Numerical-linear-algebra">
+<h1>Numerical linear algebra<a class="headerlink" href="#Numerical-linear-algebra" title="Link to this heading">#</a></h1>
+<p>The following operations are supported <strong>in-place</strong> and <strong>allocation-free</strong> + Matrix inversion in <span class="math notranslate nohighlight">\(n^3\)</span> flops. Recall that inversion by Cholesky costs <span class="math notranslate nohighlight">\((5/3)n^3\)</span> flops and needs to allocate a matrix of same size. + Computation of determinant + Check (strict) positive definiteness</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import sweepystats as sw
+import numpy as np
+
+def random_symmetric_matrix(n, eigmin=float(&#39;-inf&#39;)):
+    &quot;&quot;&quot;
+    Simulates an column-major double-precision
+    n*n symmetric matrix with minimum eigenvalue `eigmin`
+    &quot;&quot;&quot;
+    A = np.random.rand(n, n)
+    A = 0.5 * (A + A.T)
+    # force eigenvalues to be &gt;= eigmin
+    if eigmin &gt; float(&#39;-inf&#39;):
+        eval, evec = np.linalg.eig(A)
+        eval[np.where(eval &lt; 0)[0]] = eigmin
+        A = evec * np.diag(eval) * evec.T
+    # convert to column major
+    return np.array(A, order=&#39;F&#39;)
+</pre></div>
+</div>
+</div>
+<p>Matrix inverse:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># A.sweep() converts A.A into -inv(A.A)
+data = random_symmetric_matrix(100)
+Ainv = np.linalg.inv(data)
+A = sw.SweepMatrix(data)
+A.sweep()
+np.allclose(A.A, -Ainv) # check answer is correct
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|████████████████████████████████████████████| 100/100 [00:00&lt;00:00, 12265.48it/s]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<p>Determinants:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Determinants is computed by A.det(). Original matrix is untouched by default.
+data = random_symmetric_matrix(100)
+Adet = np.linalg.det(data)
+A = sw.SweepMatrix(data)
+np.allclose(A.det(restore=True), Adet) # check answer is correct
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|███████████████████████████████████████████| 100/100 [00:00&lt;00:00, 145383.15it/s]
+100%|███████████████████████████████████████████| 100/100 [00:00&lt;00:00, 131277.12it/s]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<p>Check positive definiteness:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>A = sw.SweepMatrix(random_symmetric_matrix(100, eigmin=0.0001)) # this is PD
+A.isposdef(verbose=False)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>A = sw.SweepMatrix(random_symmetric_matrix(100, eigmin=-10)) # this has negative eigenvalues, should return false
+A.isposdef(verbose=False)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+False
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>A = sw.SweepMatrix(random_symmetric_matrix(100, eigmin=0.0)) # this is PSD, should return false
+A.isposdef(verbose=False)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+False
+</pre></div></div>
 </div>
 </section>
 
@@ -377,20 +510,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../index.html"
+       href="sweepy.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Sweepystats documentation</p>
+        <p class="prev-next-title">Getting started</p>
       </div>
     </a>
     <a class="right-next"
-       href="notebooks/sweepy.html"
+       href="linreg.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Getting started</p>
+        <p class="prev-next-title">Linear Regression</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -409,7 +542,7 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/user_guide/index.rst.txt"
+      <li><a href="../../_sources/user_guide/notebooks/linalg.ipynb.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div></div>
@@ -427,8 +560,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
