@@ -113,8 +113,9 @@ class SweepMatrix:
             else:
                 det = 0
                 break
-        for k in tqdm(range(swept_until), disable = not verbose):
-            self.sweep_k(k, inv=True, symmetrize=False)
+        if restore:
+            for k in tqdm(range(swept_until), disable = not verbose):
+                self.sweep_k(k, inv=True, symmetrize=False)
         return det
 
     def isposdef(self, restore=True, verbose=True):
