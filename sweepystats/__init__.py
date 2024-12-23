@@ -1,4 +1,4 @@
-__version__ = "0.0.1"
+__version__ = "0.0.5"
 
 from .sweep_matrix import SweepMatrix
 from .linreg import LinearRegression

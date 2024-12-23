@@ -3,7 +3,7 @@ API Reference
 
 
 sweepystats.sweep_matrix
-----------
+------------------------
 
 
 .. currentmodule:: sweepystats.sweep_matrix
@@ -20,7 +20,7 @@ sweepystats.sweep_matrix
 
 
 sweepystats.linreg
---------------
+------------------
 
 .. currentmodule:: sweepystats.linreg
 
