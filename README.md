@@ -5,6 +5,11 @@
 [![Documentation](https://img.shields.io/badge/docs-latest-blue.svg)](https://biona001.github.io/sweepystats)
 [![build Actions Status](https://github.com/biona001/sweepystats/actions/workflows/CI.yml/badge.svg)](https://github.com/biona001/sweepystats/actions)
 [![codecov](https://codecov.io/gh/biona001/sweepystats/graph/badge.svg?token=UJJX0JCVKK)](https://codecov.io/gh/biona001/sweepystats)
+[![Downloads](https://static.pepy.tech/badge/sweepystats)](https://pepy.tech/project/sweepystats)
+[![Downloads](https://static.pepy.tech/badge/sweepystats/month)](https://pepy.tech/project/sweepystats)
+![versions](https://img.shields.io/pypi/pyversions/adelie.svg)
+![PyPI - Version](https://img.shields.io/pypi/v/sweepystats)
+![GitHub Release](https://img.shields.io/github/v/release/biona001/sweepystats)
 
 `Sweepystats` is a python package for performing the statistical [sweep operation](https://hua-zhou.github.io/teaching/biostatm280-2017spring/slides/11-sweep/sweep.html) on `numpy` matrices. See [documentation](https://biona001.github.io/sweepystats) for more details.
 
