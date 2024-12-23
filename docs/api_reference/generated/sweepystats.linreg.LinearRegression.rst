@@ -13,6 +13,7 @@
 
    .. autosummary::
    
+      ~LinearRegression.R2
       ~LinearRegression.__init__
       ~LinearRegression.coef
       ~LinearRegression.coef_std
