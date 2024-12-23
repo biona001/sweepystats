@@ -7,7 +7,7 @@
 [![codecov](https://codecov.io/gh/biona001/sweepystats/graph/badge.svg?token=UJJX0JCVKK)](https://codecov.io/gh/biona001/sweepystats)
 [![Downloads](https://static.pepy.tech/badge/sweepystats)](https://pepy.tech/project/sweepystats)
 [![Downloads](https://static.pepy.tech/badge/sweepystats/month)](https://pepy.tech/project/sweepystats)
-![versions](https://img.shields.io/pypi/pyversions/adelie.svg)
+![versions](https://img.shields.io/pypi/pyversions/sweepystats.svg)
 ![PyPI - Version](https://img.shields.io/pypi/v/sweepystats)
 ![GitHub Release](https://img.shields.io/github/v/release/biona001/sweepystats)
 
