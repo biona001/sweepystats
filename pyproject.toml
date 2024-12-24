@@ -1,6 +1,6 @@
 [project]
 name = "sweepystats"
-version = "0.0.5"
+version = "0.0.6"
 authors = [
   { name="Benjamin Chu", email="benchu99@hotmail.com" },
 ]
@@ -17,7 +17,8 @@ classifiers = [
 dependencies = [
   "numpy>=1.20",
   "scipy>=1.10.1",
-  "tqdm>=4.0"
+  "tqdm>=4.0",
+  "pandas>=1.0"
 ]
 
 [project.urls]
