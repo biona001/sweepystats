@@ -11,7 +11,10 @@
 ![PyPI - Version](https://img.shields.io/pypi/v/sweepystats)
 ![GitHub Release](https://img.shields.io/github/v/release/biona001/sweepystats)
 
-`Sweepystats` is a python package for performing the statistical [sweep operation](https://hua-zhou.github.io/teaching/biostatm280-2017spring/slides/11-sweep/sweep.html) on `numpy` matrices. See [documentation](https://biona001.github.io/sweepystats) for more details.
+`Sweepystats` is a python package for performing the statistical [sweep operation](https://hua-zhou.github.io/teaching/biostatm280-2017spring/slides/11-sweep/sweep.html) on `numpy` matrices. 
+
+> The sweep operator is perhaps the most versatile tool of all statistical operators that not only afford solutions to the normal equation and a gamut of additional statistics, but also allow complete insight into the nature of least squares. Once mastered, the general concepts of the sweep operator allow the whole least squares process to be visualized. 
+> -- James H. Goodnight (1978)
 
 ## Installation
 
@@ -51,11 +54,14 @@ The following operations are supported **in-place** and **allocation-free**:
 + [James Goodnight's awesome paper from 1978](https://www.jstor.org/stable/2683825)
 
 ## TODO
-+ Number of download badge
 + Stepwise regression
 + Conditional formulas for MVN
-+ MANOVA
-+ Support single precision and complex
++ ANOVA, ANCOVA, and MANOVA
++ 2-stage and 3-stage least squares
++ Partial correlation
++ GLMs
++ Generalized (pseudo-) inverses
++ Cholesky decomposition
 + Benchmarks, e.g. timing comparison with `np.inv()` and `np.linalg.lstsq()`
 + Recursive tiling, see https://github.com/joshday/SweepOperator.jl/issues/9
 + Blog post
