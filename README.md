@@ -14,7 +14,7 @@
 `Sweepystats` is a python package for performing the statistical [sweep operation](https://hua-zhou.github.io/teaching/biostatm280-2017spring/slides/11-sweep/sweep.html) on `numpy` matrices. 
 
 > The sweep operator is perhaps the most versatile tool of all statistical operators that not only afford solutions to the normal equation and a gamut of additional statistics, but also allow complete insight into the nature of least squares. Once mastered, the general concepts of the sweep operator allow the whole least squares process to be visualized. 
-> -- James H. Goodnight (1978)
+> -- James H. Goodnight (1979)
 
 ## Installation
 
@@ -39,7 +39,7 @@ The following operations are supported **in-place** and **allocation-free**:
 
 1. Git clone the repo
 2. Install `pytest` via `pip3 install pytest` if you haven't already
-3. Execute `pytest tests` in the top level directory of `sweepy`
+3. Execute `pytest tests` in the top level directory of `sweepystats`
 
 ## Related packages
 
