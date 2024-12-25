@@ -40,13 +40,12 @@ class ANOVA:
     def f_statistic(self):
         """Computes the F-statistic associated with the ANOVA model."""
         n, k = self.n, self.k # number of samples and groups
-        rss = self.ols.resid() # residual sum of squares
         yhat = np.matmul(self.X, self.ols.coef()) # predicted y
-        msb = np.dot(yhat, yhat) - (sum(self.y) ** 2) / k # between group variability
-        msw = self.ols.resid() / (n - k) # within-group variability
-        return msb / msw
+        ss_between = np.sum((yhat - np.mean(self.y)) ** 2) # between group sum of squares
+        ss_within = self.ols.resid() # within-group sum of squares
+        return (ss_between / (k - 1)) / (ss_within / (n - k))
 
-    def pvalue(self):
+    def p_value(self):
         n, k = self.n, self.k # number of samples and groups
         df1 = k - 1
         df2 = n - k
