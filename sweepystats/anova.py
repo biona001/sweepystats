@@ -42,8 +42,12 @@ class ANOVA:
         n, k = self.n, self.k # number of samples and groups
         yhat = np.matmul(self.X, self.ols.coef()) # predicted y
         ss_between = np.sum((yhat - np.mean(self.y)) ** 2) # between group sum of squares
-        ss_within = self.ols.resid() # within-group sum of squares
+        ss_within = self.sum_sq()
         return (ss_between / (k - 1)) / (ss_within / (n - k))
+
+    def sum_sq(self):
+        """Compuptes within-group sum of squares error"""
+        return self.ols.resid()
 
     def p_value(self):
         n, k = self.n, self.k # number of samples and groups
