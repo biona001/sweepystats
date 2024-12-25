@@ -2,6 +2,7 @@ import sweepystats as sw
 import numpy as np
 import pandas as pd
 import patsy
+from scipy.stats import f
 
 class ANOVA:
     """
@@ -20,6 +21,8 @@ class ANOVA:
         y, X = patsy.dmatrices(formula, df, return_type="dataframe")
         self.X = np.array(X, order='F', dtype=np.float64)
         self.y = np.array(y, dtype=np.float64).ravel()
+        self.n = self.X.shape[0]
+        self.p = self.X.shape[1]
 
         # number of groups
         k = len(X.design_info.column_names)
@@ -36,6 +39,15 @@ class ANOVA:
 
     def f_statistic(self):
         """Computes the F-statistic associated with the ANOVA model."""
+        n, k = self.n, self.k # number of samples and groups
         rss = self.ols.resid() # residual sum of squares
-        MSB = SSB / (k - 1)    # mean regression sum of squares
-        F = MSB / MSW
+        yhat = np.matmul(self.X, self.ols.coef()) # predicted y
+        msb = np.dot(yhat, yhat) - (sum(self.y) ** 2) / k # between group variability
+        msw = self.ols.resid() / (n - k) # within-group variability
+        return msb / msw
+
+    def pvalue(self):
+        n, k = self.n, self.k # number of samples and groups
+        df1 = k - 1
+        df2 = n - k
+        return f.sf(self.f_statistic(), df1, df2)
