@@ -31,7 +31,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pytest pytest-cov
-          pip install sweepystats
+          pip install -e .
 
       - name: Run tests
         run: |
