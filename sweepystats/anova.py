@@ -25,10 +25,7 @@ class ANOVA:
         self.p = self.X.shape[1]
 
         # number of groups
-        k = len(X.design_info.column_names)
-        if "Intercept" in X.design_info.column_names:
-            k -= 1
-        self.k = k
+        self.k = len(X.design_info.column_names)
 
         # initialize least squares instance
         self.ols = sw.LinearRegression(self.X, self.y)

@@ -12,7 +12,7 @@ def test_oneway():
         'Factor': pd.Categorical(["X", "X", "Y", "X", "Y", "Y", "X", "Y", "X"])
     })
 
-    formula = "Outcome ~ Group - 1" # don't include intercept to produce same answer as scipy
+    formula = "Outcome ~ Group"
     one_way = sw.ANOVA(data, formula)
     one_way.fit()
 
