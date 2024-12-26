@@ -27,6 +27,9 @@ Homepage = "https://github.com/biona001/sweepystats"
 Documentation = "https://biona001.github.io/sweepystats"
 Issues = "https://github.com/biona001/sweepystats/issues"
 
+[tool.poetry.dependencies]
+statsmodels = ">=0.13"
+
 [tool.setuptools]
 packages = ["sweepystats"]
 
