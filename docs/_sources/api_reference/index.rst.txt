@@ -22,3 +22,13 @@ sweepystats.linreg
     :toctree: generated/
 
     LinearRegression
+
+sweepystats.ANOVA
+------------------
+
+.. currentmodule:: sweepystats.anova
+
+.. autosummary::
+    :toctree: generated/
+
+    ANOVA

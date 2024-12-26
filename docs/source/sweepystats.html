@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>sweepystats package &#8212; sweepystats 0.0.5 documentation</title>
+    <title>sweepystats package &#8212; sweepystats 0.0.6 documentation</title>
   
   
   
@@ -50,7 +50,7 @@
     <link rel="search" title="Search" href="../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.0.5" />
+  <meta name="docsearch:version" content="0.0.6" />
   </head>
   
   
@@ -112,7 +112,7 @@
   
   
   
-    <p class="title logo__title">sweepystats 0.0.5 documentation</p>
+    <p class="title logo__title">sweepystats 0.0.6 documentation</p>
   
 </a></div>
     
@@ -361,7 +361,8 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="sweepystats.linreg.LinearRegression.coef">
 <span class="sig-name descname"><span class="pre">coef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.linreg.LinearRegression.coef" title="Link to this definition">#</a></dt>
-<dd><p>Fitted coefficient values (beta hat)</p>
+<dd><p>Fitted coefficient values (beta hat). Only returns the beta for
+variables that have been swept in.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -377,10 +378,27 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sweepystats.linreg.LinearRegression.exclude_k">
+<span class="sig-name descname"><span class="pre">exclude_k</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.linreg.LinearRegression.exclude_k" title="Link to this definition">#</a></dt>
+<dd><p>Exclude the <a href="#id1"><span class="problematic" id="id2">`</span></a>k`th variable in regression</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sweepystats.linreg.LinearRegression.fit">
 <span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.linreg.LinearRegression.fit" title="Link to this definition">#</a></dt>
-<dd><p>Perform least squares fitting by sweep operation</p>
+<dd><p>Perform least squares fitting by sweeping in all variables.</p>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sweepystats.linreg.LinearRegression.include_k">
+<span class="sig-name descname"><span class="pre">include_k</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.linreg.LinearRegression.include_k" title="Link to this definition">#</a></dt>
+<dd><p>Include the <a href="#id3"><span class="problematic" id="id4">`</span></a>k`th variable in regression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sweepystats.linreg.LinearRegression.is_fitted">
+<span class="sig-name descname"><span class="pre">is_fitted</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.linreg.LinearRegression.is_fitted" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sweepystats.linreg.LinearRegression.resid">
@@ -465,6 +483,42 @@ is read/swept. A progress bar is displayed unless <cite>verbose=False</cite>.</p
 <section id="module-sweepystats">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-sweepystats" title="Link to this heading">#</a></h2>
 <dl class="py class">
+<dt class="sig sig-object py" id="sweepystats.ANOVA">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sweepystats.</span></span><span class="sig-name descname"><span class="pre">ANOVA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formula</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.ANOVA" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to perform (k-way) ANOVA based on the sweep operation.</p>
+<p>Parameters:
++ <cite>df</cite>: A <cite>pandas</cite> dataframe containing the covariates and outcome. 
++ <cite>formula</cite>: A formula string to define the model, e.g.</p>
+<blockquote>
+<div><p>‘y ~ Group + Factor + Group:Factor’.</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="sweepystats.ANOVA.f_statistic">
+<span class="sig-name descname"><span class="pre">f_statistic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.ANOVA.f_statistic" title="Link to this definition">#</a></dt>
+<dd><p>Computes the F-statistic associated with the ANOVA model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sweepystats.ANOVA.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.ANOVA.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fit ANOVA model by sweep operation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sweepystats.ANOVA.p_value">
+<span class="sig-name descname"><span class="pre">p_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.ANOVA.p_value" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sweepystats.ANOVA.sum_sq">
+<span class="sig-name descname"><span class="pre">sum_sq</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.ANOVA.sum_sq" title="Link to this definition">#</a></dt>
+<dd><p>Compuptes within-group sum of squares error</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="sweepystats.LinearRegression">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sweepystats.</span></span><span class="sig-name descname"><span class="pre">LinearRegression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.LinearRegression" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
@@ -478,7 +532,8 @@ is read/swept. A progress bar is displayed unless <cite>verbose=False</cite>.</p
 <dl class="py method">
 <dt class="sig sig-object py" id="sweepystats.LinearRegression.coef">
 <span class="sig-name descname"><span class="pre">coef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.LinearRegression.coef" title="Link to this definition">#</a></dt>
-<dd><p>Fitted coefficient values (beta hat)</p>
+<dd><p>Fitted coefficient values (beta hat). Only returns the beta for
+variables that have been swept in.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -494,10 +549,27 @@ is read/swept. A progress bar is displayed unless <cite>verbose=False</cite>.</p
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sweepystats.LinearRegression.exclude_k">
+<span class="sig-name descname"><span class="pre">exclude_k</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.LinearRegression.exclude_k" title="Link to this definition">#</a></dt>
+<dd><p>Exclude the <a href="#id5"><span class="problematic" id="id6">`</span></a>k`th variable in regression</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sweepystats.LinearRegression.fit">
 <span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.LinearRegression.fit" title="Link to this definition">#</a></dt>
-<dd><p>Perform least squares fitting by sweep operation</p>
+<dd><p>Perform least squares fitting by sweeping in all variables.</p>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sweepystats.LinearRegression.include_k">
+<span class="sig-name descname"><span class="pre">include_k</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.LinearRegression.include_k" title="Link to this definition">#</a></dt>
+<dd><p>Include the <a href="#id7"><span class="problematic" id="id8">`</span></a>k`th variable in regression</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sweepystats.LinearRegression.is_fitted">
+<span class="sig-name descname"><span class="pre">is_fitted</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.LinearRegression.is_fitted" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sweepystats.LinearRegression.resid">
@@ -614,7 +686,10 @@ is read/swept. A progress bar is displayed unless <cite>verbose=False</cite>.</p
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.linreg.LinearRegression.coef"><code class="docutils literal notranslate"><span class="pre">LinearRegression.coef()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.linreg.LinearRegression.coef_std"><code class="docutils literal notranslate"><span class="pre">LinearRegression.coef_std()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.linreg.LinearRegression.cov"><code class="docutils literal notranslate"><span class="pre">LinearRegression.cov()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.linreg.LinearRegression.exclude_k"><code class="docutils literal notranslate"><span class="pre">LinearRegression.exclude_k()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.linreg.LinearRegression.fit"><code class="docutils literal notranslate"><span class="pre">LinearRegression.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.linreg.LinearRegression.include_k"><code class="docutils literal notranslate"><span class="pre">LinearRegression.include_k()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.linreg.LinearRegression.is_fitted"><code class="docutils literal notranslate"><span class="pre">LinearRegression.is_fitted()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.linreg.LinearRegression.resid"><code class="docutils literal notranslate"><span class="pre">LinearRegression.resid()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.linreg.LinearRegression.sigma2"><code class="docutils literal notranslate"><span class="pre">LinearRegression.sigma2()</span></code></a></li>
 </ul>
@@ -637,12 +712,22 @@ is read/swept. A progress bar is displayed unless <cite>verbose=False</cite>.</p
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-sweepystats">Module contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.ANOVA"><code class="docutils literal notranslate"><span class="pre">ANOVA</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.ANOVA.f_statistic"><code class="docutils literal notranslate"><span class="pre">ANOVA.f_statistic()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.ANOVA.fit"><code class="docutils literal notranslate"><span class="pre">ANOVA.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.ANOVA.p_value"><code class="docutils literal notranslate"><span class="pre">ANOVA.p_value()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.ANOVA.sum_sq"><code class="docutils literal notranslate"><span class="pre">ANOVA.sum_sq()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.LinearRegression"><code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.LinearRegression.R2"><code class="docutils literal notranslate"><span class="pre">LinearRegression.R2()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.LinearRegression.coef"><code class="docutils literal notranslate"><span class="pre">LinearRegression.coef()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.LinearRegression.coef_std"><code class="docutils literal notranslate"><span class="pre">LinearRegression.coef_std()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.LinearRegression.cov"><code class="docutils literal notranslate"><span class="pre">LinearRegression.cov()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.LinearRegression.exclude_k"><code class="docutils literal notranslate"><span class="pre">LinearRegression.exclude_k()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.LinearRegression.fit"><code class="docutils literal notranslate"><span class="pre">LinearRegression.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.LinearRegression.include_k"><code class="docutils literal notranslate"><span class="pre">LinearRegression.include_k()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.LinearRegression.is_fitted"><code class="docutils literal notranslate"><span class="pre">LinearRegression.is_fitted()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.LinearRegression.resid"><code class="docutils literal notranslate"><span class="pre">LinearRegression.resid()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.LinearRegression.sigma2"><code class="docutils literal notranslate"><span class="pre">LinearRegression.sigma2()</span></code></a></li>
 </ul>

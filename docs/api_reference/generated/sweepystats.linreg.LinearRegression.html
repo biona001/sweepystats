@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>sweepystats.linreg.LinearRegression &#8212; sweepystats 0.0.5 documentation</title>
+    <title>sweepystats.linreg.LinearRegression &#8212; sweepystats 0.0.6 documentation</title>
   
   
   
@@ -48,10 +48,11 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'api_reference/generated/sweepystats.linreg.LinearRegression';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="sweepystats.anova.ANOVA" href="sweepystats.anova.ANOVA.html" />
     <link rel="prev" title="sweepystats.sweep_matrix.SweepMatrix" href="sweepystats.sweep_matrix.SweepMatrix.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.0.5" />
+  <meta name="docsearch:version" content="0.0.6" />
   </head>
   
   
@@ -113,7 +114,7 @@
   
   
   
-    <p class="title logo__title">sweepystats 0.0.5 documentation</p>
+    <p class="title logo__title">sweepystats 0.0.6 documentation</p>
   
 </a></div>
     
@@ -291,6 +292,9 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">sweepystats.linreg.LinearRegression</a></li>
 </ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="sweepystats.anova.ANOVA.html">sweepystats.anova.ANOVA</a></li>
+</ul>
 </div>
 </nav></div>
     </div>
@@ -371,7 +375,7 @@
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.linreg.LinearRegression.coef" title="sweepystats.linreg.LinearRegression.coef"><code class="xref py py-obj docutils literal notranslate"><span class="pre">coef</span></code></a>([verbose])</p></td>
-<td><p>Fitted coefficient values (beta hat)</p></td>
+<td><p>Fitted coefficient values (beta hat).</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.linreg.LinearRegression.coef_std" title="sweepystats.linreg.LinearRegression.coef_std"><code class="xref py py-obj docutils literal notranslate"><span class="pre">coef_std</span></code></a>([verbose])</p></td>
 <td><p>Standard deviation of the fitted coefficient values</p></td>
@@ -379,13 +383,22 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.linreg.LinearRegression.cov" title="sweepystats.linreg.LinearRegression.cov"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cov</span></code></a>([verbose])</p></td>
 <td><p>Estimated variance-covariance of beta hat, i.e. Var(b) = sigma2 * inv(X'X).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.linreg.LinearRegression.fit" title="sweepystats.linreg.LinearRegression.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([verbose])</p></td>
-<td><p>Perform least squares fitting by sweep operation</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.linreg.LinearRegression.exclude_k" title="sweepystats.linreg.LinearRegression.exclude_k"><code class="xref py py-obj docutils literal notranslate"><span class="pre">exclude_k</span></code></a>(k[, force])</p></td>
+<td><p>Exclude the <a href="#id1"><span class="problematic" id="id2">`</span></a>k`th variable in regression</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.linreg.LinearRegression.resid" title="sweepystats.linreg.LinearRegression.resid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resid</span></code></a>([verbose])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.linreg.LinearRegression.fit" title="sweepystats.linreg.LinearRegression.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([verbose])</p></td>
+<td><p>Perform least squares fitting by sweeping in all variables.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.linreg.LinearRegression.include_k" title="sweepystats.linreg.LinearRegression.include_k"><code class="xref py py-obj docutils literal notranslate"><span class="pre">include_k</span></code></a>(k[, force])</p></td>
+<td><p>Include the <a href="#id3"><span class="problematic" id="id4">`</span></a>k`th variable in regression</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.linreg.LinearRegression.is_fitted" title="sweepystats.linreg.LinearRegression.is_fitted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_fitted</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.linreg.LinearRegression.resid" title="sweepystats.linreg.LinearRegression.resid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resid</span></code></a>([verbose])</p></td>
 <td><p>Estimate of residuals = ||y - yhat||^2</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.linreg.LinearRegression.sigma2" title="sweepystats.linreg.LinearRegression.sigma2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sigma2</span></code></a>([verbose])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.linreg.LinearRegression.sigma2" title="sweepystats.linreg.LinearRegression.sigma2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sigma2</span></code></a>([verbose])</p></td>
 <td><p>Estimate of sigma square.</p></td>
 </tr>
 </tbody>
@@ -413,6 +426,15 @@
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">sweepystats.sweep_matrix.SweepMatrix</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="sweepystats.anova.ANOVA.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">sweepystats.anova.ANOVA</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

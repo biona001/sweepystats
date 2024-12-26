@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Linear Regression &#8212; sweepystats 0.0.6 documentation</title>
+    <title>sweepystats.anova.ANOVA &#8212; sweepystats 0.0.6 documentation</title>
   
   
   
@@ -32,7 +32,6 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=f0c89327" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <link rel="stylesheet" type="text/css" href="../../_static/numpy.css?v=98b50ac4" />
   
   <!-- So that users can add custom icons -->
@@ -46,13 +45,10 @@
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/notebooks/linreg';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api_reference/generated/sweepystats.anova.ANOVA';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="ANOVA" href="anova.html" />
-    <link rel="prev" title="Numerical linear algebra" href="linalg.html" />
+    <link rel="prev" title="sweepystats.linreg.LinearRegression" href="sweepystats.linreg.LinearRegression.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.0.6" />
@@ -131,15 +127,15 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="../index.html">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
     User Guide
   </a>
 </li>
 
 
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../api_reference/index.html">
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
     API Reference
   </a>
 </li>
@@ -233,15 +229,15 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="../index.html">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../user_guide/index.html">
     User Guide
   </a>
 </li>
 
 
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../api_reference/index.html">
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
     API Reference
   </a>
 </li>
@@ -289,11 +285,14 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="sweepy.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="linalg.html">Numerical linear algebra</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Linear Regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="anova.html">ANOVA</a></li>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="sweepystats.sweep_matrix.SweepMatrix.html">sweepystats.sweep_matrix.SweepMatrix</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="sweepystats.linreg.LinearRegression.html">sweepystats.linreg.LinearRegression</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">sweepystats.anova.ANOVA</a></li>
 </ul>
 </div>
 </nav></div>
@@ -335,9 +334,9 @@
       </a>
     </li>
     
-    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">API Reference</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Linear Regression</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">sweepystats.anova.ANOVA</span></li>
   </ul>
 </nav>
 </div>
@@ -354,231 +353,46 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="Linear-Regression">
-<h1>Linear Regression<a class="headerlink" href="#Linear-Regression" title="Link to this heading">#</a></h1>
+  <section id="sweepystats-anova-anova">
+<h1>sweepystats.anova.ANOVA<a class="headerlink" href="#sweepystats-anova-anova" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="sweepystats.anova.ANOVA">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sweepystats.anova.</span></span><span class="sig-name descname"><span class="pre">ANOVA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formula</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.anova.ANOVA" title="Link to this definition">#</a></dt>
+<dd><p>A class to perform (k-way) ANOVA based on the sweep operation.</p>
+<p>Parameters:
++ <cite>df</cite>: A <cite>pandas</cite> dataframe containing the covariates and outcome. 
++ <cite>formula</cite>: A formula string to define the model, e.g.</p>
 <blockquote>
-<div><div class="line-block">
-<div class="line">The importance of the sweep operation in statistical computing is not so much that it is an inversion technique, but rather that is a conceptual tool for understanding the least squares process. Without this conceptual tool, it is <strong>extremely difficult</strong> to explain concepts such as absorption and what the R notation is testing in terms of the parameters of the model.</div>
-<div class="line">–James Goodnight (1979)</div>
-</div>
+<div><p>‘y ~ Group + Factor + Group:Factor’.</p>
 </div></blockquote>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
-</pre></div>
+<dl class="py method">
+<dt class="sig sig-object py" id="sweepystats.anova.ANOVA.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formula</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.anova.ANOVA.__init__" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sweepystats.anova.ANOVA.__init__" title="sweepystats.anova.ANOVA.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(df, formula)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">f_statistic</span></code>()</p></td>
+<td><p>Computes the F-statistic associated with the ANOVA model.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code>([verbose])</p></td>
+<td><p>Fit ANOVA model by sweep operation</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">p_value</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sum_sq</span></code>()</p></td>
+<td><p>Compuptes within-group sum of squares error</p></td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import sweepystats as sw
-import numpy as np
-</pre></div>
-</div>
-</div>
-<p>Lets generate some random data. Here we simulated 10 samples each with 3 covariates.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>X = np.random.normal(10, 3, size=(10, 3))
-beta = np.array([1., 2., 3.])
-y = X @ beta + np.random.normal(5)
-</pre></div>
-</div>
-</div>
-<p>We can form an instance of the <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> class and fit it as follows:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ols = sw.LinearRegression(X, y)
-ols.fit()
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-100%|█████████████████████████████████████████████████| 3/3 [00:00&lt;00:00, 4043.35it/s]
-</pre></div></div>
-</div>
-<p>The resulting beta (estimated effect size) can be extracted as</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>beta = ols.coef()
-beta
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-array([1.12750166, 2.05123825, 3.12848253])
-</pre></div></div>
-</div>
-<p>Sum-of-square residuals is</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>resid = ols.resid()
-resid
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-np.float64(1.141181054335675)
-</pre></div></div>
-</div>
-<p>Var(<span class="math notranslate nohighlight">\(\hat{\beta}\)</span>):</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cov = ols.cov()
-cov
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-array([[ 0.00224086, -0.00075225, -0.00162297],
-       [-0.00075225,  0.00104084, -0.0003123 ],
-       [-0.00162297, -0.0003123 ,  0.00226864]])
-</pre></div></div>
-</div>
-<p>Standard deviation of <span class="math notranslate nohighlight">\(\hat{\beta}\)</span>:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>std = ols.coef_std()
-std
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-array([0.04733772, 0.032262  , 0.04763029])
-</pre></div></div>
-</div>
-<p>R2 (coefficient of determination):</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ols.R2()
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-np.float64(0.987899852888527)
-</pre></div></div>
-</div>
-<section id="Comparison-with-numpy">
-<h2>Comparison with <code class="docutils literal notranslate"><span class="pre">numpy</span></code><a class="headerlink" href="#Comparison-with-numpy" title="Link to this heading">#</a></h2>
-<p>For comparison, lets check whether the answer agrees with the least squares solution implemented in <code class="docutils literal notranslate"><span class="pre">numpy</span></code> package.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># least squares solution by QR
-beta, resid, _, _ = np.linalg.lstsq(X, y)
-beta
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-array([1.12750166, 2.05123825, 3.12848253])
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>resid # true residuals
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-array([1.14118105])
-</pre></div></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">numpy</span></code> doesn’t have built-in methods to extract Var(<span class="math notranslate nohighlight">\(\hat{\beta}\)</span>) or std of beta, but we can manually extract them as:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># true Var(beta)
-n, p = 10, 3
-sigma2 = resid[0] / (n - p)
-beta_cov = sigma2 * np.linalg.inv(X.T @ X)
-beta_cov
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-array([[ 0.00224086, -0.00075225, -0.00162297],
-       [-0.00075225,  0.00104084, -0.0003123 ],
-       [-0.00162297, -0.0003123 ,  0.00226864]])
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># true std of beta
-beta_std = np.sqrt(np.diag(beta_cov))
-beta_std
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-array([0.04733772, 0.032262  , 0.04763029])
-</pre></div></div>
-</div>
-</section>
+</dd></dl>
+
 </section>
 
 
@@ -592,22 +406,13 @@ array([0.04733772, 0.032262  , 0.04763029])
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="linalg.html"
+       href="sweepystats.linreg.LinearRegression.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Numerical linear algebra</p>
+        <p class="prev-next-title">sweepystats.linreg.LinearRegression</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="anova.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">ANOVA</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -628,7 +433,10 @@ array([0.04733772, 0.032262  , 0.04763029])
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Comparison-with-numpy">Comparison with <code class="docutils literal notranslate"><span class="pre">numpy</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.anova.ANOVA"><code class="docutils literal notranslate"><span class="pre">ANOVA</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sweepystats.anova.ANOVA.__init__"><code class="docutils literal notranslate"><span class="pre">ANOVA.__init__()</span></code></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
@@ -636,7 +444,7 @@ array([0.04733772, 0.032262  , 0.04763029])
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../../_sources/user_guide/notebooks/linreg.ipynb.txt"
+      <li><a href="../../_sources/api_reference/generated/sweepystats.anova.ANOVA.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div></div>
