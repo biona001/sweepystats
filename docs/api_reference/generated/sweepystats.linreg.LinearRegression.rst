@@ -18,7 +18,10 @@
       ~LinearRegression.coef
       ~LinearRegression.coef_std
       ~LinearRegression.cov
+      ~LinearRegression.exclude_k
       ~LinearRegression.fit
+      ~LinearRegression.include_k
+      ~LinearRegression.is_fitted
       ~LinearRegression.resid
       ~LinearRegression.sigma2
    
