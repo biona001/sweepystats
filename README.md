@@ -34,6 +34,8 @@ The following operations are supported **in-place** and **allocation-free**:
 + Computation of determinants
 + Checking of (strict) positive-definiteness
 + Linear regression (beta hat, variance of OLS estimator, residuals)
++ ANOVA
++ Stepwise regression
 
 ## Running tests
 
@@ -54,9 +56,8 @@ The following operations are supported **in-place** and **allocation-free**:
 + [James Goodnight's awesome paper from 1978](https://www.jstor.org/stable/2683825)
 
 ## TODO
-+ Stepwise regression
 + Conditional formulas for MVN
-+ ANOVA, ANCOVA, and MANOVA
++ k-way ANOVA, ANCOVA, and MANOVA
 + 2-stage and 3-stage least squares
 + Partial correlation
 + GLMs
