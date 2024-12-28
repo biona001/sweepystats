@@ -1,6 +1,7 @@
 import numpy as np
 import sweepystats as sw
 import pytest
+from scipy.stats import f
 
 def test_linreg():
     n, p = 5, 3
@@ -32,3 +33,26 @@ def test_high_dimensional():
     # X'X is singular, so there must be 1 eigenvalue that is 0
     with pytest.raises(ZeroDivisionError):
         ols.fit()
+
+def test_stepwise_regression():
+    # data
+    n, p, k = 20, 5, 3
+    X = np.random.normal(n, p, size=(n, p))
+    beta = np.zeros(p)
+    beta[np.random.choice(np.arange(p), size=k, replace=False)] = np.random.randn(k)
+    y = X @ beta + np.random.normal()
+
+    # fit
+    ols = sw.LinearRegression(X, y)
+    ols.fit()
+
+    # f-stat and p-val for 1st variable
+    f_stat, pval = ols.f_test(0)
+
+    # least squares solution
+    _, resid_full, _, _ = np.linalg.lstsq(X, y)
+    _, resid_reduced, _, _ = np.linalg.lstsq(X[:, 1:], y)
+    f_stat_true = (resid_reduced - resid_full) / resid_full * (n - p)
+    pval_true = f.sf(f_stat_true, 1, n - p)
+    assert np.allclose(f_stat, f_stat_true)
+    assert np.allclose(pval, pval_true)

@@ -1,6 +1,7 @@
 import sweepystats as sw
 import numpy as np
 from tqdm import tqdm
+from scipy.stats import f
 
 class LinearRegression:
     """
@@ -27,7 +28,7 @@ class LinearRegression:
         self.swept = np.zeros(self.p)
 
     def is_fitted(self):
-        if np.all(vector == 1):
+        if np.all(self.swept == 1):
             return True
         return False
 
@@ -60,7 +61,7 @@ class LinearRegression:
                 num_swept = self.swept[k]
         return None
 
-    def coef(self, verbose=True):
+    def coef(self):
         """
         Fitted coefficient values (beta hat). Only returns the beta for
         variables that have been swept in.
@@ -68,31 +69,52 @@ class LinearRegression:
         idx = np.where(self.swept == 1)[0]
         return self.A[idx, -1].copy()
 
-    def coef_std(self, verbose=True):
+    def coef_std(self):
         """Standard deviation of the fitted coefficient values"""
         sigma2 = self.sigma2()
         idx = np.where(self.swept == 1)[0]
         beta_var = self.A.A[idx, idx].copy() # A[idx, idx] is diagonals of A
         return np.sqrt(-sigma2 * beta_var)
 
-    def resid(self, verbose=True):
+    def resid(self):
         """Estimate of residuals = ||y - yhat||^2"""
         return self.A[-1, -1]
 
-    def sigma2(self, verbose=True):
+    def sigma2(self):
         """Estimate of sigma square."""
         n, p = self.n, self.p
         return self.resid() / (n - p)
 
-    def cov(self, verbose=True):
+    def cov(self):
         """Estimated variance-covariance of beta hat, i.e. Var(b) = sigma2 * inv(X'X)"""
         cov = self.A[0:-1, 0:-1].copy()
         idx = np.where(self.swept == 1)[0]
         return -self.sigma2() * cov[np.ix_(idx, idx)]
 
-    def R2(self, verbose=True):
+    def R2(self):
         """Computes the R2 (coefficient of determination) of fit"""
         ybar = np.mean(self.y)
         ss_tot = np.sum((self.y - ybar) ** 2)
         ss_res = self.resid()
         return 1 - ss_res / ss_tot
+
+    def f_test(self, k):
+        """
+        Tests whether the `k`th variable is significant by performing an F-test.
+        The model must already be fitted. 
+
+        Returns: 
+        + `f_stat`: The F-statistic
+        + `pval`: The associated p-value
+        """
+        n, p = self.n, self.p
+        if not self.is_fitted():
+            raise ValueError(f"Model not fitted yet!")
+        # see F-test at https://en.wikipedia.org/wiki/F-test#Regression_problems
+        ss_full = self.resid()
+        self.exclude_k(k)
+        ss_reduced = self.resid()
+        self.include_k(k)
+        f_stat = (ss_reduced - ss_full) / ss_full * (n - p)
+        pval = f.sf(f_stat, 1, n - p)
+        return f_stat, pval
