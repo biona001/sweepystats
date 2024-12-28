@@ -1,6 +1,7 @@
 import sweepystats as sw
 import numpy as np
 from tqdm import tqdm
+from scipy.stats import f
 
 class LinearRegression:
     """
@@ -27,7 +28,7 @@ class LinearRegression:
         self.swept = np.zeros(self.p)
 
     def is_fitted(self):
-        if np.all(vector == 1):
+        if np.all(self.swept == 1):
             return True
         return False
 
@@ -96,3 +97,24 @@ class LinearRegression:
         ss_tot = np.sum((self.y - ybar) ** 2)
         ss_res = self.resid()
         return 1 - ss_res / ss_tot
+
+    def f_test(self, k):
+        """
+        Tests whether the `k`th variable is significant by performing an F-test.
+        The model must already be fitted. 
+
+        Returns: 
+        + `f_stat`: The F-statistic
+        + `pval`: The associated p-value
+        """
+        n, p = self.n, self.p
+        if not self.is_fitted():
+            raise ValueError(f"Model not fitted yet!")
+        # see F-test at https://en.wikipedia.org/wiki/F-test#Regression_problems
+        ss_full = self.resid()
+        self.exclude_k(k)
+        ss_reduced = self.resid()
+        self.include_k(k)
+        f_stat = (ss_reduced - ss_full) / ss_full * (n - p)
+        pval = f.sf(f_stat, 1, n - p)
+        return f_stat, pval
