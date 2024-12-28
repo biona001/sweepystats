@@ -51,7 +51,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/notebooks/linreg';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="ANOVA" href="anova.html" />
+    <link rel="next" title="Stepwise regression" href="stepreg.html" />
     <link rel="prev" title="Numerical linear algebra" href="linalg.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -293,6 +293,7 @@
 <li class="toctree-l1"><a class="reference internal" href="sweepy.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="linalg.html">Numerical linear algebra</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stepreg.html">Stepwise regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="anova.html">ANOVA</a></li>
 </ul>
 </div>
@@ -397,7 +398,7 @@ ols.fit()
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████████████████████████████████████████████| 3/3 [00:00&lt;00:00, 4043.35it/s]
+100%|███████████████████████████████████████████| 3/3 [00:00&lt;00:00, 3306.94it/s]
 </pre></div></div>
 </div>
 <p>The resulting beta (estimated effect size) can be extracted as</p>
@@ -416,7 +417,7 @@ beta
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([1.12750166, 2.05123825, 3.12848253])
+array([1.09983632, 2.02886888, 3.2716904 ])
 </pre></div></div>
 </div>
 <p>Sum-of-square residuals is</p>
@@ -435,7 +436,7 @@ resid
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-np.float64(1.141181054335675)
+np.float64(2.3953241840840747)
 </pre></div></div>
 </div>
 <p>Var(<span class="math notranslate nohighlight">\(\hat{\beta}\)</span>):</p>
@@ -454,9 +455,9 @@ cov
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([[ 0.00224086, -0.00075225, -0.00162297],
-       [-0.00075225,  0.00104084, -0.0003123 ],
-       [-0.00162297, -0.0003123 ,  0.00226864]])
+array([[ 0.00323325, -0.00144217, -0.00143833],
+       [-0.00144217,  0.00344722, -0.00208484],
+       [-0.00143833, -0.00208484,  0.00358656]])
 </pre></div></div>
 </div>
 <p>Standard deviation of <span class="math notranslate nohighlight">\(\hat{\beta}\)</span>:</p>
@@ -475,12 +476,12 @@ std
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([0.04733772, 0.032262  , 0.04763029])
+array([0.05686169, 0.05871306, 0.05988785])
 </pre></div></div>
 </div>
 <p>R2 (coefficient of determination):</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ols.R2()
@@ -488,12 +489,12 @@ array([0.04733772, 0.032262  , 0.04763029])
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-np.float64(0.987899852888527)
+np.float64(0.9969400431529486)
 </pre></div></div>
 </div>
 <section id="Comparison-with-numpy">
@@ -515,7 +516,7 @@ beta
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([1.12750166, 2.05123825, 3.12848253])
+array([1.09983632, 2.02886888, 3.2716904 ])
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -532,7 +533,7 @@ array([1.12750166, 2.05123825, 3.12848253])
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([1.14118105])
+array([2.39532418])
 </pre></div></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">numpy</span></code> doesn’t have built-in methods to extract Var(<span class="math notranslate nohighlight">\(\hat{\beta}\)</span>) or std of beta, but we can manually extract them as:</p>
@@ -554,9 +555,9 @@ beta_cov
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([[ 0.00224086, -0.00075225, -0.00162297],
-       [-0.00075225,  0.00104084, -0.0003123 ],
-       [-0.00162297, -0.0003123 ,  0.00226864]])
+array([[ 0.00323325, -0.00144217, -0.00143833],
+       [-0.00144217,  0.00344722, -0.00208484],
+       [-0.00143833, -0.00208484,  0.00358656]])
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -575,7 +576,7 @@ beta_std
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([0.04733772, 0.032262  , 0.04763029])
+array([0.05686169, 0.05871306, 0.05988785])
 </pre></div></div>
 </div>
 </section>
@@ -601,11 +602,11 @@ array([0.04733772, 0.032262  , 0.04763029])
       </div>
     </a>
     <a class="right-next"
-       href="anova.html"
+       href="stepreg.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">ANOVA</p>
+        <p class="prev-next-title">Stepwise regression</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

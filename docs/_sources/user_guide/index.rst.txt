@@ -7,4 +7,5 @@ User Guide
    notebooks/sweepy
    notebooks/linalg
    notebooks/linreg
+   notebooks/stepreg
    notebooks/anova
