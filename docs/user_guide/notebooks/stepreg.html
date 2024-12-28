@@ -381,7 +381,7 @@ import numpy as np
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n, p, k = 20, 5, 3 # number of samples, covariates, causal covariates
-np.random.seed(2025) # for reproducibility
+np.random.seed(123) # for reproducibility
 X = np.random.normal(n, p, size=(n, p))
 beta = np.zeros(p)
 beta[np.random.choice(np.arange(p), size=k, replace=False)] = np.random.randn(k)
@@ -424,7 +424,7 @@ y = X @ beta + np.random.normal()
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-np.float64(4790.139117841711)
+np.float64(1394.3565581860448)
 </pre></div></div>
 </div>
 <p>Lets try sweeping in variables one at a time (i.e. including more and more variables in multiple regression) and examine the resulting sum of squares residual <span class="math notranslate nohighlight">\(\|\mathbf{y} - \hat{\mathbf{y}}\|^2\)</span></p>
@@ -462,9 +462,9 @@ plt.show()
 <img alt="../../_images/user_guide_notebooks_stepreg_14_0.png" src="../../_images/user_guide_notebooks_stepreg_14_0.png" />
 </div>
 </div>
-<p>So it seems adding the 2nd and 4th variable improved model fit significantly (by reducing sum-of-squared residual). How do we statistically determine whether they are redundant? We can test the hypothesis <span class="math notranslate nohighlight">\(H_k = 0\)</span> using an F-test:</p>
+<p>So it seems adding the 2nd, 4th, and 5th variable improved model fit significantly (by reducing sum-of-squared residual). How do we statistically determine whether they are redundant? We can test the hypothesis <span class="math notranslate nohighlight">\(H_k = 0\)</span> using an F-test:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># test whether kth variable is significant
@@ -479,16 +479,16 @@ for k in range(p):
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Variable 0 has p-value 0.8129989461707008
-Variable 1 has p-value 3.209628882323652e-31
-Variable 2 has p-value 0.00937511174625582
-Variable 3 has p-value 6.452513415087515e-29
-Variable 4 has p-value 4.743393955410443e-25
+Variable 0 has p-value 9.062122146792274e-24
+Variable 1 has p-value 0.4648260563197989
+Variable 2 has p-value 0.19236569475852966
+Variable 3 has p-value 1.5600761098077415e-16
+Variable 4 has p-value 7.343646064572416e-18
 </pre></div></div>
 </div>
-<p>So the 2nd, 4th, and 5th variable is significant. We can compare this against the true beta coefficient:</p>
+<p>So the 1st, 4th, and 5th variable is significant. We can compare this against the true beta coefficient:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>beta
@@ -496,15 +496,15 @@ Variable 4 has p-value 4.743393955410443e-25
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([ 0.        ,  1.72690962,  0.        ,  1.43543728, -0.64106051])
+array([-1.97788793,  0.        ,  0.        ,  0.64205469,  0.71226464])
 </pre></div></div>
 </div>
-<p>So in this simple example, stepwise regression using F-test worked in identifying the correct model.</p>
+<p>So in this simple example, stepwise regression using F-test worked in identifying the correct model, while visually examining the improvement in residual error was not completely correct!</p>
 </section>
 </section>
 
