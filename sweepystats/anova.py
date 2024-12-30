@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import patsy
 from scipy.stats import f
+from .util import designate_X_columns
 
 class ANOVA:
     """
@@ -24,8 +25,8 @@ class ANOVA:
         self.n = self.X.shape[0]
         self.p = self.X.shape[1]
 
-        # number of groups
-        self.k = len(X.design_info.column_names)
+        # number of groups for each variable in RHS of formula
+        self.column_map = designate_X_columns(X, formula)
 
         # initialize least squares instance
         self.ols = sw.LinearRegression(self.X, self.y)
