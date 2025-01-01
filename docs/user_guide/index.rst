@@ -9,3 +9,4 @@ User Guide
    notebooks/linreg
    notebooks/stepreg
    notebooks/anova
+   notebooks/k-anova
