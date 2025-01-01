@@ -37,9 +37,13 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 html_theme = 'pydata_sphinx_theme'
 html_theme_options = {
+    "logo": {
+        "text": "Sweepystats",
+    },
     "github_url": "https://github.com/biona001/sweepystats",
     "navbar_end": ["theme-switcher", "navbar-icon-links"],
     "collapse_navigation": False,
+    "secondary_sidebar_items": [],  # Disable the right-hand sidebar
 }
 html_context = {"default_mode": "bright"}
 html_static_path = ['_static']
