@@ -27,7 +27,6 @@ class ANOVA:
 
         # number of groups for each variable in RHS of formula
         self.column_map = designate_X_columns(X, formula)
-        self.k = len(X.design_info.column_names)
 
         # initialize least squares instance
         self.ols = sw.LinearRegression(self.X, self.y)
@@ -37,7 +36,7 @@ class ANOVA:
         return self.ols.fit(verbose = verbose)
 
     def sum_sq(self):
-        """Compuptes within-group sum of squares error"""
+        """Computes sum of squared error for all variables that are currently swept in"""
         return self.ols.resid()
 
     def f_test(self, variable):
