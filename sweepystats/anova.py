@@ -27,7 +27,6 @@ class ANOVA:
 
         # number of groups for each variable in RHS of formula
         self.column_map = designate_X_columns(X, formula)
-        self.k = len(X.design_info.column_names)
 
         # initialize least squares instance
         self.ols = sw.LinearRegression(self.X, self.y)
