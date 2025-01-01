@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import patsy
 from scipy.stats import f
+from .util import designate_X_columns
 
 class ANOVA:
     """
@@ -24,7 +25,8 @@ class ANOVA:
         self.n = self.X.shape[0]
         self.p = self.X.shape[1]
 
-        # number of groups
+        # number of groups for each variable in RHS of formula
+        self.column_map = designate_X_columns(X, formula)
         self.k = len(X.design_info.column_names)
 
         # initialize least squares instance
@@ -34,20 +36,40 @@ class ANOVA:
         """Fit ANOVA model by sweep operation"""
         return self.ols.fit(verbose = verbose)
 
-    def f_statistic(self):
-        """Computes the F-statistic associated with the ANOVA model."""
-        n, k = self.n, self.k # number of samples and groups
-        yhat = np.matmul(self.X, self.ols.coef()) # predicted y
-        ss_between = np.sum((yhat - np.mean(self.y)) ** 2) # between group sum of squares
-        ss_within = self.sum_sq()
-        return (ss_between / (k - 1)) / (ss_within / (n - k))
-
     def sum_sq(self):
         """Compuptes within-group sum of squares error"""
         return self.ols.resid()
 
-    def p_value(self):
-        n, k = self.n, self.k # number of samples and groups
-        df1 = k - 1
-        df2 = n - k
-        return f.sf(self.f_statistic(), df1, df2)
+    def f_test(self, variable):
+        """
+        Tests whether `variable` in `self.formula` is significant by performing
+        an F-test. The model must already be fitted. 
+
+        Returns: 
+        + `f_stat`: The F-statistic
+        + `pval`: The associated p-value
+        """
+        if not self.ols.is_fitted():
+            raise ValueError(f"Model not fitted yet!")
+        if variable not in self.column_map.keys():
+            raise ValueError(f"Variable {variable} not in model!")
+
+        columns = self.column_map[variable] # column of X corresponding to `variable`
+        n = self.n
+        k_full = self.p  # Number of parameters in the full model
+        k_reduced = k_full - len(columns)
+
+        ss_full = self.sum_sq()
+        for k in columns:
+            self.ols.exclude_k(k)
+        ss_reduced = self.sum_sq()
+        for k in columns:
+            self.ols.include_k(k)  # Restore full model
+
+        # Calculate F-statistic
+        df_numer = len(columns)
+        df_denom = n - k_full
+        f_stat = ((ss_reduced - ss_full) / df_numer) / (ss_full / df_denom)
+        pval = f.sf(f_stat, df_numer, df_denom)
+
+        return f_stat, pval
