@@ -17,8 +17,7 @@
    "source": [
     "import sweepystats as sw\n",
     "import numpy as np\n",
-    "import pandas as pd\n",
-    "import patsy"
+    "import pandas as pd"
    ]
   },
   {
