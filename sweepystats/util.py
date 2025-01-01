@@ -21,9 +21,4 @@ def designate_X_columns(X, formula):
         ks[k] = list(range(offset, offset + v))
         offset += v
 
-    # take care of intercept term
-    if "Intercept" in mapping.keys():
-        term = model.rhs_termlist[1].name() # first non-intercept term
-        ks[term].insert(0, 0)
-
     return ks
