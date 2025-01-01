@@ -13,8 +13,12 @@ def designate_X_columns(X, formula):
         mapping[term.name()] = X.design_info.term_codings[term][0].num_columns
 
     # to correspond the columns, compute the cumsum
-    offset = 1 if "Intercept" in mapping.keys() else 0
     ks = {}
+    if "Intercept" in mapping.keys():
+        ks["Intercept"] = [0] # intercept is always the first col of X
+        offset = 1
+    else:
+        offset = 0
     for k, v in mapping.items():
         if k == "Intercept":
             continue
