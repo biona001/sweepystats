@@ -36,7 +36,7 @@ class ANOVA:
         return self.ols.fit(verbose = verbose)
 
     def sum_sq(self):
-        """Compuptes within-group sum of squares error"""
+        """Computes sum of squared error for all variables that are currently swept in"""
         return self.ols.resid()
 
     def f_test(self, variable):
