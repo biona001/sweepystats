@@ -16,6 +16,9 @@
 > The sweep operator is perhaps the most versatile tool of all statistical operators that not only afford solutions to the normal equation and a gamut of additional statistics, but also allow complete insight into the nature of least squares. Once mastered, the general concepts of the sweep operator allow the whole least squares process to be visualized. 
 > -- James H. Goodnight (1979)
 
+> Although there are faster and numerically more stable algorithms for inverting a matrix or solving a least-squares problem, no algorithm matches the conceptual simplicity and utility of sweeping.
+> -- Kenneth Lange (2010)
+
 ## Installation
 
 ```shell
@@ -57,8 +60,9 @@ The following operations are supported **in-place** and **allocation-free**:
 
 ## TODO
 + Conditional formulas for MVN
-+ k-way ANOVA, ANCOVA, and MANOVA
++ ANCOVA, and MANOVA
 + 2-stage and 3-stage least squares
++ Weighted least squares
 + Partial correlation
 + GLMs
 + Generalized (pseudo-) inverses
