@@ -363,7 +363,7 @@
 <div><p>Should I include the <code class="docutils literal notranslate"><span class="pre">k</span></code>th variable in regression? Is the improvement in fit statistically significant?</p>
 </div></blockquote>
 <p>The sweep operator is a beautiful tool for this kind of question, because <strong>including/excluding a variable does not require re-fitting the entire model</strong>. Instead, just <em>sweep</em> the variable in if you want to include its effect, and if it isn’t good, <em>sweep</em> it out!</p>
-<div style="border: 1px solid red; padding: 10px; background-color: #ffe6e6; color: red;"><p>Warning: stepwise regression is generally NOT a valid method for model selection, see this StackExchange post for a detailed explanation. This functionality is implemented mainly to explore the properties of the sweep operator.</p>
+<div style="border: 1px solid red; padding: 10px; background-color: #ffe6e6; color: red;"><p>Warning: stepwise regression is generally NOT a valid method for model selection. This functionality is implemented mainly to explore the properties of the sweep operator.</p>
 </div><div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
