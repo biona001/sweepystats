@@ -14,9 +14,8 @@
    .. autosummary::
    
       ~ANOVA.__init__
-      ~ANOVA.f_statistic
+      ~ANOVA.f_test
       ~ANOVA.fit
-      ~ANOVA.p_value
       ~ANOVA.sum_sq
    
    
