@@ -70,3 +70,12 @@ class Normal:
         # extract conditional mean
         zidx = np.setdiff1d(range(0, self.p), yidx)
         return self.A[zidx, -1]
+
+    def cond_var(self, y, yidx):
+        """
+        Computes the conditional variance `Var(Z | Y = y)` where `(Y, Z)`
+        is assumed to be jointly Gaussian with mean `mu` and cov `sigma`.
+        """
+        self.cond_mean(y, yidx) # same internal sweeps
+        zidx = np.setdiff1d(range(0, self.p), yidx)
+        return self.A[np.ix_(zidx, zidx)]
