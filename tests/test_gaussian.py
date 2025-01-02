@@ -27,7 +27,7 @@ def test_loglikelihood():
 
 def test_cond_expectation():
     # instantiate a Normal
-    p = 4
+    p = 6
     mu = np.zeros(p)
     sigma = toeplitz(np.array([0.5**i for i in range(p)]))
     d = sw.Normal(mu, sigma)
@@ -37,7 +37,7 @@ def test_cond_expectation():
     yidx = [0, 1]
     ans = d.cond_mean(y, yidx)
     # brute-force implementation
-    mu_Y, mu_Z = np.zeros(2), np.zeros(2)
+    mu_Y, mu_Z = np.zeros(2), np.zeros(p - len(yidx))
     sigma_Y = sigma[0:2, 0:2]
     sigma_Z = sigma[2:, 2:]
     sigma_ZY = sigma[2:, 0:2]
@@ -45,12 +45,18 @@ def test_cond_expectation():
     assert np.allclose(ans, ans_true)
 
     # another test: non-contiguous yidx:
+    p = 6
+    mu = np.zeros(p)
+    sigma = toeplitz(np.array([0.5**i for i in range(p)]))
+    d = sw.Normal(mu, sigma)
+
+    # answer from sweepystats
     y = np.random.normal(2, size=(2,))
     yidx = [0, 3]
     ans = d.cond_mean(y, yidx)
     # brute-force implementation
-    zidx = [1, 2]
-    mu_Y, mu_Z = np.zeros(2), np.zeros(2)
+    zidx = [1, 2, 4, 5]
+    mu_Y, mu_Z = np.zeros(2), np.zeros(p - len(yidx))
     sigma_Y = sigma[np.ix_(yidx, yidx)]
     sigma_Z = sigma[np.ix_(zidx, zidx)]
     sigma_ZY = sigma[np.ix_(zidx, yidx)]
