@@ -45,4 +45,4 @@ class Normal:
                 logdet += np.log(self.A.sweep_k(k, symmetrize=False))
             else:
                 raise ValueError("Covariance matrix is not positive definite!")
-        return -0.5 * self.p * np.log(2*np.pi) - 0.5 * logdet - 0.5 * self.A[-1, -1]
+        return -0.5 * (self.p * np.log(2*np.pi) + logdet - self.A[-1, -1])
