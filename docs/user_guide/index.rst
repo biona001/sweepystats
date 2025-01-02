@@ -10,3 +10,4 @@ User Guide
    notebooks/stepreg
    notebooks/anova
    notebooks/k-anova
+   notebooks/MVN

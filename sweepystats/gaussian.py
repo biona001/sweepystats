@@ -57,7 +57,8 @@ class Normal:
     def cond_mean(self, y, yidx):
         """
         Computes the conditional expectation `E(Z | Y = y)` where `(Y, Z)`
-        is assumed to be jointly Gaussian with mean `mu` and cov `sigma`.
+        is assumed to be jointly Gaussian with mean `mu` and cov `sigma`. The
+        vector `yidx` indicates the indices of the observed `y`. 
         """
         # change self.A into starting matrix
         self._update_mu()
@@ -74,7 +75,8 @@ class Normal:
     def cond_var(self, y, yidx):
         """
         Computes the conditional variance `Var(Z | Y = y)` where `(Y, Z)`
-        is assumed to be jointly Gaussian with mean `mu` and cov `sigma`.
+        is assumed to be jointly Gaussian with mean `mu` and cov `sigma`. The
+        vector `yidx` indicates the indices of the observed `y`. 
         """
         self.cond_mean(y, yidx) # same internal sweeps
         zidx = np.setdiff1d(range(0, self.p), yidx)
