@@ -25,11 +25,8 @@ class Normal:
         self.A = sw.SweepMatrix(A)
         self.p = p
 
-        # vector to keep track of how many times a variable was swept
-        self.swept = np.zeros(self.p)
-
     def _update_x_minus_mu(self, x=None):
-        """Updates self.A to become [sigma, x - mu; x - mu, 0]"""
+        """Updates self.A to become [sigma, x - mu; (x - mu)^t, 0]."""
         if x is None:
             x = np.zeros(self.p)
         np.copyto(self.A[0:-1, 0:-1], self.sigma)
@@ -37,7 +34,17 @@ class Normal:
         self.A[-1, 0:-1] = self.A[0:-1, -1]
         self.A[-1, -1] = 0
 
+    def _update_mu(self, x=None):
+        """Updates self.A to become [sigma, mu; mu^t, 0]."""
+        if x is None:
+            x = np.zeros(self.p)
+        np.copyto(self.A[0:-1, 0:-1], self.sigma)
+        self.A[0:-1, -1] = self.mu
+        self.A[-1, 0:-1] = self.mu
+        self.A[-1, -1] = 0
+
     def loglikelihood(self, x, verbose=True):
+        """Evaluates the loglikelihood of obsering X=x."""
         self._update_x_minus_mu(x)
         logdet = 0.0
         for k in tqdm(range(self.p), disable = not verbose):
@@ -46,3 +53,20 @@ class Normal:
             else:
                 raise ValueError("Covariance matrix is not positive definite!")
         return -0.5 * (self.p * np.log(2*np.pi) + logdet - self.A[-1, -1])
+
+    def cond_mean(self, y, yidx):
+        """
+        Computes the conditional expectation `E(Z | Y = y)` where `(Y, Z)`
+        is assumed to be jointly Gaussian with mean `mu` and cov `sigma`.
+        """
+        # change self.A into starting matrix
+        self._update_mu()
+        for (yi, idx) in zip(y, yidx):
+            self.A[-1, idx] -= yi
+            self.A[idx, -1] -= yi
+        # sweep
+        for k in yidx:
+            self.A.sweep_k(k)
+        # extract conditional mean
+        zidx = np.setdiff1d(range(0, self.p), yidx)
+        return self.A[zidx, -1]
