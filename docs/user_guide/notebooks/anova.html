@@ -367,10 +367,9 @@ import pandas as pd
 <section id="1-way-ANOVA">
 <h2>1-way ANOVA<a class="headerlink" href="#1-way-ANOVA" title="Link to this heading">#</a></h2>
 <p>Suppose we are given an example data set, and we want to know:</p>
-<blockquote>
-<div><p>Question: Do samples in different <code class="docutils literal notranslate"><span class="pre">Group</span></code> have different <code class="docutils literal notranslate"><span class="pre">Outcome</span></code>s?</p>
-</div></blockquote>
-<div class="nbinput docutils container">
+<div class="admonition note" name="html-admonition" style="background: lightyellow; padding: 10px">
+    <strong>Question:</strong> Do samples in different <code>Group</code> have different <code>Outcome</code>s?
+</div><div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
@@ -579,10 +578,9 @@ anova_table
 <section id="k-way-ANOVA">
 <h2><span class="math notranslate nohighlight">\(k\)</span>-way ANOVA<a class="headerlink" href="#k-way-ANOVA" title="Link to this heading">#</a></h2>
 <p>Now suppose we have another covariate <code class="docutils literal notranslate"><span class="pre">Factor</span></code> that was measured, and we want to know:</p>
-<blockquote>
-<div><p>Question: Do samples in different <code class="docutils literal notranslate"><span class="pre">Group</span></code> and <code class="docutils literal notranslate"><span class="pre">Factor</span></code> have different <code class="docutils literal notranslate"><span class="pre">Outcome</span></code>s?</p>
-</div></blockquote>
-<div class="nbinput docutils container">
+<div class="admonition note" name="html-admonition" style="background: lightyellow; padding: 10px">
+    <strong>Question:</strong> Do samples in different <code>Group</code> and <code>Factor</code> have different <code>Outcome</code>s?
+</div><div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
@@ -763,9 +761,10 @@ f_stat, pval
 <ul class="simple">
 <li><p>If we test <code class="docutils literal notranslate"><span class="pre">Group</span></code> by itself (in a 1-way ANOVA), then it is not significant.</p></li>
 <li><p>If we add <code class="docutils literal notranslate"><span class="pre">Factor</span></code>, then <code class="docutils literal notranslate"><span class="pre">Group</span></code> becomes significant, while <code class="docutils literal notranslate"><span class="pre">Factor</span></code> is not.</p></li>
-<li><p><strong>Note:</strong> in each of these tests, internally we are <strong>NOT</strong> refitting the reduced model - we simply <em>swept</em> out the (one-hot encoded) variable from the full model!</p></li>
 </ul>
-<section id="id1">
+<div class="alert alert-block alert-info">
+    <b>NOTE:</b> in each of these tests, internally we are <strong>NOT</strong> refitting the reduced model - we simply swept out the (one-hot encoded) variable from the full model!
+</div><section id="id1">
 <h3>Check answer is correct<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <p>Again we can compare the answer is correct using <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> package:</p>
 <div class="nbinput docutils container">
@@ -802,10 +801,9 @@ Residual       0.130000  3.0         NaN       NaN
 <section id="ANCOVA---analysis-of-co-variance">
 <h2>ANCOVA - analysis of co-variance<a class="headerlink" href="#ANCOVA---analysis-of-co-variance" title="Link to this heading">#</a></h2>
 <p>Now suppose we also measured a continuous covariate <code class="docutils literal notranslate"><span class="pre">Environment</span></code> and we want to adjust for its effect on <code class="docutils literal notranslate"><span class="pre">Group</span></code> and <code class="docutils literal notranslate"><span class="pre">Factor</span></code>. Our question becomes:</p>
-<blockquote>
-<div><p>Question: do samples in different <code class="docutils literal notranslate"><span class="pre">Group</span></code> and <code class="docutils literal notranslate"><span class="pre">Factor</span></code> have different <code class="docutils literal notranslate"><span class="pre">Outcome</span></code>s, after adjusting for <code class="docutils literal notranslate"><span class="pre">Environment</span></code>?</p>
-</div></blockquote>
-<div class="nbinput docutils container">
+<div class="admonition note" name="html-admonition" style="background: lightyellow; padding: 10px">
+    <strong>Question:</strong> Do samples in different <code>Group</code> and <code>Factor</code> have different <code>Outcome</code>s, after adjusting for <code>Environment</code>?
+</div><div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>

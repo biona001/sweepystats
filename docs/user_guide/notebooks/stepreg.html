@@ -355,11 +355,10 @@
   <section id="Stepwise-regression">
 <h1>Stepwise regression<a class="headerlink" href="#Stepwise-regression" title="Link to this heading">#</a></h1>
 <p>A common problem encountered in regression analysis is the following:</p>
-<blockquote>
-<div><p>Should I include the <code class="docutils literal notranslate"><span class="pre">k</span></code>th variable in regression? Is the improvement in fit statistically significant?</p>
-</div></blockquote>
-<p>The sweep operator is a beautiful tool for this kind of question, because <strong>including/excluding a variable does not require re-fitting the entire model</strong>. Instead, just <em>sweep</em> the variable in if you want to include its effect, and if it isn’t good, <em>sweep</em> it out!</p>
-<div class="admonition note" name="html-admonition" style="background: lightred; padding: 10px">
+<div class="admonition note" name="html-admonition" style="background: lightyellow; padding: 10px">
+    <strong>Question:</strong> Should I include the <code>k</code>th variable in regression? Is the improvement in fit statistically significant?
+</div><p>The sweep operator is a beautiful tool for this kind of question, because <strong>including/excluding a variable does not require re-fitting the entire model</strong>. Instead, just <em>sweep</em> the variable in if you want to include its effect, and if it isn’t good, <em>sweep</em> it out!</p>
+<div class="admonition note" name="html-admonition" style="background: tomato; padding: 10px">
     <strong>Warning:</strong> stepwise regression is generally <strong>NOT</strong> a valid method for model selection. This functionality is implemented mainly to explore the properties of the sweep operator.
 </div><div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -457,7 +456,7 @@ plt.show()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/user_guide_notebooks_stepreg_14_0.png" src="../../_images/user_guide_notebooks_stepreg_14_0.png" />
+<img alt="../../_images/user_guide_notebooks_stepreg_16_0.png" src="../../_images/user_guide_notebooks_stepreg_16_0.png" />
 </div>
 </div>
 <p>So it seems adding the 2nd, 4th, and 5th variable improved model fit significantly (by reducing sum-of-squared residual). How do we statistically determine whether they are redundant? We can test the hypothesis <span class="math notranslate nohighlight">\(H_k = 0\)</span> using an F-test:</p>

@@ -26,7 +26,17 @@
    "source": [
     "## The `SweepMatrix` class\n",
     "\n",
-    "`SweepMatrix` is a thin wrapper over numpy `darray`s. The input must be a symmetric matrix. We convert all matrices into double-precision numpy arrays with column-major order. **No data is copied** if the input is already in this format. The latter requirement is because the sweeping operation is blessed by level-3 BLAS, which we call internally. "
+    "`SweepMatrix` is a thin wrapper over numpy `darray`s. The input must be a symmetric matrix. We convert all matrices into double-precision numpy arrays with column-major order, if they aren't already."
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "e0d4aaeb-bdf9-4615-8478-62b74b5c1ba8",
+   "metadata": {},
+   "source": [
+    "<div class=\"alert alert-block alert-info\"> \n",
+    "    <b>NOTE:</b> <strong>No data is copied</strong> if the input is already double-precision in column-major format. The latter requirement is because the sweeping operation is blessed by level-3 BLAS, which we call internally. \n",
+    "</div>"
    ]
   },
   {
@@ -139,8 +149,8 @@
    ]
   },
   {
-   "cell_type": "markdown",
-   "id": "20616218-49df-496c-9e96-2e8666a29fd4",
+   "cell_type": "raw",
+   "id": "6916eac5-6d85-4e3c-9db4-41d1da62d513",
    "metadata": {},
    "source": [
     "<div class=\"alert alert-block alert-info\"> <b>NOTE:</b> Because the sweep operation divides the k-th row/column of A by Akk, the diagonal entry **cannot be 0** (exactly or numerically) before it is swept! </div>"
