@@ -27,6 +27,12 @@ extensions = [
     "sphinx_design",
     "numpydoc",
     "nbsphinx",
+    "myst_parser"
+]
+
+myst_enable_extensions = [
+    "html_admonition",  # Enables HTML-style admonitions
+    "colon_fence",      # (Optional) Enables colon-based fenced blocks for directives
 ]
 
 templates_path = ['_templates']
@@ -42,8 +48,9 @@ html_theme_options = {
     },
     "github_url": "https://github.com/biona001/sweepystats",
     "navbar_end": ["theme-switcher", "navbar-icon-links"],
-    "collapse_navigation": False,
+    "collapse_navigation": True,
     "secondary_sidebar_items": [],  # Disable the right-hand sidebar
+    "navigation_depth": 3, # show 2 
 }
 html_context = {"default_mode": "bright"}
 html_static_path = ['_static']
