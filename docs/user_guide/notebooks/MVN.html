@@ -437,20 +437,12 @@ d.loglikelihood(X)
 np.float64(-7.372282461672331)
 </pre></div></div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Internally, we accumulated the determinant and the loglikelihood function
-</pre></div>
-</div>
-</div>
+<p>We can check answer with scipy:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># check answer with scipy
-from scipy.stats import multivariate_normal
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from scipy.stats import multivariate_normal
 multivariate_normal.logpdf(X, mean=mu, cov=sigma)
 </pre></div>
 </div>
@@ -559,8 +551,8 @@ mu_Z + sigma_ZY @ np.linalg.inv(sigma_Y) @ (y - mu_Y)
 array([0.66050197, 0.33025098, 0.16512549, 0.08256275])
 </pre></div></div>
 </div>
-<div class="admonition note" name="html-admonition" style="background: lightgreen; padding: 10px">
-    <strong>Tip:</strong> <code>yidx</code> does NOT have to be contiguous!
+<div class="alert alert-block alert-info">
+    <b>Tip:</b> <code>yidx</code> does NOT have to be contiguous!
 </div><div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
 </pre></div>
