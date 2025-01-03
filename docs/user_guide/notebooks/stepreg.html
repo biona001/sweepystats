@@ -359,6 +359,17 @@
 <div><p>Should I include the <code class="docutils literal notranslate"><span class="pre">k</span></code>th variable in regression? Is the improvement in fit statistically significant?</p>
 </div></blockquote>
 <p>The sweep operator is a beautiful tool for this kind of question, because <strong>including/excluding a variable does not require re-fitting the entire model</strong>. Instead, just <em>sweep</em> the variable in if you want to include its effect, and if it isn’t good, <em>sweep</em> it out!</p>
+```html
+<div class="admonition note" name="html-admonition" style="background: lightgreen; padding: 10px">
+<p class="title">This is the **title**</p>
+This is the *content*
+</div>
+```<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;admonition note&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;html-admonition&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;background: lightgreen; padding: 10px&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;title&quot;</span><span class="p">&gt;</span>This is the **title**<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+This is the *content*
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
 <div style="border: 1px solid red; padding: 10px; background-color: #ffe6e6; color: red;"><p>Warning: stepwise regression is generally NOT a valid method for model selection. This functionality is implemented mainly to explore the properties of the sweep operator.</p>
 </div><div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -456,7 +467,7 @@ plt.show()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/user_guide_notebooks_stepreg_14_0.png" src="../../_images/user_guide_notebooks_stepreg_14_0.png" />
+<img alt="../../_images/user_guide_notebooks_stepreg_16_0.png" src="../../_images/user_guide_notebooks_stepreg_16_0.png" />
 </div>
 </div>
 <p>So it seems adding the 2nd, 4th, and 5th variable improved model fit significantly (by reducing sum-of-squared residual). How do we statistically determine whether they are redundant? We can test the hypothesis <span class="math notranslate nohighlight">\(H_k = 0\)</span> using an F-test:</p>
