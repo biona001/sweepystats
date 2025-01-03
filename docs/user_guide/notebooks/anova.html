@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>ANOVA &#8212; sweepystats 0.0.9 documentation</title>
+    <title>ANOVA &#8212; sweepystats 0.0.10 documentation</title>
   
   
   
@@ -55,7 +55,7 @@
     <link rel="prev" title="Stepwise regression" href="stepreg.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.0.9" />
+  <meta name="docsearch:version" content="0.0.10" />
   </head>
   
   
@@ -368,7 +368,7 @@ import pandas as pd
 <h2>1-way ANOVA<a class="headerlink" href="#1-way-ANOVA" title="Link to this heading">#</a></h2>
 <p>Suppose we are given an example data set, and we want to know:</p>
 <blockquote>
-<div><p>Do samples in different <code class="docutils literal notranslate"><span class="pre">Group</span></code> have different <code class="docutils literal notranslate"><span class="pre">Outcome</span></code>s?</p>
+<div><p>Question: Do samples in different <code class="docutils literal notranslate"><span class="pre">Group</span></code> have different <code class="docutils literal notranslate"><span class="pre">Outcome</span></code>s?</p>
 </div></blockquote>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -476,12 +476,12 @@ one_way.fit()
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|████████████████████████████████████████████| 3/3 [00:00&lt;00:00, 7341.26it/s]
+100%|████████████████████████████████████████████| 3/3 [00:00&lt;00:00, 6754.11it/s]
 </pre></div></div>
 </div>
 <p>The F-statistic and p-value can be extracted as:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>f_stat, pval = one_way.f_test(&quot;Group&quot;)
@@ -490,12 +490,12 @@ f_stat, pval
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(np.float64(3.96686746987947), np.float64(0.07984562357182826))
+(np.float64(3.966867469879486), np.float64(0.0798456235718277))
 </pre></div></div>
 </div>
 <p>If we reject the null at <span class="math notranslate nohighlight">\(\alpha = 0.05\)</span> level, then no, there is no statistically significant difference between at least one pair of group means.</p>
@@ -503,7 +503,7 @@ f_stat, pval
 <h3>Check answer is correct<a class="headerlink" href="#Check-answer-is-correct" title="Link to this heading">#</a></h3>
 <p>We can compare the answer via sweep operator is correct using <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> package:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
@@ -520,7 +520,7 @@ anova_table
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -580,10 +580,10 @@ anova_table
 <h2><span class="math notranslate nohighlight">\(k\)</span>-way ANOVA<a class="headerlink" href="#k-way-ANOVA" title="Link to this heading">#</a></h2>
 <p>Now suppose we have another covariate <code class="docutils literal notranslate"><span class="pre">Factor</span></code> that was measured, and we want to know:</p>
 <blockquote>
-<div><p>Do samples in different <code class="docutils literal notranslate"><span class="pre">Group</span></code> and <code class="docutils literal notranslate"><span class="pre">Factor</span></code> have different <code class="docutils literal notranslate"><span class="pre">Outcome</span></code>s?</p>
+<div><p>Question: Do samples in different <code class="docutils literal notranslate"><span class="pre">Group</span></code> and <code class="docutils literal notranslate"><span class="pre">Factor</span></code> have different <code class="docutils literal notranslate"><span class="pre">Outcome</span></code>s?</p>
 </div></blockquote>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = pd.DataFrame({
@@ -596,7 +596,7 @@ df
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -684,7 +684,7 @@ df
 </div>
 <p>We previously saw that <code class="docutils literal notranslate"><span class="pre">Group</span></code> alone is not significant, using 1-way ANOVA. Lets additionally adjust for <code class="docutils literal notranslate"><span class="pre">Factor</span></code> and the interaction effect between <code class="docutils literal notranslate"><span class="pre">Group</span></code> and <code class="docutils literal notranslate"><span class="pre">Factor</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula = &quot;Outcome ~ Group + Factor + Group:Factor&quot;
@@ -698,12 +698,12 @@ two_way.fit()
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|████████████████████████████████████████████| 6/6 [00:00&lt;00:00, 6572.43it/s]
+100%|████████████████████████████████████████████| 6/6 [00:00&lt;00:00, 7861.86it/s]
 </pre></div></div>
 </div>
 <p>Now, we can test for significance of <code class="docutils literal notranslate"><span class="pre">Group</span></code>, <code class="docutils literal notranslate"><span class="pre">Factor</span></code>, and their interaction using an F-test. For example,</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># test for Group variable
@@ -713,7 +713,7 @@ f_stat, pval
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -722,7 +722,26 @@ f_stat, pval
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># test for Factor variable
+f_stat, pval = two_way.f_test(&quot;Factor&quot;)
+f_stat, pval
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(np.float64(4.653846153845692), np.float64(0.11988267006105482))
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># test for interaction
@@ -732,7 +751,7 @@ f_stat, pval
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -740,12 +759,17 @@ f_stat, pval
 (np.float64(2.474358974358741), np.float64(0.2318655632501541))
 </pre></div></div>
 </div>
-<p>Note that in each of these tests, internally we are <strong>NOT</strong> refitting the reduced model - we simply <em>swept</em> out the (one-hot encoded) variable from the full model!</p>
+<p><strong>Conclusion</strong>:</p>
+<ul class="simple">
+<li><p>If we test <code class="docutils literal notranslate"><span class="pre">Group</span></code> by itself (in a 1-way ANOVA), then it is not significant.</p></li>
+<li><p>If we add <code class="docutils literal notranslate"><span class="pre">Factor</span></code>, then <code class="docutils literal notranslate"><span class="pre">Group</span></code> becomes significant, while <code class="docutils literal notranslate"><span class="pre">Factor</span></code> is not.</p></li>
+<li><p><strong>Note:</strong> in each of these tests, internally we are <strong>NOT</strong> refitting the reduced model - we simply <em>swept</em> out the (one-hot encoded) variable from the full model!</p></li>
+</ul>
 <section id="id1">
 <h3>Check answer is correct<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <p>Again we can compare the answer is correct using <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> package:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import statsmodels.api as sm
@@ -771,6 +795,229 @@ Group          1.002000  2.0   11.561538  0.038918
 Factor         0.201667  1.0    4.653846  0.119883
 Group:Factor   0.214444  2.0    2.474359  0.231866
 Residual       0.130000  3.0         NaN       NaN
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="ANCOVA---analysis-of-co-variance">
+<h2>ANCOVA - analysis of co-variance<a class="headerlink" href="#ANCOVA---analysis-of-co-variance" title="Link to this heading">#</a></h2>
+<p>Now suppose we also measured a continuous covariate <code class="docutils literal notranslate"><span class="pre">Environment</span></code> and we want to adjust for its effect on <code class="docutils literal notranslate"><span class="pre">Group</span></code> and <code class="docutils literal notranslate"><span class="pre">Factor</span></code>. Our question becomes:</p>
+<blockquote>
+<div><p>Question: do samples in different <code class="docutils literal notranslate"><span class="pre">Group</span></code> and <code class="docutils literal notranslate"><span class="pre">Factor</span></code> have different <code class="docutils literal notranslate"><span class="pre">Outcome</span></code>s, after adjusting for <code class="docutils literal notranslate"><span class="pre">Environment</span></code>?</p>
+</div></blockquote>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = pd.DataFrame({
+    &#39;Outcome&#39;: [3.6, 3.5, 4.2, 2.7, 4.1, 5.2, 3.0, 4.8, 4.0],
+    &#39;Group&#39;: pd.Categorical([&quot;A&quot;, &quot;A&quot;, &quot;B&quot;, &quot;B&quot;, &quot;A&quot;, &quot;C&quot;, &quot;B&quot;, &quot;C&quot;, &quot;C&quot;]),
+    &#39;Factor&#39;: pd.Categorical([&quot;X&quot;, &quot;X&quot;, &quot;Y&quot;, &quot;X&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;X&quot;, &quot;Y&quot;, &quot;X&quot;]),
+    &#39;Environment&#39;: [-1.2, 0.3, 3.3, 0.0, -2.7, -1.1, -0.1, 0.1, 1.0]
+})
+df
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Outcome</th>
+      <th>Group</th>
+      <th>Factor</th>
+      <th>Environment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3.6</td>
+      <td>A</td>
+      <td>X</td>
+      <td>-1.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3.5</td>
+      <td>A</td>
+      <td>X</td>
+      <td>0.3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.2</td>
+      <td>B</td>
+      <td>Y</td>
+      <td>3.3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2.7</td>
+      <td>B</td>
+      <td>X</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4.1</td>
+      <td>A</td>
+      <td>Y</td>
+      <td>-2.7</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>5.2</td>
+      <td>C</td>
+      <td>Y</td>
+      <td>-1.1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>3.0</td>
+      <td>B</td>
+      <td>X</td>
+      <td>-0.1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>4.8</td>
+      <td>C</td>
+      <td>Y</td>
+      <td>0.1</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>4.0</td>
+      <td>C</td>
+      <td>X</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula = &quot;Outcome ~ Group + Factor + Environment&quot;
+anvoca = sw.ANOVA(df, formula)
+anvoca.fit()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|████████████████████████████████████████████| 5/5 [00:00&lt;00:00, 9541.18it/s]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>f_stat, pval = anvoca.f_test(&quot;Group&quot;)
+f_stat, pval
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(np.float64(12.498763543030575), np.float64(0.019028215317113274))
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>f_stat, pval = anvoca.f_test(&quot;Factor&quot;)
+f_stat, pval
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(np.float64(29.73336179288068), np.float64(0.00549619765483064))
+</pre></div></div>
+</div>
+<p>Of course, we can also check for the importance of <code class="docutils literal notranslate"><span class="pre">Environment</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>f_stat, pval = anvoca.f_test(&quot;Environment&quot;)
+f_stat, pval
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(np.float64(1.3761221387331437), np.float64(0.30585068386326636))
+</pre></div></div>
+</div>
+<p><strong>Conclusion</strong>: both <code class="docutils literal notranslate"><span class="pre">Group</span></code> and <code class="docutils literal notranslate"><span class="pre">Factor</span></code> are significant after adjusting for <code class="docutils literal notranslate"><span class="pre">Environment</span></code>!</p>
+<section id="Check-answer">
+<h3>Check answer<a class="headerlink" href="#Check-answer" title="Link to this heading">#</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import statsmodels.api as sm
+from statsmodels.formula.api import ols
+
+# Fit the model
+model = ols(&#39;Outcome ~ Group + Factor + Environment&#39;, data=df).fit()
+
+# Perform ANOVA
+anova_table = sm.stats.anova_lm(model, typ=2)
+print(anova_table)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+               sum_sq   df          F    PR(&gt;F)
+Group        1.601574  2.0  12.498764  0.019028
+Factor       1.904996  1.0  29.733362  0.005496
+Environment  0.088167  1.0   1.376122  0.305851
+Residual     0.256277  4.0        NaN       NaN
 </pre></div></div>
 </div>
 </section>
