@@ -358,7 +358,7 @@
     The importance of the sweep operation in statistical computing is not so much that it is an inversion technique, but rather that is a conceptual tool for understanding the least squares process. Without this conceptual tool, it is extremely difficult to explain concepts such as absorption and what the R notation is testing in terms of the parameters of the model.
     <figcaption>--James Goodnight (1979)</figcaption>
 </div><div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import sweepystats as sw
@@ -571,6 +571,82 @@ beta_std
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 array([0.05686169, 0.05871306, 0.05988785])
+</pre></div></div>
+</div>
+</section>
+<section id="Rank-deficient-case">
+<h2>Rank deficient case<a class="headerlink" href="#Rank-deficient-case" title="Link to this heading">#</a></h2>
+<p>If the design matrix is rank deficient, the sweep operator can still return (one of the infinitely many) solutions, corresponding to using the pseudo-inverse to solve the normal equation.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># example from https://blogs.sas.com/content/iml/2018/11/21/generalized-inverses-for-matrices.html
+X = np.array(
+    [[100.,  50, 20, 10],
+      [50, 106, 46, 23],
+      [20, 46, 56, 28],
+      [10, 23, 28, 14]])
+y = np.array([130, 776, 486, 243])
+
+# X is not full rank
+np.linalg.matrix_rank(X)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+np.int64(3)
+</pre></div></div>
+</div>
+<p>Fitting a rank deficient matrix uses the exact same syntax:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ols = sw.LinearRegression(X, y)
+ols.fit()
+ols.coef() # solution even if X is not full rank
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|████████████████████████████████████████████| 4/4 [00:00&lt;00:00, 4008.89it/s]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([-3.,  7.,  4.,  0.])
+</pre></div></div>
+</div>
+<p>Compare the solution against one obtained from the Moore-Penrose inverse:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>np.linalg.pinv(X.T @ X) @ X.T @ y
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([-3. ,  7. ,  3.2,  1.6])
 </pre></div></div>
 </div>
 </section>

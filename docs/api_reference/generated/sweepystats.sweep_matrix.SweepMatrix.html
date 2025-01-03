@@ -374,13 +374,13 @@ if it is a double-precision 2D array stored in column-major (Fortran-style).</p>
 <tr class="row-even"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.det" title="sweepystats.sweep_matrix.SweepMatrix.det"><code class="xref py py-obj docutils literal notranslate"><span class="pre">det</span></code></a>([restore, verbose])</p></td>
 <td><p>Computes the determinant by sweeping the entire matrix.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.isposdef" title="sweepystats.sweep_matrix.SweepMatrix.isposdef"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isposdef</span></code></a>([restore, verbose])</p></td>
-<td><p>Checks whether the matrix is positive definite by checking if  <cite>A[k, k] &gt; 0</cite> (note: strict inequality) for each <cite>k</cite> before being swept.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.isposdef" title="sweepystats.sweep_matrix.SweepMatrix.isposdef"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isposdef</span></code></a>([restore, verbose, tol])</p></td>
+<td><p>Checks whether the matrix is positive definite by checking if  <cite>A[k, k] &gt; tol</cite> (note: strict inequality) for each <cite>k</cite> before being swept.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.sweep" title="sweepystats.sweep_matrix.SweepMatrix.sweep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sweep</span></code></a>([inv, verbose, symmetrize])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.sweep" title="sweepystats.sweep_matrix.SweepMatrix.sweep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sweep</span></code></a>([inv, verbose, symmetrize, tol])</p></td>
 <td><p>Sweeps the entire matrix.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.sweep_k" title="sweepystats.sweep_matrix.SweepMatrix.sweep_k"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sweep_k</span></code></a>(k[, inv, symmetrize])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.sweep_k" title="sweepystats.sweep_matrix.SweepMatrix.sweep_k"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sweep_k</span></code></a>(k[, inv, symmetrize, tol])</p></td>
 <td><p>Sweeps on the kth row/column, returns A[k, k] before it is swept.</p></td>
 </tr>
 </tbody>
@@ -392,16 +392,13 @@ if it is a double-precision 2D array stored in column-major (Fortran-style).</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.dtype" title="sweepystats.sweep_matrix.SweepMatrix.dtype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dtype</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.mem_layout" title="sweepystats.sweep_matrix.SweepMatrix.mem_layout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mem_layout</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.ndim" title="sweepystats.sweep_matrix.SweepMatrix.ndim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ndim</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.ndim" title="sweepystats.sweep_matrix.SweepMatrix.ndim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ndim</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.shape" title="sweepystats.sweep_matrix.SweepMatrix.shape"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shape</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.shape" title="sweepystats.sweep_matrix.SweepMatrix.shape"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shape</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.size" title="sweepystats.sweep_matrix.SweepMatrix.size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">size</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.size" title="sweepystats.sweep_matrix.SweepMatrix.size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">size</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>

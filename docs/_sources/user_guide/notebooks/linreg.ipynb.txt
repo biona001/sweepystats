@@ -21,7 +21,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
+   "execution_count": 6,
    "id": "deb0bcef-9f75-4bc0-8005-ecd13343ceb9",
    "metadata": {},
    "outputs": [],
@@ -338,6 +338,113 @@
     "# true std of beta\n",
     "beta_std = np.sqrt(np.diag(beta_cov))\n",
     "beta_std"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "1cef1d1a-e327-42ea-83c9-a555a7bcf53a",
+   "metadata": {},
+   "source": [
+    "## Rank deficient case\n",
+    "\n",
+    "If the design matrix is rank deficient, the sweep operator can still return (one of the infinitely many) solutions, corresponding to using the pseudo-inverse to solve the normal equation. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 37,
+   "id": "3a1787eb-fd38-436b-855c-fb79f3e417e2",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "np.int64(3)"
+      ]
+     },
+     "execution_count": 37,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# example from https://blogs.sas.com/content/iml/2018/11/21/generalized-inverses-for-matrices.html\n",
+    "X = np.array(\n",
+    "    [[100.,  50, 20, 10],\n",
+    "      [50, 106, 46, 23],\n",
+    "      [20, 46, 56, 28],\n",
+    "      [10, 23, 28, 14]])\n",
+    "y = np.array([130, 776, 486, 243])\n",
+    "\n",
+    "# X is not full rank\n",
+    "np.linalg.matrix_rank(X)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "136f9905-e1ba-4fba-ba4c-2c401ce8bbb0",
+   "metadata": {},
+   "source": [
+    "Fitting a rank deficient matrix uses the exact same syntax:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 38,
+   "id": "0b7a6ed1-355a-4f3d-8a41-510bf31df8c9",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "100%|████████████████████████████████████████████| 4/4 [00:00<00:00, 4008.89it/s]\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "array([-3.,  7.,  4.,  0.])"
+      ]
+     },
+     "execution_count": 38,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "ols = sw.LinearRegression(X, y)\n",
+    "ols.fit()\n",
+    "ols.coef() # solution even if X is not full rank"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "07155f3f-fd68-4136-9edb-4aade6d1d671",
+   "metadata": {},
+   "source": [
+    "Compare the solution against one obtained from the Moore-Penrose inverse:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 44,
+   "id": "f66cedc9-6ea6-4ba4-b953-3a4551410dfe",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([-3. ,  7. ,  3.2,  1.6])"
+      ]
+     },
+     "execution_count": 44,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "np.linalg.pinv(X.T @ X) @ X.T @ y"
    ]
   }
  ],
