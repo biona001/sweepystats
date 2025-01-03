@@ -19,33 +19,7 @@
    "id": "a696c7d6-2102-42c2-9410-423f0e72164b",
    "metadata": {},
    "source": [
-    "```html\n",
-    "<div class=\"admonition note\" name=\"html-admonition\" style=\"background: lightgreen; padding: 10px\">\n",
-    "<p class=\"title\">This is the **title**</p>\n",
-    "This is the *content*\n",
-    "</div>\n",
-    "```"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "f3e3c81e-b3d6-4aab-881b-545356e01c01",
-   "metadata": {},
-   "source": [
-    "```html\n",
-    "<div class=\"admonition note\" name=\"html-admonition\" style=\"background: lightgreen; padding: 10px\">\n",
-    "<p class=\"title\">This is the **title**</p>\n",
-    "This is the *content*\n",
-    "</div>\n",
-    "```"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "id": "19b9d24e-1c66-4360-931c-eeb26fb5b701",
-   "metadata": {},
-   "source": [
-    "<div style=\"border: 1px solid red; padding: 10px; background-color: #ffe6e6; color: red;\">\n",
+    "<div class=\"admonition note\" name=\"html-admonition\" style=\"background: lightred; padding: 10px\">\n",
     "    <strong>Warning:</strong> stepwise regression is generally <strong>NOT</strong> a valid method for model selection. This functionality is implemented mainly to explore the properties of the sweep operator.\n",
     "</div>"
    ]
