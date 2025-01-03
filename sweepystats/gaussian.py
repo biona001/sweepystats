@@ -67,7 +67,7 @@ class Normal:
             self.A[idx, -1] -= yi
         # sweep
         for k in yidx:
-            self.A.sweep_k(k)
+            self.A.sweep_k(k, symmetrize = False)
         # extract conditional mean
         zidx = np.setdiff1d(range(0, self.p), yidx)
         return self.A[zidx, -1]
