@@ -52,7 +52,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="API Reference" href="../../api_reference/index.html" />
-    <link rel="prev" title="\(k\)-way ANOVA" href="k-anova.html" />
+    <link rel="prev" title="ANOVA" href="anova.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.0.9" />
@@ -290,8 +290,7 @@
 <li class="toctree-l1"><a class="reference internal" href="linalg.html">Numerical linear algebra</a></li>
 <li class="toctree-l1"><a class="reference internal" href="linreg.html">Linear Regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stepreg.html">Stepwise regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="anova.html">1-way ANOVA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="k-anova.html"><span class="math notranslate nohighlight">\(k\)</span>-way ANOVA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="anova.html">ANOVA</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Multivariate Gaussian Density</a></li>
 </ul>
 </div>
@@ -357,7 +356,7 @@
 <h1>Multivariate Gaussian Density<a class="headerlink" href="#Multivariate-Gaussian-Density" title="Link to this heading">#</a></h1>
 <p>A random vector <span class="math notranslate nohighlight">\(X \in \mathbb{R}^p\)</span> with mean <span class="math notranslate nohighlight">\(\mu\)</span>, covariance <span class="math notranslate nohighlight">\(\Sigma\)</span>, and density</p>
 <div class="math notranslate nohighlight">
-\[2\pi^{\frac{p}{2}}(\det{\Sigma})^{-\frac{1}{2}}e^{-\frac{1}{2}(x - \mu)^\top\Sigma^{-1}(x - \mu)}\]</div>
+\[2\pi^{-\frac{p}{2}}(\det{\Sigma})^{-\frac{1}{2}}e^{-\frac{1}{2}(x - \mu)^\top\Sigma^{-1}(x - \mu)}\]</div>
 <p>is said to follow a multivariate normal (Gaussian) distribution. To evaluate this density, one needs to compute:</p>
 <ul class="simple">
 <li><p>The (square root) determinant: <span class="math notranslate nohighlight">\((\det{\Sigma})^{-\frac{1}{2}}\)</span></p></li>
@@ -687,12 +686,12 @@ array([[0.6     , 0.      , 0.      , 0.      ],
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="k-anova.html"
+       href="anova.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="math notranslate nohighlight">\(k\)</span>-way ANOVA</p>
+        <p class="prev-next-title">ANOVA</p>
       </div>
     </a>
     <a class="right-next"

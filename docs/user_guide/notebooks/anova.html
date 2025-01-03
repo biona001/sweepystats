@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>1-way ANOVA &#8212; sweepystats 0.0.9 documentation</title>
+    <title>ANOVA &#8212; sweepystats 0.0.9 documentation</title>
   
   
   
@@ -51,7 +51,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/notebooks/anova';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="\(k\)-way ANOVA" href="k-anova.html" />
+    <link rel="next" title="Multivariate Gaussian Density" href="MVN.html" />
     <link rel="prev" title="Stepwise regression" href="stepreg.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -290,8 +290,7 @@
 <li class="toctree-l1"><a class="reference internal" href="linalg.html">Numerical linear algebra</a></li>
 <li class="toctree-l1"><a class="reference internal" href="linreg.html">Linear Regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stepreg.html">Stepwise regression</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">1-way ANOVA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="k-anova.html"><span class="math notranslate nohighlight">\(k\)</span>-way ANOVA</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">ANOVA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MVN.html">Multivariate Gaussian Density</a></li>
 </ul>
 </div>
@@ -336,7 +335,7 @@
     
     <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">1-way ANOVA</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">ANOVA</span></li>
   </ul>
 </nav>
 </div>
@@ -353,8 +352,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="1-way-ANOVA">
-<h1>1-way ANOVA<a class="headerlink" href="#1-way-ANOVA" title="Link to this heading">#</a></h1>
+  <section id="ANOVA">
+<h1>ANOVA<a class="headerlink" href="#ANOVA" title="Link to this heading">#</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -365,6 +364,8 @@ import pandas as pd
 </pre></div>
 </div>
 </div>
+<section id="1-way-ANOVA">
+<h2>1-way ANOVA<a class="headerlink" href="#1-way-ANOVA" title="Link to this heading">#</a></h2>
 <p>Suppose we are given an example data set, and we want to know:</p>
 <blockquote>
 <div><p>Do samples in different <code class="docutils literal notranslate"><span class="pre">Group</span></code> have different <code class="docutils literal notranslate"><span class="pre">Outcome</span></code>s?</p>
@@ -475,30 +476,12 @@ one_way.fit()
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|████████████████████████████████████████████| 3/3 [00:00&lt;00:00, 8519.24it/s]
+100%|████████████████████████████████████████████| 3/3 [00:00&lt;00:00, 7341.26it/s]
 </pre></div></div>
 </div>
 <p>The F-statistic and p-value can be extracted as:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>f_stat, pval = one_way.f_test(&quot;Intercept&quot;)
-f_stat, pval
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-(np.float64(113.34939759036061), np.float64(4.047672672725335e-05))
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>f_stat, pval = one_way.f_test(&quot;Group&quot;)
@@ -507,20 +490,20 @@ f_stat, pval
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(np.float64(3.9668674698794675), np.float64(0.07984562357182835))
+(np.float64(3.96686746987947), np.float64(0.07984562357182826))
 </pre></div></div>
 </div>
 <p>If we reject the null at <span class="math notranslate nohighlight">\(\alpha = 0.05\)</span> level, then no, there is no statistically significant difference between at least one pair of group means.</p>
 <section id="Check-answer-is-correct">
-<h2>Check answer is correct<a class="headerlink" href="#Check-answer-is-correct" title="Link to this heading">#</a></h2>
+<h3>Check answer is correct<a class="headerlink" href="#Check-answer-is-correct" title="Link to this heading">#</a></h3>
 <p>We can compare the answer via sweep operator is correct using <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> package:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
@@ -537,7 +520,7 @@ anova_table
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -593,6 +576,206 @@ anova_table
 </div>
 </section>
 </section>
+<section id="k-way-ANOVA">
+<h2><span class="math notranslate nohighlight">\(k\)</span>-way ANOVA<a class="headerlink" href="#k-way-ANOVA" title="Link to this heading">#</a></h2>
+<p>Now suppose we have another covariate <code class="docutils literal notranslate"><span class="pre">Factor</span></code> that was measured, and we want to know:</p>
+<blockquote>
+<div><p>Do samples in different <code class="docutils literal notranslate"><span class="pre">Group</span></code> and <code class="docutils literal notranslate"><span class="pre">Factor</span></code> have different <code class="docutils literal notranslate"><span class="pre">Outcome</span></code>s?</p>
+</div></blockquote>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = pd.DataFrame({
+    &#39;Outcome&#39;: [3.6, 3.5, 4.2, 2.7, 4.1, 5.2, 3.0, 4.8, 4.0],
+    &#39;Group&#39;: pd.Categorical([&quot;A&quot;, &quot;A&quot;, &quot;B&quot;, &quot;B&quot;, &quot;A&quot;, &quot;C&quot;, &quot;B&quot;, &quot;C&quot;, &quot;C&quot;]),
+    &#39;Factor&#39;: pd.Categorical([&quot;X&quot;, &quot;X&quot;, &quot;Y&quot;, &quot;X&quot;, &quot;Y&quot;, &quot;Y&quot;, &quot;X&quot;, &quot;Y&quot;, &quot;X&quot;])
+})
+df
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Outcome</th>
+      <th>Group</th>
+      <th>Factor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3.6</td>
+      <td>A</td>
+      <td>X</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3.5</td>
+      <td>A</td>
+      <td>X</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.2</td>
+      <td>B</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2.7</td>
+      <td>B</td>
+      <td>X</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4.1</td>
+      <td>A</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>5.2</td>
+      <td>C</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>3.0</td>
+      <td>B</td>
+      <td>X</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>4.8</td>
+      <td>C</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>4.0</td>
+      <td>C</td>
+      <td>X</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>We previously saw that <code class="docutils literal notranslate"><span class="pre">Group</span></code> alone is not significant, using 1-way ANOVA. Lets additionally adjust for <code class="docutils literal notranslate"><span class="pre">Factor</span></code> and the interaction effect between <code class="docutils literal notranslate"><span class="pre">Group</span></code> and <code class="docutils literal notranslate"><span class="pre">Factor</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>formula = &quot;Outcome ~ Group + Factor + Group:Factor&quot;
+two_way = sw.ANOVA(df, formula)
+two_way.fit()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|████████████████████████████████████████████| 6/6 [00:00&lt;00:00, 6572.43it/s]
+</pre></div></div>
+</div>
+<p>Now, we can test for significance of <code class="docutils literal notranslate"><span class="pre">Group</span></code>, <code class="docutils literal notranslate"><span class="pre">Factor</span></code>, and their interaction using an F-test. For example,</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># test for Group variable
+f_stat, pval = two_way.f_test(&quot;Group&quot;)
+f_stat, pval
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(np.float64(11.561538461537321), np.float64(0.03891754069189004))
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># test for interaction
+f_stat, pval = two_way.f_test(&quot;Group:Factor&quot;)
+f_stat, pval
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(np.float64(2.474358974358741), np.float64(0.2318655632501541))
+</pre></div></div>
+</div>
+<p>Note that in each of these tests, internally we are <strong>NOT</strong> refitting the reduced model - we simply <em>swept</em> out the (one-hot encoded) variable from the full model!</p>
+<section id="id1">
+<h3>Check answer is correct<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Again we can compare the answer is correct using <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> package:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import statsmodels.api as sm
+from statsmodels.formula.api import ols
+
+# Fit the model
+model = ols(&#39;Outcome ~ Group + Factor + Group:Factor&#39;, data=df).fit()
+
+# Perform ANOVA
+anova_table = sm.stats.anova_lm(model, typ=3)  # Type III ANOVA (note: use type 2 if no interaction term)
+print(anova_table)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+                 sum_sq   df           F    PR(&gt;F)
+Intercept     25.205000  1.0  581.653846  0.000156
+Group          1.002000  2.0   11.561538  0.038918
+Factor         0.201667  1.0    4.653846  0.119883
+Group:Factor   0.214444  2.0    2.474359  0.231866
+Residual       0.130000  3.0         NaN       NaN
+</pre></div></div>
+</div>
+</section>
+</section>
+</section>
 
 
                 </article>
@@ -614,11 +797,11 @@ anova_table
       </div>
     </a>
     <a class="right-next"
-       href="k-anova.html"
+       href="MVN.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="math notranslate nohighlight">\(k\)</span>-way ANOVA</p>
+        <p class="prev-next-title">Multivariate Gaussian Density</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
