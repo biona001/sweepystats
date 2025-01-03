@@ -197,7 +197,7 @@
     "\\begin{pmatrix}\n",
     "    -\\Sigma_Y^{-1} & \\Sigma_Y^{-1}\\Sigma_{YZ} & \\Sigma_Y^{-1}(\\mu_Y - y)\\\\\n",
     "    \\Sigma_{ZY}\\Sigma_Y^{-1} & \\Sigma_Z - \\Sigma_{ZY}\\Sigma_Y^{-1}\\Sigma_{YZ} & \\mu_Z + \\Sigma_{ZY}\\Sigma_Y^{-1}(y - \\mu_Y)\\\\\\\n",
-    "    (\\mu_Y^\\top - y^\\top)\\Sigma_Y^{-1} & \\mu_Z^\\top - (y^\\top - \\mu_Y^\\top)\\Sigma_Y^{-1}\\Sigma_{YZ} & -(\\mu_Y - y^\\top)\\Sigma_Y^{-1}(\\mu_Y - y)\n",
+    "    (\\mu_Y^\\top - y^\\top)\\Sigma_Y^{-1} & \\mu_Z^\\top + (y^\\top - \\mu_Y^\\top)\\Sigma_Y^{-1}\\Sigma_{YZ} & -(\\mu_Y - y^\\top)\\Sigma_Y^{-1}(\\mu_Y - y)\n",
     "\\end{pmatrix}.\n",
     "$$\n",
     "\n",

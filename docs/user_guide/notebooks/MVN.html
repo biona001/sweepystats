@@ -489,7 +489,7 @@ N\left(
 \[\begin{split}\begin{pmatrix}
     -\Sigma_Y^{-1} &amp; \Sigma_Y^{-1}\Sigma_{YZ} &amp; \Sigma_Y^{-1}(\mu_Y - y)\\
     \Sigma_{ZY}\Sigma_Y^{-1} &amp; \Sigma_Z - \Sigma_{ZY}\Sigma_Y^{-1}\Sigma_{YZ} &amp; \mu_Z + \Sigma_{ZY}\Sigma_Y^{-1}(y - \mu_Y)\\\
-    (\mu_Y^\top - y^\top)\Sigma_Y^{-1} &amp; \mu_Z^\top - (y^\top - \mu_Y^\top)\Sigma_Y^{-1}\Sigma_{YZ} &amp; -(\mu_Y - y^\top)\Sigma_Y^{-1}(\mu_Y - y)
+    (\mu_Y^\top - y^\top)\Sigma_Y^{-1} &amp; \mu_Z^\top + (y^\top - \mu_Y^\top)\Sigma_Y^{-1}\Sigma_{YZ} &amp; -(\mu_Y - y^\top)\Sigma_Y^{-1}(\mu_Y - y)
 \end{pmatrix}.\end{split}\]</div>
 <p>Thus, the conditional expection and variance becomes immediately available, <strong>again without needing to allocate anything new.</strong></p>
 <section id="Conditional-expectations">
