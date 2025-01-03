@@ -54,7 +54,7 @@ class SweepMatrix:
     def __str__(self):
         return f"SweepMatrix with array:\n{self.A}"
 
-    def sweep_k(self, k, inv=False, symmetrize=True, tol=1e-10):
+    def sweep_k(self, k, inv=False, symmetrize=True, tol=1e-12):
         """
         Sweeps on the kth row/column, returns A[k, k] before it is swept.
 
@@ -69,7 +69,7 @@ class SweepMatrix:
         # quick return if diagonal is 0 (skip sweeping)
         Akk = self.A[k, k]
         if np.abs(Akk) < tol:
-            return 0.0
+            return Akk
         Akkinv = 1 / Akk
 
         # store kth row before sweeping (only read from upper triangle of A)
@@ -90,7 +90,7 @@ class SweepMatrix:
 
         return Akk
 
-    def sweep(self, inv=False, verbose=True, symmetrize=True, tol=1e-10):
+    def sweep(self, inv=False, verbose=True, symmetrize=True, tol=1e-12):
         """
         Sweeps the entire matrix. If `inv=True`, we perform the inverse sweep
         on the kth row/col. If `symmetrize=False`, then only the upper-triangle
@@ -119,7 +119,7 @@ class SweepMatrix:
                 self.sweep_k(k, inv=True, symmetrize=False)
         return det
 
-    def isposdef(self, restore=True, verbose=True, tol=1e-10):
+    def isposdef(self, restore=True, verbose=True, tol=1e-12):
         """
         Checks whether the matrix is positive definite by checking if 
         `A[k, k] > tol` (note: strict inequality) for each `k` before being swept. 
@@ -139,5 +139,17 @@ class SweepMatrix:
                 self.sweep_k(k, inv=True, symmetrize=False)
         return True if swept_until == p else False
 
-    # def rank(self):
-        # count number of non-0 diagonals?
+    def rank(self, restore=True, verbose=True, tol=1e-12):
+        """
+        Computes matrix rank by sweeping the entire matrix.
+        If `restore=True` (default), then the original matrix is untouched.
+        """
+        rk = 0
+        for k in tqdm(range(self.shape[0]), disable = not verbose):
+            if abs(self.A[k, k]) > tol:
+                self.sweep_k(k, symmetrize=False)
+                rk += 1
+        if restore:
+            for k in tqdm(range(self.shape[0]), disable = not verbose):
+                self.sweep_k(k, inv=True, symmetrize=False)
+        return rk
