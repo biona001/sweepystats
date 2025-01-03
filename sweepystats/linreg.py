@@ -11,18 +11,17 @@ class LinearRegression:
         # Convert inputs to NumPy arrays if they are not already
         self.X = np.array(X) if not isinstance(X, np.ndarray) else X
         self.y = np.array(y) if not isinstance(y, np.ndarray) else y
-
-        # initialize SweepMatrix class
-        XtX = np.matmul(X.T, X)
-        Xty = np.matmul(X.T, y).reshape(-1, 1)
-        yty = np.array([[np.dot(y, y)]])
-        A = np.block([
-            [XtX, Xty],
-            [Xty.T, yty],
-        ])
-        self.A = sw.SweepMatrix(A)
         self.n = self.X.shape[0]
         self.p = self.X.shape[1]
+
+        # initialize SweepMatrix class
+        A = np.empty((self.p + 1, self.p + 1), dtype=np.float64, order='F')
+        Xty = np.matmul(X.T, y).reshape(-1, 1).ravel()
+        A[:self.p, :self.p] = np.matmul(X.T, X)
+        A[:self.p, self.p] = Xty
+        A[self.p, :self.p] = Xty
+        A[self.p, self.p] = np.dot(y, y)
+        self.A = sw.SweepMatrix(A)
 
         # vector to keep track of how many times a variable was swept
         self.swept = np.zeros(self.p)

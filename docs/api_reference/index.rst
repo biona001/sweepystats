@@ -32,3 +32,13 @@ sweepystats.ANOVA
     :toctree: generated/
 
     ANOVA
+
+sweepystats.Normal
+------------------
+
+.. currentmodule:: sweepystats.gaussian
+
+.. autosummary::
+    :toctree: generated/
+
+    Normal
