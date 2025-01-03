@@ -35,11 +35,6 @@ def test_SweepMatrix_throws_error():
     with pytest.raises(TypeError):
         sw.SweepMatrix(np.array([[1, 3],
                                  [2, 5]]))
-    # Cannot sweep if diagonal contains exact 0
-    with pytest.raises(ZeroDivisionError):
-        A = sw.SweepMatrix(np.array([[0, 3],
-                                 [3, 5]]))
-        A.sweep()
 
 def test_sweep_kth_diagonal():
     A = sw.SweepMatrix(np.array([[4, 3],

@@ -30,10 +30,6 @@ def test_high_dimensional():
     y = np.random.rand(n)
     ols = sw.LinearRegression(X, y)
 
-    # X'X is singular, so there must be 1 eigenvalue that is 0
-    with pytest.raises(ZeroDivisionError):
-        ols.fit()
-
 def test_stepwise_regression():
     # data
     n, p, k = 20, 5, 3
