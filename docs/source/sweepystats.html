@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>sweepystats package &#8212; sweepystats 0.0.7 documentation</title>
+    <title>sweepystats package &#8212; sweepystats 0.0.9 documentation</title>
   
   
   
@@ -50,7 +50,7 @@
     <link rel="search" title="Search" href="../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.0.7" />
+  <meta name="docsearch:version" content="0.0.9" />
   </head>
   
   
@@ -500,9 +500,13 @@ is read/swept. A progress bar is displayed unless <cite>verbose=False</cite>.</p
 <div><p>‘y ~ Group + Factor + Group:Factor’.</p>
 </div></blockquote>
 <dl class="py method">
-<dt class="sig sig-object py" id="sweepystats.ANOVA.f_statistic">
-<span class="sig-name descname"><span class="pre">f_statistic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.ANOVA.f_statistic" title="Link to this definition">#</a></dt>
-<dd><p>Computes the F-statistic associated with the ANOVA model.</p>
+<dt class="sig sig-object py" id="sweepystats.ANOVA.f_test">
+<span class="sig-name descname"><span class="pre">f_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.ANOVA.f_test" title="Link to this definition">#</a></dt>
+<dd><p>Tests whether <cite>variable</cite> in <cite>self.formula</cite> is significant by performing
+an F-test. The model must already be fitted.</p>
+<p>Returns: 
++ <cite>f_stat</cite>: The F-statistic
++ <cite>pval</cite>: The associated p-value</p>
 </dd></dl>
 
 <dl class="py method">
@@ -512,14 +516,9 @@ is read/swept. A progress bar is displayed unless <cite>verbose=False</cite>.</p
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="sweepystats.ANOVA.p_value">
-<span class="sig-name descname"><span class="pre">p_value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.ANOVA.p_value" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="sweepystats.ANOVA.sum_sq">
 <span class="sig-name descname"><span class="pre">sum_sq</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.ANOVA.sum_sq" title="Link to this definition">#</a></dt>
-<dd><p>Compuptes within-group sum of squares error</p>
+<dd><p>Computes sum of squared error for all variables that are currently swept in</p>
 </dd></dl>
 
 </dd></dl>
@@ -597,6 +596,36 @@ The model must already be fitted.</p>
 <dt class="sig sig-object py" id="sweepystats.LinearRegression.sigma2">
 <span class="sig-name descname"><span class="pre">sigma2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.LinearRegression.sigma2" title="Link to this definition">#</a></dt>
 <dd><p>Estimate of sigma square.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sweepystats.Normal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sweepystats.</span></span><span class="sig-name descname"><span class="pre">Normal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.Normal" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class that computes the density and conditional distributions of
+the multivariate Gaussian using the sweep operation.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sweepystats.Normal.cond_mean">
+<span class="sig-name descname"><span class="pre">cond_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yidx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.Normal.cond_mean" title="Link to this definition">#</a></dt>
+<dd><p>Computes the conditional expectation <cite>E(Z | Y = y)</cite> where <cite>(Y, Z)</cite>
+is assumed to be jointly Gaussian with mean <cite>mu</cite> and cov <cite>sigma</cite>. The
+vector <cite>yidx</cite> indicates the indices of the observed <cite>y</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sweepystats.Normal.cond_var">
+<span class="sig-name descname"><span class="pre">cond_var</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yidx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.Normal.cond_var" title="Link to this definition">#</a></dt>
+<dd><p>Computes the conditional variance <cite>Var(Z | Y = y)</cite> where <cite>(Y, Z)</cite>
+is assumed to be jointly Gaussian with mean <cite>mu</cite> and cov <cite>sigma</cite>. The
+vector <cite>yidx</cite> indicates the indices of the observed <cite>y</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sweepystats.Normal.loglikelihood">
+<span class="sig-name descname"><span class="pre">loglikelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sweepystats.Normal.loglikelihood" title="Link to this definition">#</a></dt>
+<dd><p>Evaluates the loglikelihood of obsering X=x.</p>
 </dd></dl>
 
 </dd></dl>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Stepwise regression &#8212; sweepystats 0.0.9 documentation</title>
+    <title>Multivariate Gaussian Density &#8212; sweepystats 0.0.9 documentation</title>
   
   
   
@@ -48,11 +48,11 @@
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/notebooks/stepreg';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/notebooks/MVN';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="1-way ANOVA" href="anova.html" />
-    <link rel="prev" title="Linear Regression" href="linreg.html" />
+    <link rel="next" title="API Reference" href="../../api_reference/index.html" />
+    <link rel="prev" title="\(k\)-way ANOVA" href="k-anova.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.0.9" />
@@ -289,10 +289,10 @@
 <li class="toctree-l1"><a class="reference internal" href="sweepy.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="linalg.html">Numerical linear algebra</a></li>
 <li class="toctree-l1"><a class="reference internal" href="linreg.html">Linear Regression</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Stepwise regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stepreg.html">Stepwise regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="anova.html">1-way ANOVA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="k-anova.html"><span class="math notranslate nohighlight">\(k\)</span>-way ANOVA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="MVN.html">Multivariate Gaussian Density</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Multivariate Gaussian Density</a></li>
 </ul>
 </div>
 </nav></div>
@@ -336,7 +336,7 @@
     
     <li class="breadcrumb-item"><a href="../index.html" class="nav-link">User Guide</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Stepwise regression</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Multivariate Gaussian Density</span></li>
   </ul>
 </nav>
 </div>
@@ -353,156 +353,326 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="Stepwise-regression">
-<h1>Stepwise regression<a class="headerlink" href="#Stepwise-regression" title="Link to this heading">#</a></h1>
-<p>A common problem encountered in regression analysis is the following:</p>
-<blockquote>
-<div><p>Should I include the <code class="docutils literal notranslate"><span class="pre">k</span></code>th variable in regression? Is the improvement in fit statistically significant?</p>
-</div></blockquote>
-<p>The sweep operator is a beautiful tool for this kind of question, because <strong>including/excluding a variable does not require re-fitting the entire model</strong>. Instead, just <em>sweep</em> the variable in if you want to include its effect, and if it isn’t good, <em>sweep</em> it out!</p>
-<div style="border: 1px solid red; padding: 10px; background-color: #ffe6e6; color: red;"><p>Warning: stepwise regression is generally NOT a valid method for model selection. This functionality is implemented mainly to explore the properties of the sweep operator.</p>
-</div><div class="nbinput nblast docutils container">
+  <section id="Multivariate-Gaussian-Density">
+<h1>Multivariate Gaussian Density<a class="headerlink" href="#Multivariate-Gaussian-Density" title="Link to this heading">#</a></h1>
+<p>A random vector <span class="math notranslate nohighlight">\(X \in \mathbb{R}^p\)</span> with mean <span class="math notranslate nohighlight">\(\mu\)</span>, covariance <span class="math notranslate nohighlight">\(\Sigma\)</span>, and density</p>
+<div class="math notranslate nohighlight">
+\[2\pi^{\frac{p}{2}}(\det{\Sigma})^{-\frac{1}{2}}e^{-\frac{1}{2}(x - \mu)^\top\Sigma^{-1}(x - \mu)}\]</div>
+<p>is said to follow a multivariate normal (Gaussian) distribution. To evaluate this density, one needs to compute:</p>
+<ul class="simple">
+<li><p>The (square root) determinant: <span class="math notranslate nohighlight">\((\det{\Sigma})^{-\frac{1}{2}}\)</span></p></li>
+<li><p>The quadratic form <span class="math notranslate nohighlight">\((x - \mu)^\top\Sigma^{-1}(x - \mu)\)</span></p></li>
+</ul>
+<p>Without the sweep operator, both of these terms require special computational care. The sweep operator permits straightforward calculation of both terms when we construct</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{pmatrix}
+    \Sigma &amp; x - \mu\\
+    x^\top - \mu^\top &amp; 0
+\end{pmatrix}\end{split}\]</div>
+<p>and sweep on the diagonal entries of <span class="math notranslate nohighlight">\(\Sigma\)</span>. This operation will result in the following:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{pmatrix}
+    -\Sigma^{-1} &amp; \Sigma^{-1}(x - \mu)\\
+    (x - \mu)^t\Sigma^{-1} &amp; -(x - \mu)^t\Sigma^{-1}(x - \mu)
+\end{pmatrix}\end{split}\]</div>
+<p>and in the process also accumulate <span class="math notranslate nohighlight">\(\det(\Sigma)\)</span>. Thus, we can evaluate the MVN density <strong>in-place</strong> without any additional allocation.</p>
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import sweepystats as sw
 import numpy as np
+from scipy.linalg import toeplitz
 </pre></div>
 </div>
 </div>
-<p>Lets simulate some data. I simulated <span class="math notranslate nohighlight">\(p=10\)</span> covariates from</p>
-<div class="math notranslate nohighlight">
-\[\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + N(0, \mathbf{I})\]</div>
-<p>but only <span class="math notranslate nohighlight">\(k=3\)</span> randomly chosen variables influence the response.</p>
+<section id="Loglikelihood">
+<h2>Loglikelihood<a class="headerlink" href="#Loglikelihood" title="Link to this heading">#</a></h2>
+<p>To evaluate the likelihood of <span class="math notranslate nohighlight">\(X = (X_1 = x_1,..., X_p = x_p)\)</span>, we initialize the <code class="docutils literal notranslate"><span class="pre">Normal</span></code> class and call the <code class="docutils literal notranslate"><span class="pre">loglikelihood</span></code> function.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n, p, k = 20, 5, 3 # number of samples, covariates, causal covariates
-np.random.seed(123) # for reproducibility
-X = np.random.normal(n, p, size=(n, p))
-beta = np.zeros(p)
-beta[np.random.choice(np.arange(p), size=k, replace=False)] = np.random.randn(k)
-y = X @ beta + np.random.normal()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># instantiate a Normal
+p = 5
+mu = np.zeros(p)
+sigma = toeplitz(np.array([0.5**i for i in range(p)]))
+d = sw.Normal(mu, sigma)
 </pre></div>
 </div>
 </div>
-<p>Form an instance of <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> class:</p>
-<div class="nbinput nblast docutils container">
+<p>Here we simulated</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\Sigma =
+\begin{pmatrix}
+1 &amp; \rho &amp; \rho^2 &amp; ... &amp; \rho^{p-1}\\
+\rho &amp; 1 &amp; \rho &amp; ... &amp; \rho^{p-2}\\
+\rho^2 &amp; \rho &amp; 1 &amp; ... &amp; \rho^{p-2}\\
+\vdots &amp; &amp; &amp; \ddots &amp; \vdots\\
+\rho^{p-1} &amp; ... &amp; &amp; \rho &amp; 1
+\end{pmatrix}\end{split}\]</div>
+<p>with <span class="math notranslate nohighlight">\(\rho = 0.5\)</span>. Now we can ask what is the likelihood that <span class="math notranslate nohighlight">\(X = (X_1 = x_1,..., X_p = x_p)\)</span>?</p>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ols = sw.LinearRegression(X, y)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>X = np.random.normal(size=p)
+d.loglikelihood(X)
 </pre></div>
 </div>
 </div>
-<section id="Including/excluding-covariates-corresponds-to-sweeping-the-variable-in/out">
-<h2>Including/excluding covariates corresponds to sweeping the variable in/out<a class="headerlink" href="#Including/excluding-covariates-corresponds-to-sweeping-the-variable-in/out" title="Link to this heading">#</a></h2>
-<p>For example, lets “sweep in” the first variable.</p>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|███████████████████████████████████████████| 5/5 [00:00&lt;00:00, 28610.53it/s]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+np.float64(-7.372282461672331)
+</pre></div></div>
+</div>
 <div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Internally, we accumulated the determinant and the loglikelihood function
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ols.include_k(0) # include the first variable in regression
-</pre></div>
-</div>
-</div>
-<p>After sweeping in the first variable, we can examine the sum-of-squares residuals:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ols.resid()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># check answer with scipy
+from scipy.stats import multivariate_normal
+multivariate_normal.logpdf(X, mean=mu, cov=sigma)
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-np.float64(1394.3565581860448)
+np.float64(-7.372282461672331)
 </pre></div></div>
 </div>
-<p>Lets try sweeping in variables one at a time (i.e. including more and more variables in multiple regression) and examine the resulting sum of squares residual <span class="math notranslate nohighlight">\(\|\mathbf{y} - \hat{\mathbf{y}}\|^2\)</span></p>
+</section>
+<section id="Conditional-distributions">
+<h2>Conditional distributions<a class="headerlink" href="#Conditional-distributions" title="Link to this heading">#</a></h2>
+<p>Let <span class="math notranslate nohighlight">\(X \sim N(\mu, \Sigma)\)</span>. If <span class="math notranslate nohighlight">\(X = (Y, Z)\)</span> and</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}X = \begin{pmatrix}
+    Y \\ Z
+\end{pmatrix} \sim
+N\left(
+\begin{pmatrix}
+    \mu_Y\\ \mu_Z
+\end{pmatrix},
+\begin{pmatrix}
+    \Sigma_Y &amp; \Sigma_{YZ}\\
+    \Sigma_{ZY} &amp; \Sigma_{Z}
+\end{pmatrix}\right)\end{split}\]</div>
+<p>then the following classical formulas hold</p>
+<div class="math notranslate nohighlight">
+\[E(Z | Y = y) = \mu_Z + \Sigma_{ZY}\Sigma^{-1}_Y(y - \mu_Y)\]</div>
+<div class="math notranslate nohighlight">
+\[Var(Z | Y = y) = \Sigma_Z - \Sigma_{ZY}\Sigma^{-1}_Y\Sigma_{YZ}.\]</div>
+<p>These quantities be easily computed via the sweep operation. Consider the matrix:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{pmatrix}
+    \Sigma_Y &amp; \Sigma_{YZ} &amp; \mu_Y - y\\
+    \Sigma_{ZY} &amp; \Sigma_{Z} &amp; \mu_Z\\
+    \mu_Y^\top - y^\top &amp; \mu_Z^t &amp; 0
+\end{pmatrix}.\end{split}\]</div>
+<p>Sweeping on the diagonals of <span class="math notranslate nohighlight">\(\Sigma_Y\)</span> yields:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{pmatrix}
+    -\Sigma_Y^{-1} &amp; \Sigma_Y^{-1}\Sigma_{YZ} &amp; \Sigma_Y^{-1}(\mu_Y - y)\\
+    \Sigma_{ZY}\Sigma_Y^{-1} &amp; \Sigma_Z - \Sigma_{ZY}\Sigma_Y^{-1}\Sigma_{YZ} &amp; \mu_Z + \Sigma_{ZY}\Sigma_Y^{-1}(y - \mu_Y)\\\
+    (\mu_Y^\top - y^\top)\Sigma_Y^{-1} &amp; \mu_Z^\top - (y^\top - \mu_Y^\top)\Sigma_Y^{-1}\Sigma_{YZ} &amp; -(\mu_Y - y^\top)\Sigma_Y^{-1}(\mu_Y - y)
+\end{pmatrix}.\end{split}\]</div>
+<p>Thus, the conditional expection and variance becomes immediately available, <strong>again without needing to allocate anything new.</strong></p>
+<section id="Conditional-expectations">
+<h3>Conditional expectations<a class="headerlink" href="#Conditional-expectations" title="Link to this heading">#</a></h3>
+<p>We wish to evaluate</p>
+<div class="math notranslate nohighlight">
+\[E(Z | Y = y) = \mu_Z + \Sigma_{ZY}\Sigma^{-1}_Y(y - \mu_Y)\]</div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>resids = [ols.resid()]
-for i in range(1, p):
-    ols.include_k(i) # sweep the ith variable in (include it in regression)
-    resids.append(ols.resid()) # save sum-of-square residual
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># instantiate a Normal
+p = 6
+mu = np.zeros(p)
+sigma = toeplitz(np.array([0.5**i for i in range(p)]))
+d = sw.Normal(mu, sigma)
 </pre></div>
 </div>
 </div>
-<p>We can visualize the residuals</p>
+<p>Suppose <span class="math notranslate nohighlight">\(p=4\)</span> and we condition on the first 2 elements. What is the conditional mean for the remaining 2 elements?</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
-plt.scatter(range(p), resids, color=&#39;blue&#39;, label=&#39;Residuals&#39;)
-plt.axhline(0, color=&#39;red&#39;, linestyle=&#39;--&#39;, label=&#39;Zero Line&#39;)
-plt.xlabel(&#39;Variables included in regression&#39;)
-plt.ylabel(&#39;Residual Value&#39;)
-plt.title(&#39;Scatter Plot of Residuals&#39;)
-plt.legend()
-plt.show()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>y = np.random.normal(2, size=(2,))
+yidx = [0, 1]
+d.cond_mean(y, yidx)
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/user_guide_notebooks_stepreg_14_0.png" src="../../_images/user_guide_notebooks_stepreg_14_0.png" />
-</div>
-</div>
-<p>So it seems adding the 2nd, 4th, and 5th variable improved model fit significantly (by reducing sum-of-squared residual). How do we statistically determine whether they are redundant? We can test the hypothesis <span class="math notranslate nohighlight">\(H_k = 0\)</span> using an F-test:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># test whether kth variable is significant
-for k in range(p):
-    f_stat, pval = ols.f_test(k)
-    print(f&quot;Variable {k} has p-value {pval}&quot;)
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Variable 0 has p-value 9.062122146792274e-24
-Variable 1 has p-value 0.4648260563197989
-Variable 2 has p-value 0.19236569475852966
-Variable 3 has p-value 1.5600761098077415e-16
-Variable 4 has p-value 7.343646064572416e-18
-</pre></div></div>
-</div>
-<p>So the 1st, 4th, and 5th variable is significant. We can compare this against the true beta coefficient:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>beta
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([-1.97788793,  0.        ,  0.        ,  0.64205469,  0.71226464])
+array([0.66050197, 0.33025098, 0.16512549, 0.08256275])
 </pre></div></div>
 </div>
-<p>So in this simple example, stepwise regression using F-test worked in identifying the correct model, while visually examining the improvement in residual error was not completely correct!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># check answers with brute-force implementation
+mu_Y, mu_Z = np.zeros(2), np.zeros(p - len(yidx))
+sigma_Y = sigma[0:2, 0:2]
+sigma_Z = sigma[2:, 2:]
+sigma_ZY = sigma[2:, 0:2]
+mu_Z + sigma_ZY @ np.linalg.inv(sigma_Y) @ (y - mu_Y)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([0.66050197, 0.33025098, 0.16512549, 0.08256275])
+</pre></div></div>
+</div>
+<p>Note: <code class="docutils literal notranslate"><span class="pre">yidx</span></code> does NOT have to be contiguous!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>p = 6
+y = np.random.normal(2, size=(2,))
+yidx = [0, 3]
+d.cond_mean(y, yidx)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([1.72322558, 1.95738227, 1.58511505, 0.79255753])
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># check answers with brute-force implementation
+zidx = [1, 2, 4, 5]
+mu_Y, mu_Z = np.zeros(2), np.zeros(p - len(yidx))
+sigma_Y = sigma[np.ix_(yidx, yidx)]
+sigma_Z = sigma[np.ix_(zidx, zidx)]
+sigma_ZY = sigma[np.ix_(zidx, yidx)]
+mu_Z + sigma_ZY @ np.linalg.inv(sigma_Y) @ (y - mu_Y)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([1.72322558, 1.95738227, 1.58511505, 0.79255753])
+</pre></div></div>
+</div>
+</section>
+<section id="Conditional-Variance">
+<h3>Conditional Variance<a class="headerlink" href="#Conditional-Variance" title="Link to this heading">#</a></h3>
+<p>We wish to evaluate</p>
+<div class="math notranslate nohighlight">
+\[Var(Z | Y = y) = \Sigma_Z - \Sigma_{ZY}\Sigma^{-1}_Y\Sigma_{YZ}.\]</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># instantiate a Normal
+p = 6
+mu = np.zeros(p)
+sigma = toeplitz(np.array([0.5**i for i in range(p)]))
+d = sw.Normal(mu, sigma)
+</pre></div>
+</div>
+</div>
+<p>To compute conditional variance:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>y = np.random.normal(2, size=(2,))
+yidx = [0, 2]
+d.cond_var(y, yidx)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[0.6     , 0.      , 0.      , 0.      ],
+       [0.      , 0.75    , 0.375   , 0.1875  ],
+       [0.      , 0.375   , 0.9375  , 0.46875 ],
+       [0.      , 0.1875  , 0.46875 , 0.984375]])
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># check answers with brute-force implementation
+zidx = [1, 3, 4, 5]
+sigma_Y = sigma[np.ix_(yidx, yidx)]
+sigma_Z = sigma[np.ix_(zidx, zidx)]
+sigma_ZY = sigma[np.ix_(zidx, yidx)]
+sigma_YZ = sigma[np.ix_(yidx, zidx)]
+sigma_Z - sigma_ZY @ np.linalg.inv(sigma_Y) @ sigma_YZ
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[0.6     , 0.      , 0.      , 0.      ],
+       [0.      , 0.75    , 0.375   , 0.1875  ],
+       [0.      , 0.375   , 0.9375  , 0.46875 ],
+       [0.      , 0.1875  , 0.46875 , 0.984375]])
+</pre></div></div>
+</div>
+<p>Of course, for conditional variance computation, the vector <code class="docutils literal notranslate"><span class="pre">zidx</span></code> need not be contiguous as well.</p>
+</section>
 </section>
 </section>
 
@@ -517,20 +687,20 @@ array([-1.97788793,  0.        ,  0.        ,  0.64205469,  0.71226464])
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="linreg.html"
+       href="k-anova.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Linear Regression</p>
+        <p class="prev-next-title"><span class="math notranslate nohighlight">\(k\)</span>-way ANOVA</p>
       </div>
     </a>
     <a class="right-next"
-       href="anova.html"
+       href="../../api_reference/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">1-way ANOVA</p>
+        <p class="prev-next-title">API Reference</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
