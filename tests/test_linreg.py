@@ -24,15 +24,20 @@ def test_linreg():
     assert np.allclose(ols.coef_std(), beta_std) # std of beta hat
     assert np.allclose(ols.R2(), R2)             # R2
 
-def test_high_dimensional():
-    n, p = 5, 10
-    X = np.random.rand(n, p)
-    y = np.random.rand(n)
+def test_rank_deficient_case():
+    # example from https://blogs.sas.com/content/iml/2018/11/21/generalized-inverses-for-matrices.html
+    X = np.array(
+        [[100.,  50, 20, 10],
+        [50, 106, 46, 23],
+        [20, 46, 56, 28],
+        [10, 23, 28, 14]], order='F')
+    y = np.array([130, 776, 486, 243])
     ols = sw.LinearRegression(X, y)
+    ols.fit()
 
-    # X'X is singular, so there must be 1 eigenvalue that is 0
-    with pytest.raises(ZeroDivisionError):
-        ols.fit()
+    beta = ols.coef()
+    sas_beta = np.array([-3, 7, 4, 0])
+    np.allclose(beta, sas_beta)
 
 def test_stepwise_regression():
     # data

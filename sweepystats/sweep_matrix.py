@@ -42,13 +42,6 @@ class SweepMatrix:
     def dtype(self):
         return self.A.dtype
 
-    @property
-    def mem_layout(self):
-        if self.A.flags["C_CONTIGUOUS"]:
-            return "C_CONTIGUOUS" # C style = row major
-        else:
-            return "F_CONTIGUOUS" # Fortran style = column major
-
     def __getitem__(self, key):
         return self.A[key]
 
@@ -61,14 +54,22 @@ class SweepMatrix:
     def __str__(self):
         return f"SweepMatrix with array:\n{self.A}"
 
-    def sweep_k(self, k, inv=False, symmetrize=True):
-        """Sweeps on the kth row/column, returns A[k, k] before it is swept."""
+    def sweep_k(self, k, inv=False, symmetrize=True, tol=1e-10):
+        """
+        Sweeps on the kth row/column, returns A[k, k] before it is swept.
+
+        If `inv=True`, then the inverse-sweep is performed. 
+        If `symmetrize = False`, then only the upper-triangular matrix is touched.
+        `tol` is the smallest diagonal element that is treated as numerically 0. 
+        """
         p = self.shape[0]
         if k < 0 or k >= p:
             raise ValueError("Index k is out of bounds.")
+
+        # quick return if diagonal is 0 (skip sweeping)
         Akk = self.A[k, k]
-        if np.abs(Akk) < 1e-14:
-            raise ZeroDivisionError(f"A diagonal is numerically 0: {np.abs(Akk):.2e}")
+        if np.abs(Akk) < tol:
+            return 0.0
         Akkinv = 1 / Akk
 
         # store kth row before sweeping (only read from upper triangle of A)
@@ -89,20 +90,20 @@ class SweepMatrix:
 
         return Akk
 
-    def sweep(self, inv=False, verbose=True, symmetrize=True):
+    def sweep(self, inv=False, verbose=True, symmetrize=True, tol=1e-10):
         """
         Sweeps the entire matrix. If `inv=True`, we perform the inverse sweep
         on the kth row/col. If `symmetrize=False`, then only the upper-triangle
         is read/swept. A progress bar is displayed unless `verbose=False`. 
         """
         for k in tqdm(range(self.shape[0]), disable = not verbose):
-            self.sweep_k(k, inv, symmetrize)
+            self.sweep_k(k, inv, symmetrize, tol)
         return None
 
     def det(self, restore=True, verbose=True):
         """
         Computes the determinant by sweeping the entire matrix.
-        If `restore=True`, then the original matrix is untouched.
+        If `restore=True` (default), then the original matrix is untouched.
         """
         det = 1.0
         swept_until = 0
@@ -118,16 +119,16 @@ class SweepMatrix:
                 self.sweep_k(k, inv=True, symmetrize=False)
         return det
 
-    def isposdef(self, restore=True, verbose=True):
+    def isposdef(self, restore=True, verbose=True, tol=1e-10):
         """
         Checks whether the matrix is positive definite by checking if 
-        `A[k, k] > 0` (note: strict inequality) for each `k` before being swept. 
-        If `restore=True`, then the original matrix is untouched.
+        `A[k, k] > tol` (note: strict inequality) for each `k` before being swept. 
+        If `restore=True` (default), then the original matrix is untouched.
         """
         swept_until = 0
         p = self.shape[0]
         for k in tqdm(range(p), disable = not verbose):
-            if self.A[k, k] > 0:
+            if self.A[k, k] > tol:
                 self.sweep_k(k, symmetrize=False)
                 swept_until += 1
             else:
@@ -137,3 +138,6 @@ class SweepMatrix:
             for k in tqdm(range(swept_until), disable = not verbose):
                 self.sweep_k(k, inv=True, symmetrize=False)
         return True if swept_until == p else False
+
+    # def rank(self):
+        # count number of non-0 diagonals?
