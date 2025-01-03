@@ -18,7 +18,7 @@ jobs:
         sudo wget https://github.com/jgm/pandoc/releases/download/3.1.8/pandoc-3.1.8-1-amd64.deb -O /tmp/pandoc-3.1.8-1-amd64.deb
         sudo dpkg -i /tmp/pandoc-3.1.8-1-amd64.deb
         python -m pip install --upgrade pip
-        pip install sphinx sphinx_design numpydoc pandoc nbsphinx pydata_sphinx_theme
+        pip install sphinx sphinx_design numpydoc pandoc nbsphinx pydata_sphinx_theme myst_parser
         pip install -e .
     - name: Build documentation
       run: |
