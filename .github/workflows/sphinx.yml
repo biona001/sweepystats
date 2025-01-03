@@ -19,7 +19,7 @@ jobs:
         sudo dpkg -i /tmp/pandoc-3.1.8-1-amd64.deb
         python -m pip install --upgrade pip
         pip install sphinx sphinx_design numpydoc pandoc nbsphinx pydata_sphinx_theme
-        pip install sweepystats
+        pip install -e .
     - name: Build documentation
       run: |
         git config --local user.email "action@github.com"
