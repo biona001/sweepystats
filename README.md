@@ -36,9 +36,11 @@ The following operations are supported **in-place** and **allocation-free**:
 + Matrix inversions
 + Computation of determinants
 + Checking of (strict) positive-definiteness
-+ Linear regression (beta hat, variance of OLS estimator, residuals)
-+ ANOVA
++ Computation of matrix rank
++ Linear regression
 + Stepwise regression
++ ANOVA
++ ... etc. See the documentation for full list of features
 
 ## Running tests
 
@@ -51,6 +53,8 @@ The following operations are supported **in-place** and **allocation-free**:
 + [SweepOperator.jl](https://github.com/joshday/SweepOperator.jl) in Julia
 + [sweep.operator](https://search.r-project.org/CRAN/refmans/fastmatrix/html/sweep.operator.html) in R
 
+Know another package that supports sweeping? PRs are welcomed!
+
 ## References
 
 + [Biostats M280 lecture notes at UCLA](https://hua-zhou.github.io/teaching/biostatm280-2017spring/slides/11-sweep/sweep.html)
@@ -59,8 +63,6 @@ The following operations are supported **in-place** and **allocation-free**:
 + [James Goodnight's awesome paper from 1978](https://www.jstor.org/stable/2683825)
 
 ## TODO
-+ Conditional formulas for MVN
-+ ANCOVA, and MANOVA
 + 2-stage and 3-stage least squares
 + Weighted least squares
 + Partial correlation

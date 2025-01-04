@@ -28,6 +28,7 @@
    .. autosummary::
    
       ~SweepMatrix.dtype
+      ~SweepMatrix.mem_layout
       ~SweepMatrix.ndim
       ~SweepMatrix.shape
       ~SweepMatrix.size

@@ -138,3 +138,7 @@ def test_not_numpy_inputs():
                           [3, 2]])
     A.sweep()
     assert np.allclose(A.A, -Ainv)
+
+def test_matrix_rank():
+    A = sw.SweepMatrix(random_symmetric_matrix(100, eigmin=0.0))
+    assert A.rank() == np.linalg.matrix_rank(A.A)
