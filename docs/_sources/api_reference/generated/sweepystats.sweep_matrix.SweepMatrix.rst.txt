@@ -16,6 +16,7 @@
       ~SweepMatrix.__init__
       ~SweepMatrix.det
       ~SweepMatrix.isposdef
+      ~SweepMatrix.rank
       ~SweepMatrix.sweep
       ~SweepMatrix.sweep_k
    

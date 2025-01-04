@@ -369,8 +369,8 @@ import numpy as np
 
 def random_symmetric_matrix(n, eigmin=float(&#39;-inf&#39;)):
     &quot;&quot;&quot;
-    Simulates an column-major double-precision
-    n*n symmetric matrix with minimum eigenvalue `eigmin`
+    Simulates a n*n symmetric matrix with minimum eigenvalue set to `eigmin`.
+    The resulting matrix is stored in column-major format.
     &quot;&quot;&quot;
     A = np.random.rand(n, n)
     A = 0.5 * (A + A.T)
@@ -384,17 +384,25 @@ def random_symmetric_matrix(n, eigmin=float(&#39;-inf&#39;)):
 </pre></div>
 </div>
 </div>
-<p>Matrix inverse:</p>
+<section id="Matrix-inverses">
+<h2>Matrix inverses<a class="headerlink" href="#Matrix-inverses" title="Link to this heading">#</a></h2>
+<p>If <code class="docutils literal notranslate"><span class="pre">A</span></code> is full rank, <code class="docutils literal notranslate"><span class="pre">A.sweep()</span></code> converts <code class="docutils literal notranslate"><span class="pre">A.A</span></code> into <code class="docutils literal notranslate"><span class="pre">-inv(A.A)</span></code>:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># A.sweep() converts A.A into -inv(A.A)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># simulated data
 data = random_symmetric_matrix(100)
+
+# true inverse
 Ainv = np.linalg.inv(data)
+
+# sweep
 A = sw.SweepMatrix(data)
 A.sweep()
-np.allclose(A.A, -Ainv) # check answer is correct
+
+# check answer is correct
+np.allclose(A.A, -Ainv)
 </pre></div>
 </div>
 </div>
@@ -403,7 +411,7 @@ np.allclose(A.A, -Ainv) # check answer is correct
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|████████████████████████████████████████████| 100/100 [00:00&lt;00:00, 12265.48it/s]
+100%|███████████████████████████████████████| 100/100 [00:00&lt;00:00, 13296.26it/s]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -415,16 +423,26 @@ np.allclose(A.A, -Ainv) # check answer is correct
 True
 </pre></div></div>
 </div>
-<p>Determinants:</p>
+</section>
+<section id="Determinants">
+<h2>Determinants<a class="headerlink" href="#Determinants" title="Link to this heading">#</a></h2>
+<p>Determinants are computed by <code class="docutils literal notranslate"><span class="pre">A.det()</span></code>. The original matrix is untouched by default.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Determinants is computed by A.det(). Original matrix is untouched by default.
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># simulate data
 data = random_symmetric_matrix(100)
+
+# true determinant
 Adet = np.linalg.det(data)
+
+# sweep
 A = sw.SweepMatrix(data)
-np.allclose(A.det(restore=True), Adet) # check answer is correct
+det = A.det()
+
+# check answer is correct
+np.allclose(det, Adet)
 </pre></div>
 </div>
 </div>
@@ -433,8 +451,8 @@ np.allclose(A.det(restore=True), Adet) # check answer is correct
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|███████████████████████████████████████████| 100/100 [00:00&lt;00:00, 145383.15it/s]
-100%|███████████████████████████████████████████| 100/100 [00:00&lt;00:00, 131277.12it/s]
+100%|██████████████████████████████████████| 100/100 [00:00&lt;00:00, 151255.10it/s]
+100%|██████████████████████████████████████| 100/100 [00:00&lt;00:00, 144931.03it/s]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -446,13 +464,16 @@ np.allclose(A.det(restore=True), Adet) # check answer is correct
 True
 </pre></div></div>
 </div>
-<p>Check positive definiteness:</p>
+</section>
+<section id="Checking-of-positive-definiteness">
+<h2>Checking of positive definiteness<a class="headerlink" href="#Checking-of-positive-definiteness" title="Link to this heading">#</a></h2>
+<p>This is a PD matrix:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>A = sw.SweepMatrix(random_symmetric_matrix(100, eigmin=0.0001)) # this is PD
-A.isposdef(verbose=False)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>A = sw.SweepMatrix(random_symmetric_matrix(100, eigmin=0.00001)) # this is PD
+A.isposdef(tol=1e-15, verbose=False)
 </pre></div>
 </div>
 </div>
@@ -465,11 +486,12 @@ A.isposdef(verbose=False)
 True
 </pre></div></div>
 </div>
+<p>Simulate a matrix with negative eigenvalues:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>A = sw.SweepMatrix(random_symmetric_matrix(100, eigmin=-10)) # this has negative eigenvalues, should return false
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>A = sw.SweepMatrix(random_symmetric_matrix(100, eigmin=-10)) # should return false
 A.isposdef(verbose=False)
 </pre></div>
 </div>
@@ -483,6 +505,7 @@ A.isposdef(verbose=False)
 False
 </pre></div></div>
 </div>
+<p>Simulate a matrix with 0 as eigenvalue:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
@@ -501,6 +524,56 @@ A.isposdef(verbose=False)
 False
 </pre></div></div>
 </div>
+</section>
+<section id="Matrix-rank:">
+<h2>Matrix rank:<a class="headerlink" href="#Matrix-rank:" title="Link to this heading">#</a></h2>
+<p>Less well known is that the sweep operator can also be used to compute the rank of a matrix, by counting how many diagonals are non-zero prior to sweeping.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>A = sw.SweepMatrix(random_symmetric_matrix(123, eigmin=0.0))
+A.rank()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|███████████████████████████████████████| 123/123 [00:00&lt;00:00, 57836.25it/s]
+100%|███████████████████████████████████████| 123/123 [00:00&lt;00:00, 56351.65it/s]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+62
+</pre></div></div>
+</div>
+<p>Check answer:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>np.linalg.matrix_rank(A.A)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+np.int64(62)
+</pre></div></div>
+</div>
+</section>
 </section>
 
 

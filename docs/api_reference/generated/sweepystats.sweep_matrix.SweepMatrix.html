@@ -377,10 +377,13 @@ if it is a double-precision 2D array stored in column-major (Fortran-style).</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.isposdef" title="sweepystats.sweep_matrix.SweepMatrix.isposdef"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isposdef</span></code></a>([restore, verbose, tol])</p></td>
 <td><p>Checks whether the matrix is positive definite by checking if  <cite>A[k, k] &gt; tol</cite> (note: strict inequality) for each <cite>k</cite> before being swept.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.sweep" title="sweepystats.sweep_matrix.SweepMatrix.sweep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sweep</span></code></a>([inv, verbose, symmetrize, tol])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.rank" title="sweepystats.sweep_matrix.SweepMatrix.rank"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rank</span></code></a>([restore, verbose, tol])</p></td>
+<td><p>Computes matrix rank by sweeping the entire matrix.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.sweep" title="sweepystats.sweep_matrix.SweepMatrix.sweep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sweep</span></code></a>([inv, verbose, symmetrize, tol])</p></td>
 <td><p>Sweeps the entire matrix.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.sweep_k" title="sweepystats.sweep_matrix.SweepMatrix.sweep_k"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sweep_k</span></code></a>(k[, inv, symmetrize, tol])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../../source/sweepystats.html#sweepystats.sweep_matrix.SweepMatrix.sweep_k" title="sweepystats.sweep_matrix.SweepMatrix.sweep_k"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sweep_k</span></code></a>(k[, inv, symmetrize, tol])</p></td>
 <td><p>Sweeps on the kth row/column, returns A[k, k] before it is swept.</p></td>
 </tr>
 </tbody>

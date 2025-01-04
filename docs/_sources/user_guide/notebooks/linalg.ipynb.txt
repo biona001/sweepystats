@@ -26,8 +26,8 @@
     "\n",
     "def random_symmetric_matrix(n, eigmin=float('-inf')):\n",
     "    \"\"\"\n",
-    "    Simulates an column-major double-precision\n",
-    "    n*n symmetric matrix with minimum eigenvalue `eigmin`\n",
+    "    Simulates a n*n symmetric matrix with minimum eigenvalue set to `eigmin`.\n",
+    "    The resulting matrix is stored in column-major format.\n",
     "    \"\"\"\n",
     "    A = np.random.rand(n, n)\n",
     "    A = 0.5 * (A + A.T)\n",
@@ -45,7 +45,9 @@
    "id": "7a2d295f-60dc-4fee-bc3c-503f472368e1",
    "metadata": {},
    "source": [
-    "Matrix inverse:"
+    "## Matrix inverses\n",
+    "\n",
+    "If `A` is full rank, `A.sweep()` converts `A.A` into `-inv(A.A)`:"
    ]
   },
   {
@@ -58,7 +60,7 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "100%|████████████████████████████████████████████| 100/100 [00:00<00:00, 12265.48it/s]\n"
+      "100%|███████████████████████████████████████| 100/100 [00:00<00:00, 13296.26it/s]\n"
      ]
     },
     {
@@ -73,12 +75,18 @@
     }
    ],
    "source": [
-    "# A.sweep() converts A.A into -inv(A.A)\n",
+    "# simulated data\n",
     "data = random_symmetric_matrix(100)\n",
+    "\n",
+    "# true inverse\n",
     "Ainv = np.linalg.inv(data)\n",
+    "\n",
+    "# sweep\n",
     "A = sw.SweepMatrix(data)\n",
     "A.sweep()\n",
-    "np.allclose(A.A, -Ainv) # check answer is correct"
+    "\n",
+    "# check answer is correct\n",
+    "np.allclose(A.A, -Ainv)"
    ]
   },
   {
@@ -86,7 +94,9 @@
    "id": "58ff9d4d-3c4b-4adb-8bf4-aa2f444743f4",
    "metadata": {},
    "source": [
-    "Determinants:"
+    "## Determinants\n",
+    "\n",
+    "Determinants are computed by `A.det()`. The original matrix is untouched by default. "
    ]
   },
   {
@@ -99,8 +109,8 @@
      "name": "stderr",
      "output_type": "stream",
      "text": [
-      "100%|███████████████████████████████████████████| 100/100 [00:00<00:00, 145383.15it/s]\n",
-      "100%|███████████████████████████████████████████| 100/100 [00:00<00:00, 131277.12it/s]\n"
+      "100%|██████████████████████████████████████| 100/100 [00:00<00:00, 151255.10it/s]\n",
+      "100%|██████████████████████████████████████| 100/100 [00:00<00:00, 144931.03it/s]\n"
      ]
     },
     {
@@ -115,11 +125,18 @@
     }
    ],
    "source": [
-    "# Determinants is computed by A.det(). Original matrix is untouched by default. \n",
+    "# simulate data\n",
     "data = random_symmetric_matrix(100)\n",
+    "\n",
+    "# true determinant\n",
     "Adet = np.linalg.det(data)\n",
+    "\n",
+    "# sweep\n",
     "A = sw.SweepMatrix(data)\n",
-    "np.allclose(A.det(restore=True), Adet) # check answer is correct"
+    "det = A.det()\n",
+    "\n",
+    "# check answer is correct\n",
+    "np.allclose(det, Adet)"
    ]
   },
   {
@@ -127,7 +144,9 @@
    "id": "75a11b86-fcc5-4310-83df-e684543e2395",
    "metadata": {},
    "source": [
-    "Check positive definiteness:"
+    "## Checking of positive definiteness\n",
+    "\n",
+    "This is a PD matrix:"
    ]
   },
   {
@@ -148,8 +167,16 @@
     }
    ],
    "source": [
-    "A = sw.SweepMatrix(random_symmetric_matrix(100, eigmin=0.0001)) # this is PD\n",
-    "A.isposdef(verbose=False)"
+    "A = sw.SweepMatrix(random_symmetric_matrix(100, eigmin=0.00001)) # this is PD\n",
+    "A.isposdef(tol=1e-15, verbose=False)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7986a565-4de0-4108-a356-60fd412f2660",
+   "metadata": {},
+   "source": [
+    "Simulate a matrix with negative eigenvalues:"
    ]
   },
   {
@@ -170,8 +197,16 @@
     }
    ],
    "source": [
-    "A = sw.SweepMatrix(random_symmetric_matrix(100, eigmin=-10)) # this has negative eigenvalues, should return false\n",
+    "A = sw.SweepMatrix(random_symmetric_matrix(100, eigmin=-10)) # should return false\n",
     "A.isposdef(verbose=False)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "846c38db-1810-4001-8cc8-17e02a3a91ca",
+   "metadata": {},
+   "source": [
+    "Simulate a matrix with 0 as eigenvalue:"
    ]
   },
   {
@@ -194,6 +229,75 @@
    "source": [
     "A = sw.SweepMatrix(random_symmetric_matrix(100, eigmin=0.0)) # this is PSD, should return false\n",
     "A.isposdef(verbose=False)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "2bb27403-db4b-4016-b094-86aaca6351a1",
+   "metadata": {},
+   "source": [
+    "## Matrix rank:\n",
+    "\n",
+    "Less well known is that the sweep operator can also be used to compute the rank of a matrix, by counting how many diagonals are non-zero prior to sweeping. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "id": "9dd8fe73-2da2-4277-ae7a-cc0a1b2e68c7",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "100%|███████████████████████████████████████| 123/123 [00:00<00:00, 57836.25it/s]\n",
+      "100%|███████████████████████████████████████| 123/123 [00:00<00:00, 56351.65it/s]\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "62"
+      ]
+     },
+     "execution_count": 25,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "A = sw.SweepMatrix(random_symmetric_matrix(123, eigmin=0.0))\n",
+    "A.rank()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "9a324a0e-ab2b-4e54-a6ea-d2fbc08019fd",
+   "metadata": {},
+   "source": [
+    "Check answer:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "id": "39b64741-a8d8-4357-abcf-0c60505f7449",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "np.int64(62)"
+      ]
+     },
+     "execution_count": 26,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "np.linalg.matrix_rank(A.A)"
    ]
   }
  ],
