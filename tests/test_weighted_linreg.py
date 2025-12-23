@@ -189,3 +189,28 @@ def test_wls_backward_compatibility():
     
     assert np.allclose(lr.coef(), beta)
     assert np.allclose(lr.resid(), resid[0])
+
+
+def test_wls_r2():
+    """Test weighted R² calculation"""
+    n, p = 20, 2
+    np.random.seed(222)
+    X = np.random.rand(n, p)
+    y = np.random.rand(n)
+    weights = np.random.rand(n) + 0.5
+    
+    wls = sw.LinearRegression(X, y, weights=weights)
+    wls.fit(verbose=False)
+    
+    # Manual computation of weighted R²
+    beta = wls.coef()
+    y_pred = X @ beta
+    residuals = y - y_pred
+    
+    w_sum = np.sum(weights)
+    ybar_weighted = np.sum(weights * y) / w_sum
+    ss_tot_weighted = np.sum(weights * (y - ybar_weighted) ** 2)
+    ss_res_weighted = np.sum(weights * residuals ** 2)
+    r2_true = 1 - ss_res_weighted / ss_tot_weighted
+    
+    assert np.allclose(wls.R2(), r2_true)

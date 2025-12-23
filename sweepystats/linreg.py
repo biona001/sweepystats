@@ -15,7 +15,7 @@ class LinearRegression:
         Response vector of shape (n,)
     weights : array-like, optional
         Weight vector of shape (n,). If provided, performs weighted least squares.
-        Weights should be positive. If None (default), performs ordinary least squares.
+        Weights should be non-negative. If None (default), performs ordinary least squares.
     """
     def __init__(self, X, y, weights=None):
         # Convert inputs to NumPy arrays if they are not already
@@ -129,11 +129,23 @@ class LinearRegression:
         return -self.sigma2() * cov[np.ix_(idx, idx)]
 
     def R2(self):
-        """Computes the R2 (coefficient of determination) of fit"""
-        ybar = np.mean(self.y)
-        ss_tot = np.sum((self.y - ybar) ** 2)
-        ss_res = self.resid()
-        return 1 - ss_res / ss_tot
+        """
+        Computes the R² (coefficient of determination) of fit.
+        For weighted least squares, uses weighted statistics.
+        """
+        if self.weights is not None:
+            # Weighted R²
+            w_sum = np.sum(self.weights)
+            ybar_weighted = np.sum(self.weights * self.y) / w_sum
+            ss_tot_weighted = np.sum(self.weights * (self.y - ybar_weighted) ** 2)
+            ss_res_weighted = self.resid()
+            return 1 - ss_res_weighted / ss_tot_weighted
+        else:
+            # Unweighted R²
+            ybar = np.mean(self.y)
+            ss_tot = np.sum((self.y - ybar) ** 2)
+            ss_res = self.resid()
+            return 1 - ss_res / ss_tot
 
     def f_test(self, k):
         """
