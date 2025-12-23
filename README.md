@@ -37,7 +37,7 @@ The following operations are supported **in-place** and **allocation-free**:
 + Computation of determinants
 + Checking of (strict) positive-definiteness
 + Computation of matrix rank
-+ Linear regression
++ Linear regression (ordinary and weighted least squares)
 + Stepwise regression
 + ANOVA
 + ... etc. See the documentation for full list of features
@@ -64,7 +64,6 @@ Know another package that supports sweeping? PRs are welcomed!
 
 ## TODO
 + 2-stage and 3-stage least squares
-+ Weighted least squares
 + Partial correlation
 + GLMs
 + Generalized (pseudo-) inverses
