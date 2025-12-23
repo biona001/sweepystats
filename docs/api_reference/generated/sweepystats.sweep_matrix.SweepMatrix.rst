@@ -16,7 +16,6 @@
       ~SweepMatrix.__init__
       ~SweepMatrix.det
       ~SweepMatrix.isposdef
-      ~SweepMatrix.rank
       ~SweepMatrix.sweep
       ~SweepMatrix.sweep_k
    
@@ -29,6 +28,7 @@
    .. autosummary::
    
       ~SweepMatrix.dtype
+      ~SweepMatrix.mem_layout
       ~SweepMatrix.ndim
       ~SweepMatrix.shape
       ~SweepMatrix.size
