@@ -6,21 +6,56 @@ from scipy.stats import f
 class LinearRegression:
     """
     A class to perform linear regression based on the sweep operation. 
+    
+    Parameters
+    ----------
+    X : array-like
+        Design matrix of shape (n, p)
+    y : array-like
+        Response vector of shape (n,)
+    weights : array-like, optional
+        Weight vector of shape (n,). If provided, performs weighted least squares.
+        Weights should be positive. If None (default), performs ordinary least squares.
     """
-    def __init__(self, X, y):
+    def __init__(self, X, y, weights=None):
         # Convert inputs to NumPy arrays if they are not already
         self.X = np.array(X) if not isinstance(X, np.ndarray) else X
         self.y = np.array(y) if not isinstance(y, np.ndarray) else y
         self.n = self.X.shape[0]
         self.p = self.X.shape[1]
+        
+        # Handle weights
+        if weights is not None:
+            self.weights = np.array(weights) if not isinstance(weights, np.ndarray) else weights
+            if self.weights.shape[0] != self.n:
+                raise ValueError(f"weights must have length {self.n}, got {self.weights.shape[0]}")
+            if np.any(self.weights < 0):
+                raise ValueError("weights must be non-negative")
+        else:
+            self.weights = None
 
         # initialize SweepMatrix class
         A = np.empty((self.p + 1, self.p + 1), dtype=np.float64, order='F')
-        Xty = np.matmul(X.T, y).reshape(-1, 1).ravel()
-        A[:self.p, :self.p] = np.matmul(X.T, X)
-        A[:self.p, self.p] = Xty
-        A[self.p, :self.p] = Xty
-        A[self.p, self.p] = np.dot(y, y)
+        
+        # Compute weighted or unweighted cross-products
+        if self.weights is not None:
+            # For weighted least squares: X'WX and X'Wy where W = diag(weights)
+            W_sqrt = np.sqrt(self.weights)
+            X_weighted = self.X * W_sqrt[:, np.newaxis]
+            y_weighted = self.y * W_sqrt
+            Xty = np.matmul(X_weighted.T, y_weighted).reshape(-1, 1).ravel()
+            A[:self.p, :self.p] = np.matmul(X_weighted.T, X_weighted)
+            A[:self.p, self.p] = Xty
+            A[self.p, :self.p] = Xty
+            A[self.p, self.p] = np.dot(y_weighted, y_weighted)
+        else:
+            # For ordinary least squares: X'X and X'y
+            Xty = np.matmul(X.T, y).reshape(-1, 1).ravel()
+            A[:self.p, :self.p] = np.matmul(X.T, X)
+            A[:self.p, self.p] = Xty
+            A[self.p, :self.p] = Xty
+            A[self.p, self.p] = np.dot(y, y)
+        
         self.A = sw.SweepMatrix(A)
 
         # vector to keep track of how many times a variable was swept
@@ -80,7 +115,10 @@ class LinearRegression:
         return self.A[-1, -1]
 
     def sigma2(self):
-        """Estimate of sigma square."""
+        """
+        Estimate of sigma square.
+        For weighted least squares, returns the weighted variance estimate.
+        """
         n, p = self.n, self.p
         return self.resid() / (n - p)
 
